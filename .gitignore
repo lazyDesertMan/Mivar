@@ -1,3 +1,4 @@
 bin/
 .vscode
 files
+CMakeLists.txt.user

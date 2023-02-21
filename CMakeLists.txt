@@ -28,6 +28,8 @@ set(SOURCES
     ui/components/TreeView.cpp
     ui/MainContainer.cpp
     ui/Project.cpp
+    ui/MainWindow.h
+    ui/MainWindow.cpp
     main.cpp
 )
 add_executable(${PROJECT_NAME} ${SOURCES})
