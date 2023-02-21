@@ -6,8 +6,11 @@ project(${PROJECT_NAME})
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
 
 set(SOURCES
+    models/IObservable.h
+    models/IObserver.h
     models/MivarModel.h
     models/MivarObject.h
     models/MivarRelation.h
@@ -16,6 +19,7 @@ set(SOURCES
     ui/components/TreeView.h
     ui/MainContainer.h
     ui/Project.h
+    models/IObservable.cpp
     models/MivarModel.cpp
     models/MivarObject.cpp
     models/MivarRelation.cpp
