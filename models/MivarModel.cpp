@@ -31,6 +31,7 @@ bool MivarModel::addClass(const MivarClass& modelClass) {
         idx++;
     if (idx == m_classes.size()) {
         m_classes.push_back(modelClass);
+        sendEvent();
         return true;
     }
     return false;
@@ -40,8 +41,10 @@ void MivarModel::removeClass(const QString& id) {
     size_t idx = 0;
     while (idx < m_classes.size() && m_classes[idx].id() != id)
         idx++;
-    if (idx != m_classes.size())
+    if (idx != m_classes.size()) {
         m_classes.erase(m_classes.begin() + idx);
+        sendEvent();
+    }
 }
 
 const std::vector<std::shared_ptr<MivarRelation>>& MivarModel::relations() const noexcept {
@@ -54,6 +57,7 @@ bool MivarModel::addRelation(const std::shared_ptr<MivarRelation>& relation) {
         idx++;
     if (idx == m_relations.size()) {
         m_relations.push_back(relation);
+        sendEvent();
         return true;
     }
     return false;
@@ -63,8 +67,10 @@ void MivarModel::removeRelation(const QString& id) {
     size_t idx = 0;
     while (idx < m_relations.size() && m_relations[idx]->id() != id)
         idx++;
-    if (idx != m_relations.size())
+    if (idx != m_relations.size()) {
         m_relations.erase(m_relations.begin() + idx);
+        sendEvent();
+    }
 }
 
 const QString& MivarParam::type() const noexcept {

@@ -6,6 +6,7 @@
 #include <memory>
 #include "MivarObject.h"
 #include "MivarRelation.h"
+#include "IObservable.h"
 
 /**
  * @brief Параметр класса
@@ -36,7 +37,7 @@ public:
 /**
  * @brief Модель
  */
-class MivarModel : public MivarObject {
+class MivarModel : public MivarObject, public IObservable {
     std::vector<MivarClass> m_classes;
     std::vector<std::shared_ptr<MivarRelation>> m_relations;
 
