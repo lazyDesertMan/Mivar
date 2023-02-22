@@ -3,6 +3,7 @@
 #include <QJSEngine>
 #include "ui/MainWindow.h"
 #include "services/ModelLoader.h"
+#include "services/SingleJSEngine.h"
 
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
@@ -19,7 +20,7 @@ int main(int argc, char* argv[]) {
         app.exec();
     }
     else {
-        QJSEngine engine;
+        QJSEngine& engine = SingleJSEngine::engine();
 
         MivarModel model = ModelLoader::load("./files/proj3.xml");
         std::shared_ptr<MivarRelation> rel = model.relations()[1];

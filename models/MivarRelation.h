@@ -24,15 +24,23 @@ public:
         void setType(const QString& type);
     };
 
+    /**
+     * @brief Сведения об ошибке
+     */
+    struct ErrorData {
+        int     line;  //!< Номер ошибочной строки
+        QString msg;   //!< Сообщение об ошибке
+    };
+
 protected:
     QString m_code;
     std::vector<RelationParameter> m_inputs;
     std::vector<RelationParameter> m_outputs;
 
 public:
-    MivarRelation(const QString& id = "", const QString& name = "", const QString& description = "");
+    MivarRelation(const QString& id = "", const QString& name = "", const QString& description = "", const QString& code = "");
 
-    virtual const QString& type() const noexcept = 0;
+    virtual const QString type() const noexcept = 0;
     
     const QString& code() const noexcept;
     void setCode(const QString& code);
@@ -44,6 +52,13 @@ public:
     bool containsParam(const QString& name) const noexcept;
 
     virtual QString toJSFunction() const = 0;
+    
+    /**
+     * @brief Получение информации об ошибке в коде
+     * 
+     * @return ErrorData Данные об ошибке. Если ошибки нет, полю line будет присвоено значение -1
+     */
+    virtual ErrorData errorDetails() const = 0;
 
     virtual ~MivarRelation() = default;
 };
@@ -51,7 +66,8 @@ public:
 class MivarFunctionRelation : public MivarRelation {
 public:
     virtual QString toJSFunction() const;
-    virtual const QString& type() const noexcept;
+    virtual ErrorData errorDetails() const;
+    virtual const QString type() const noexcept;
     virtual ~MivarFunctionRelation() = default;
 };
 

@@ -15,6 +15,7 @@ set(SOURCES
     models/MivarObject.h
     models/MivarRelation.h
     services/ModelLoader.h
+    services/SingleJSEngine.h
     ui/ClassList.h
     ui/components/TreeView.h
     ui/MainContainer.h

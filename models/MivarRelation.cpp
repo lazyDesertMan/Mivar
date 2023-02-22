@@ -1,9 +1,11 @@
+#include "../services/SingleJSEngine.h"
 #include "MivarRelation.h"
 
-MivarRelation::MivarRelation(const QString& id, const QString& name, const QString& description) {
+MivarRelation::MivarRelation(const QString& id, const QString& name, const QString& description, const QString& code) {
     m_id = id;
     m_name = name;
     m_description = description;
+    m_code = code;
 }
 
 const QString& MivarRelation::code() const noexcept {
@@ -74,11 +76,11 @@ QString MivarFunctionRelation::toJSFunction() const {
         code += "var " + m_outputs[0].name();
         for (size_t i = 1; i < m_outputs.size(); i++)
             code += ", " + m_outputs[i].name();
-        code += ";";
+        code += ";\n";
     }
     code += m_code;
     if (m_outputs.size() == 1) {
-        code += ";return " + m_outputs[0].name() + ";";
+        code += "\n;return " + m_outputs[0].name() + ";";
     } else if (m_outputs.size() > 1) {
         
     }
@@ -86,6 +88,13 @@ QString MivarFunctionRelation::toJSFunction() const {
     return code;
 }
 
-const QString& MivarFunctionRelation::type() const noexcept {
+MivarRelation::ErrorData MivarFunctionRelation::errorDetails() const {
+    QJSValue func = SingleJSEngine::engine().evaluate(toJSFunction());
+    if (func.isError())
+        return { func.property("lineNumber").toInt() - 1, func.toString() };
+    return { -1, "" };
+}
+
+const QString MivarFunctionRelation::type() const noexcept {
     return "prog";
 }

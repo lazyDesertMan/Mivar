@@ -102,7 +102,11 @@ void ModelLoader::loadRelations(MivarModel& model, const QDomNode& relationsNode
                     }
                 }
                 relation->setCode(curNode.childNodes().item(0).nodeValue());
-                model.addRelation(relation);
+                auto error = relation->errorDetails();
+                if (error.line == -1)
+                    model.addRelation(relation);
+                else
+                    std::cout << "Error <" << name.toStdString() << ">: " << error.line << ". " << error.msg.toStdString() << std::endl;
             }
         }
     } 
