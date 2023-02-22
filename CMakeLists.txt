@@ -18,6 +18,7 @@ set(SOURCES
     ui/ClassList.h
     ui/components/TreeView.h
     ui/MainContainer.h
+    ui/MainWindow.h
     ui/Project.h
     models/IObservable.cpp
     models/MivarModel.cpp
@@ -28,7 +29,6 @@ set(SOURCES
     ui/components/TreeView.cpp
     ui/MainContainer.cpp
     ui/Project.cpp
-    ui/MainWindow.h
     ui/MainWindow.cpp
     main.cpp
 )
