@@ -36,36 +36,10 @@ void ModelLoader::loadRelations(MivarModel& model, const QDomNode& relationsNode
                     description = attribute.nodeValue();
                 else if (attribute.nodeName() == "relationType")
                     type = attribute.nodeValue();
-                else if (attribute.nodeName() == "inObj") {
+                else if (attribute.nodeName() == "inObj")
                     inputs = attribute.nodeValue();
-                    /*QString paramListStr = attribute.nodeValue();
-                    QStringList params = paramListStr.split(";");
-                    for (const QString& curParam : params) {
-                        QStringList paramData = curParam.split(":");
-                        if (paramData.size() == 2) {
-                            try {
-                                 param(paramData[0], paramData[1]);
-                                relation->addInput(param);
-                            }
-                            catch(...) {}
-                        }
-                    }*/
-                }
-                else if (attribute.nodeName() == "outObj") {
+                else if (attribute.nodeName() == "outObj")
                     outputs = attribute.nodeValue();
-                    /*QString paramListStr = attribute.nodeValue();
-                    QStringList params = paramListStr.split(";");
-                    for (const QString& curParam : params) {
-                        QStringList paramData = curParam.split(":");
-                        if (paramData.size() == 2) {
-                            try {
-                                MivarRelation::RelationParameter param(paramData[0], paramData[1]);
-                                relation->addOutput(param);
-                            }
-                            catch(...) {}
-                        }
-                    }*/
-                }
             }
             if (id.size() && name.size()) {
                 if (type == "constr")
@@ -112,10 +86,32 @@ void ModelLoader::loadRelations(MivarModel& model, const QDomNode& relationsNode
     } 
 }
 
-void ModelLoader::loadSubclasses(MivarModel& model, const QDomNode& classesNode) {
+void ModelLoader::loadSubclasses(MivarClass& parentClass, const QDomNode& classesNode) {
+    for (int i = 0; i < classesNode.childNodes().size(); i++) {
+        QDomNode node = classesNode.childNodes().at(i);
+        if (node.nodeName() == "class") {
+            MivarClass child;
+            loadClass(child, node);
+            parentClass.addSubclass(child);
+        }
+    }
 }
 
-void ModelLoader::loadClass(MivarModel& model, const QDomNode& classesNode) {
+void ModelLoader::loadClass(MivarClass& mivarClass, const QDomNode& classesNode){
+    for (int attIdx = 0; attIdx < classesNode.attributes().size(); attIdx++) {
+        QDomNode attribute = classesNode.attributes().item(attIdx);
+        if (attribute.nodeName() == "id")
+            mivarClass.setId(attribute.nodeValue());
+        else if (attribute.nodeName() == "shortName")
+            mivarClass.setName(attribute.nodeValue());
+        else if (attribute.nodeName() == "description")
+            mivarClass.setDescription(attribute.nodeValue());
+    }
+    for (int i = 0; i < classesNode.childNodes().size(); i++) {
+        QDomNode node = classesNode.childNodes().at(i);
+        if (node.nodeName() == "classes")
+            loadSubclasses(mivarClass, node);
+    }
 }
 
 MivarModel ModelLoader::load(const QString &path)
@@ -130,8 +126,11 @@ MivarModel ModelLoader::load(const QString &path)
             readModelData(model, root);
             for (int i = 0; i < root.childNodes().size(); i++) {
                 QDomNode node = root.childNodes().at(i);
-                if (node.nodeName() == "class")
-                    loadClass(model, node);
+                if (node.nodeName() == "class") {
+                    MivarClass rootClass;
+                    loadClass(rootClass, node);
+                    model.setModelClass(rootClass);
+                }
                 else if (node.nodeName() == "relations")
                     loadRelations(model, node);
             }

@@ -5,6 +5,25 @@
 #include "services/ModelLoader.h"
 #include "services/SingleJSEngine.h"
 
+void printClass(const MivarClass& mClass, int deep = 1) {
+    for(int i = 0; i < deep; i++)
+        std::cout << "| ";
+    std::cout << "ID: " << mClass.id().toStdString() << std::endl;
+    for(int i = 0; i < deep; i++)
+        std::cout << "| ";
+    std::cout << "Имя: " << mClass.name().toStdString() << std::endl;
+    if (mClass.subclasses().size()) {
+        for(int i = 0; i < deep; i++)
+            std::cout << "| ";
+        std::cout << "Подклассы:" << std::endl;
+        for(size_t i = 0; i < mClass.subclasses().size(); i++)
+            printClass(mClass.subclasses()[i], deep + 1);
+    }
+    for(int i = 0; i < deep; i++)
+        std::cout << "| ";
+    std::cout << std::endl;
+}
+
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
     bool isTesing = false;
@@ -23,12 +42,12 @@ int main(int argc, char* argv[]) {
         QJSEngine& engine = SingleJSEngine::engine();
 
         MivarModel model = ModelLoader::load("./files/proj3.xml");
-        std::shared_ptr<MivarRelation> rel = model.relations()[1];
-        std::cout << rel->name().toStdString() << std::endl;
-        QJSValue func = engine.evaluate(rel->toJSFunction());
-        QJSValueList params;
-        params << 1 << 2 << 5;
-        QJSValue res = func.call(params);
-        std::cout << res.toString().toStdString() << std::endl;
+        std::cout << "Модель: " << model.name().toStdString() << std::endl << "Классы:" << std::endl;
+        printClass(model.modelClass());
+
+        std::cout << "Отношения:" << std::endl;
+        for(size_t i = 0; i < model.relations().size(); i++) {
+            std::cout << "| " << model.relations()[i]->name().toStdString() << std::endl;
+        }
     }
 }

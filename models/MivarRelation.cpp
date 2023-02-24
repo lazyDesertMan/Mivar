@@ -1,6 +1,31 @@
 #include "../services/SingleJSEngine.h"
 #include "MivarRelation.h"
 
+MivarRelation::RelationParameter::RelationParameter(const QString& name, const QString& type) {
+    setName(name);
+    setType(type);
+}
+
+const QString &MivarRelation::RelationParameter::name() const noexcept
+{
+    return m_name;
+}
+
+const QString& MivarRelation::RelationParameter::type() const noexcept {
+    return m_type;
+}
+
+void MivarRelation::RelationParameter::setName(const QString& name) {
+    m_name = name;
+}
+
+void MivarRelation::RelationParameter::setType(const QString& type) {
+    if (type == "double" || type == "string")
+        m_type = type;
+    else
+        throw MivarRelation::InvalidTypeException();
+}
+
 MivarRelation::MivarRelation(const QString& id, const QString& name, const QString& description, const QString& code) {
     m_id = id;
     m_name = name;

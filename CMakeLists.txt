@@ -11,6 +11,7 @@ set(CMAKE_AUTOUIC ON)
 set(SOURCES
     models/IObservable.h
     models/IObserver.h
+    models/MivarClass.h
     models/MivarModel.h
     models/MivarObject.h
     models/MivarRelation.h
@@ -22,6 +23,7 @@ set(SOURCES
     ui/MainWindow.h
     ui/Project.h
     models/IObservable.cpp
+    models/MivarClass.cpp
     models/MivarModel.cpp
     models/MivarObject.cpp
     models/MivarRelation.cpp
