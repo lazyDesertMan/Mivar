@@ -2,28 +2,8 @@
 #include "MivarRelation.h"
 
 MivarRelation::RelationParameter::RelationParameter(const QString& name, const QString& type) {
-    setName(name);
-    setType(type);
-}
-
-const QString &MivarRelation::RelationParameter::name() const noexcept
-{
-    return m_name;
-}
-
-const QString& MivarRelation::RelationParameter::type() const noexcept {
-    return m_type;
-}
-
-void MivarRelation::RelationParameter::setName(const QString& name) {
-    m_name = name;
-}
-
-void MivarRelation::RelationParameter::setType(const QString& type) {
-    if (type == "double" || type == "string")
-        m_type = type;
-    else
-        throw MivarRelation::InvalidTypeException();
+    this->name = name;
+    this->type = type;
 }
 
 MivarRelation::MivarRelation(const QString& id, const QString& name, const QString& description, const QString& code) {
@@ -39,11 +19,22 @@ const QString& MivarRelation::code() const noexcept {
 
 void MivarRelation::setCode(const QString& code) {
     m_code = code;
+    sendEvent();
 }
 
 bool MivarRelation::addInput(const RelationParameter& param) {
-    if (!containsParam(param.name())) {
+    if (!containsParam(param.name)) {
         m_inputs.push_back(param);
+        sendEvent();
+        return true;
+    }
+    return false;
+}
+
+bool MivarRelation::addOutput(const RelationParameter& param) {
+    if (!containsParam(param.name)) {
+        m_outputs.push_back(param);
+        sendEvent();
         return true;
     }
     return false;
@@ -59,53 +50,78 @@ const std::vector<MivarRelation::RelationParameter>& MivarRelation::inputs() con
 
 void MivarRelation::removeParam(const QString& paramName) {
     for(size_t idx = 0; idx < m_inputs.size(); idx++)
-        if (m_inputs[idx].name() == paramName) {
+        if (m_inputs[idx].name == paramName) {
             m_inputs.erase(m_inputs.begin() + idx);
+            sendEvent();
             return;
         }
     for(size_t idx = 0; idx < m_outputs.size(); idx++)
-        if (m_outputs[idx].name() == paramName) {
+        if (m_outputs[idx].name == paramName) {
             m_outputs.erase(m_outputs.begin() + idx);
+            sendEvent();
             return;
         }
-}
-
-bool MivarRelation::addOutput(const RelationParameter& param) {
-    if (!containsParam(param.name())) {
-        m_outputs.push_back(param);
-        return true;
-    }
-    return false;
 }
 
 bool MivarRelation::containsParam(const QString& name) const noexcept {
     for(size_t idx = 0; idx < m_inputs.size(); idx++)
-        if (m_inputs[idx].name() == name)
+        if (m_inputs[idx].name == name)
             return true;
     for(size_t idx = 0; idx < m_outputs.size(); idx++)
-        if (m_outputs[idx].name() == name)
+        if (m_outputs[idx].name == name)
             return true;
     return false;
 }
 
+void MivarRelation::renameParam(const QString& paramName, const QString& newParamName) {
+    if (!containsParam(newParamName)) {
+        for(size_t idx = 0; idx < m_inputs.size(); idx++)
+            if (m_inputs[idx].name == paramName) {
+                m_inputs[idx].name = newParamName;
+                sendEvent();
+                return;
+            }
+        for(size_t idx = 0; idx < m_outputs.size(); idx++)
+            if (m_outputs[idx].name == paramName) {
+                m_outputs[idx].name = newParamName;
+                sendEvent();
+                return;
+            }
+    }
+}
+
+void MivarRelation::setParamType(const QString& paramName, const QString& type) {
+    for(size_t idx = 0; idx < m_inputs.size(); idx++)
+        if (m_inputs[idx].name == paramName) {
+            m_inputs[idx].type = type;
+            sendEvent();
+            return;
+        }
+    for(size_t idx = 0; idx < m_outputs.size(); idx++)
+        if (m_outputs[idx].name == paramName) {
+            m_outputs[idx].type = type;
+            sendEvent();
+            return;
+        }
+}
 
 QString MivarFunctionRelation::toJSFunction() const {
     QString code = "(function(";
     if (m_inputs.size()) {
-        code += m_inputs[0].name();
+        code += m_inputs[0].name;
         for (size_t i = 1; i < m_inputs.size(); i++)
-            code += ", " + m_inputs[i].name();
+            code += ", " + m_inputs[i].name;
     }
     code += ") {";
     if (m_outputs.size()) {
-        code += "var " + m_outputs[0].name();
+        code += "var " + m_outputs[0].name;
         for (size_t i = 1; i < m_outputs.size(); i++)
-            code += ", " + m_outputs[i].name();
+            code += ", " + m_outputs[i].name;
         code += ";\n";
     }
     code += m_code;
     if (m_outputs.size() == 1) {
-        code += "\n;return " + m_outputs[0].name() + ";";
+        code += "\n;return " + m_outputs[0].name + ";";
     } else if (m_outputs.size() > 1) {
         
     }

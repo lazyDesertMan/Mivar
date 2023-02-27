@@ -15,6 +15,7 @@ set(SOURCES
     models/MivarModel.h
     models/MivarObject.h
     models/MivarRelation.h
+    models/MivarRule.h
     services/ModelLoader.h
     services/SingleJSEngine.h
     ui/ClassList.h
@@ -27,6 +28,7 @@ set(SOURCES
     models/MivarModel.cpp
     models/MivarObject.cpp
     models/MivarRelation.cpp
+    models/MivarRule.cpp
     services/ModelLoader.cpp
     ui/ClassList.cpp
     ui/components/TreeView.cpp
