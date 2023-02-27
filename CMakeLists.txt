@@ -22,6 +22,7 @@ set(SOURCES
     ui/components/TreeView.h
     ui/MainContainer.h
     ui/MainWindow.h
+    ui/MainWindow.ui
     ui/Project.h
     models/IObservable.cpp
     models/MivarClass.cpp
