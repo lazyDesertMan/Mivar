@@ -3,25 +3,20 @@
 
 #include <vector>
 #include <QString>
+#include "IObservable.h"
 #include "MivarObject.h"
 
 /**
  * @brief Отношение
  */
-class MivarRelation : public MivarObject {
+class MivarRelation : public MivarObject, public IObservable {
 public:
     class InvalidTypeException {};
     
-    class RelationParameter {
-        QString m_name;
-        QString m_type;
-    public:
+    struct RelationParameter {
+        QString name;
+        QString type;
         RelationParameter(const QString& name, const QString& type);
-
-        const QString& name() const noexcept;
-        const QString& type() const noexcept;
-        void setName(const QString& name);
-        void setType(const QString& type);
     };
 
     /**
@@ -43,13 +38,15 @@ public:
     virtual const QString type() const noexcept = 0;
     
     const QString& code() const noexcept;
-    void setCode(const QString& code);
+    virtual void setCode(const QString& code);
     const std::vector<RelationParameter>& inputs() const noexcept;
     bool addInput(const RelationParameter& param);
     const std::vector<RelationParameter>& outputs() const noexcept;
     bool addOutput(const RelationParameter& param);
     void removeParam(const QString& paramName);
     bool containsParam(const QString& name) const noexcept;
+    void renameParam(const QString& paramName, const QString& newParamName);
+    void setParamType(const QString& paramName, const QString& type);
 
     virtual QString toJSFunction() const = 0;
     
