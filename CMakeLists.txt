@@ -8,6 +8,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
+include_directories("./")
+
 set(SOURCES
     models/IObservable.h
     models/IObserver.h
@@ -18,12 +20,9 @@ set(SOURCES
     models/MivarRule.h
     services/ModelLoader.h
     services/SingleJSEngine.h
-    ui/ClassList.h
     ui/components/TreeView.h
-    ui/MainContainer.h
     ui/MainWindow.h
     ui/MainWindow.ui
-    ui/Project.h
     models/IObservable.cpp
     models/MivarClass.cpp
     models/MivarModel.cpp
@@ -31,11 +30,14 @@ set(SOURCES
     models/MivarRelation.cpp
     models/MivarRule.cpp
     services/ModelLoader.cpp
-    ui/ClassList.cpp
     ui/components/TreeView.cpp
-    ui/MainContainer.cpp
-    ui/Project.cpp
     ui/MainWindow.cpp
+    ui/ClassTree.cpp
+    ui/ClassTree.h
+    ui/ClassTree.ui
+    ui/ClassOptions.cpp
+    ui/ClassOptions.h
+    ui/ClassOptions.ui
     main.cpp
 )
 add_executable(${PROJECT_NAME} ${SOURCES})

@@ -87,7 +87,7 @@
            <property name="childrenCollapsible">
             <bool>false</bool>
            </property>
-           <widget class="QTextBrowser" name="displayTree"/>
+           <widget class="ClassOptions" name="displayOptions" native="true"/>
            <widget class="QTextBrowser" name="displayRelative"/>
           </widget>
           <widget class="QTextBrowser" name="displayErrors">
@@ -107,6 +107,14 @@
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ClassOptions</class>
+   <extends>QWidget</extends>
+   <header location="global">ui/ClassOptions.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
