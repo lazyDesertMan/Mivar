@@ -1,6 +1,11 @@
 #include "MainWindow.h"
 #include "ClassOptions.h"
 #include "ui_MainWindow.h"
+#include "services/ModelLoader.h"
+#include "models/MivarModel.h"
+#include <QFileDialog>
+#include <iostream>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -19,3 +24,23 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+// Выход из приложения
+void MainWindow::on_exit_triggered()
+{
+    QApplication::quit();
+}
+
+// Загрузка *.xml файла
+void MainWindow::on_loadFile_triggered()
+{
+    MivarModel MivarM;
+    QString pathFile = QFileDialog::getOpenFileName(this, "Выберите файл", QDir::currentPath(), "*.xml");
+    qDebug() << pathFile;
+    if(pathFile.size() > 0){
+        MivarM = MivarModel(ModelLoader::load(pathFile).id(), ModelLoader::load(pathFile).name(), ModelLoader::load(pathFile).description());
+
+    }
+
+}
+
