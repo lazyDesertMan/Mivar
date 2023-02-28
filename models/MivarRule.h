@@ -1,18 +1,22 @@
 #ifndef MIVAR_RULE_H
 #define MIVAR_RULE_H
 
+#include <map>
 #include "IObserver.h"
 #include "MivarRelation.h"
-#include <iostream>
+#include "MivarObject.h"
 
-class MivarRule : public IObservable {
+class MivarRule : public MivarObject, public IObservable {
     struct MivarRuleLogic : public IObserver {
-        MivarRule* parent;
-        void handle() { parent->sendEvent(); }
-    };
+        std::shared_ptr<MivarRelation> relation;
+        std::map<QString, QString> params;
 
-    std::shared_ptr<MivarRelation> m_relation;
+        MivarRule* parent;
+        void syncWithRelation();
+        void handle();
+    };
     std::shared_ptr<MivarRuleLogic> m_rule;
+
 public:
     MivarRule(const std::shared_ptr<MivarRelation>& relation);
     MivarRule(MivarRule&) = delete;
@@ -21,6 +25,18 @@ public:
     ~MivarRule();
 
     bool isCorrect();
+    /**
+     * @brief Привязывает параметр с именем paramName правила
+     *        к параметру с ID paramId миварного класса.
+     * 
+     * @param paramName Имя параметра правила.
+     * @param paramId ID параметра класса.
+     * @return true Параметр был привязан.
+     * @return false Не удалось привязать параметр.
+     */
+    bool bindParam(const QString& paramName, const QString& paramId);
+
+    const std::map<QString, QString>& params() const noexcept;
 };
 
 #endif

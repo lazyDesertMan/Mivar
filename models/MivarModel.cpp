@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 #include "MivarModel.h"
 
 MivarModel::MivarModel(const QString& id, const QString& name, const QString& description) {
@@ -29,6 +30,14 @@ bool MivarModel::addRelation(const std::shared_ptr<MivarRelation>& relation) {
         return true;
     }
     return false;
+}
+
+const std::shared_ptr<MivarRelation> MivarModel::getRelation(const QString& id) const {
+    for (size_t idx = 0; idx < m_relations.size(); idx++) {
+        if (m_relations[idx]->id() == id)
+            return m_relations[idx];
+    }
+    throw std::invalid_argument("Отношение не существует (" + id.toStdString() + ")");
 }
 
 void MivarModel::removeRelation(const QString& id) {

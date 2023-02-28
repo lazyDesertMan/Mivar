@@ -36,11 +36,9 @@ void MainWindow::on_loadFile_triggered()
 {
     MivarModel MivarM;
     QString pathFile = QFileDialog::getOpenFileName(this, "Выберите файл", QDir::currentPath(), "*.xml");
-    qDebug() << pathFile;
     if(pathFile.size() > 0){
-        MivarM = MivarModel(ModelLoader::load(pathFile).id(), ModelLoader::load(pathFile).name(), ModelLoader::load(pathFile).description());
-
+        MivarM = ModelLoader::load(pathFile);
+        qDebug() << MivarM.name();
     }
-
 }
 

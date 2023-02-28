@@ -4,8 +4,7 @@
 #include <QMessageBox>
 #include "ModelLoader.h"
 
-void ModelLoader::readModelData(MivarModel& model, const QDomNode& modelNode)
-{
+void ModelLoader::readModelData(MivarModel& model, const QDomNode& modelNode) {
     QDomNamedNodeMap attributes = modelNode.attributes();
     for (int i = 0; i < attributes.size(); i++) {
         QDomNode param = attributes.item(i);
@@ -86,18 +85,64 @@ void ModelLoader::loadRelations(MivarModel& model, const QDomNode& relationsNode
     } 
 }
 
-void ModelLoader::loadSubclasses(MivarClass& parentClass, const QDomNode& classesNode) {
+void ModelLoader::bindRuleParams(std::shared_ptr<MivarRule>& rule, const QString& params) {
+    QStringList paramList = params.split(";");
+    for (const QString& curParam : paramList) {
+        QStringList paramData = curParam.split(":");
+        if (paramData.size() == 2) {
+            rule->bindParam(paramData[0], paramData[1]);
+        }
+    }
+}
+
+void ModelLoader::loadRules(const MivarModel& model, MivarClass& mivarClass, const QDomNode& rulesNode) {
+    for (int relIdx = 0; relIdx < rulesNode.childNodes().size(); relIdx++) {
+        QDomNode curNode = rulesNode.childNodes().at(relIdx);
+        if (curNode.nodeName() == "rule") {
+            try {
+                QString id = "", name = "", description = "", relationId = "", inpBinds = "", outBinds = "";
+                for (int attIdx = 0; attIdx < curNode.attributes().size(); attIdx++) {
+                    QDomNode attribute = curNode.attributes().item(attIdx);
+                    if (attribute.nodeName() == "id")
+                        id = attribute.nodeValue();
+                    else if (attribute.nodeName() == "shortName")
+                        name = attribute.nodeValue();
+                    else if (attribute.nodeName() == "description")
+                        description = attribute.nodeValue();
+                    else if (attribute.nodeName() == "initId")
+                        inpBinds = attribute.nodeValue();
+                    else if (attribute.nodeName() == "resultId")
+                        outBinds = attribute.nodeValue();
+                    else if (attribute.nodeName() == "relation")
+                        relationId = attribute.nodeValue();
+                }
+                std::shared_ptr<MivarRelation> ruleRelation = model.getRelation(relationId);
+                std::shared_ptr<MivarRule> rule = std::make_shared<MivarRule>(ruleRelation);
+                rule->setId(id);
+                rule->setName(name);
+                rule->setDescription(description);
+                bindRuleParams(rule, inpBinds);
+                bindRuleParams(rule, outBinds);
+                mivarClass.addRule(rule);
+            } catch (std::invalid_argument e) {
+                std::cout << "error: " << e.what() << std::endl;
+            }
+        }
+    }
+}
+
+void ModelLoader::loadSubclasses(const MivarModel& model, MivarClass& parentClass, const QDomNode& classesNode) {
     for (int i = 0; i < classesNode.childNodes().size(); i++) {
         QDomNode node = classesNode.childNodes().at(i);
         if (node.nodeName() == "class") {
             MivarClass child;
-            loadClass(child, node);
+            loadClass(model, child, node);
             parentClass.addSubclass(child);
         }
     }
 }
 
-void ModelLoader::loadClass(MivarClass& mivarClass, const QDomNode& classesNode){
+void ModelLoader::loadClass(const MivarModel& model, MivarClass& mivarClass, const QDomNode& classesNode){
     for (int attIdx = 0; attIdx < classesNode.attributes().size(); attIdx++) {
         QDomNode attribute = classesNode.attributes().item(attIdx);
         if (attribute.nodeName() == "id")
@@ -110,7 +155,9 @@ void ModelLoader::loadClass(MivarClass& mivarClass, const QDomNode& classesNode)
     for (int i = 0; i < classesNode.childNodes().size(); i++) {
         QDomNode node = classesNode.childNodes().at(i);
         if (node.nodeName() == "classes")
-            loadSubclasses(mivarClass, node);
+            loadSubclasses(model, mivarClass, node);
+        else if (node.nodeName() == "rules")
+            loadRules(model, mivarClass, node);
     }
 }
 
@@ -124,22 +171,25 @@ MivarModel ModelLoader::load(const QString &path)
         if (root.tagName() == "model") {
             MivarModel model;
             readModelData(model, root);
+            QDomNode rootClassNode;
             for (int i = 0; i < root.childNodes().size(); i++) {
                 QDomNode node = root.childNodes().at(i);
                 if (node.nodeName() == "class") {
-                    MivarClass rootClass;
-                    loadClass(rootClass, node);
-                    model.setModelClass(rootClass);
+                    rootClassNode = node;
                 }
                 else if (node.nodeName() == "relations")
                     loadRelations(model, node);
             }
+            if (!rootClassNode.isNull()) {
+                MivarClass rootClass;
+                loadClass(model, rootClass, rootClassNode);
+                model.setModelClass(rootClass);
+            } else { /* ОБРАБОТКА ОТСУТСТВИЯ КЛАССОВ */ }
             return model;
         }
     }
     return MivarModel("id-", "name-", "desc-");
 }
 
-void ModelLoader::save(const MivarModel &model, const QString &path)
-{
+void ModelLoader::save(const MivarModel& model, const QString& path) {
 }

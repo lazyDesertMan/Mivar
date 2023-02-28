@@ -6,6 +6,33 @@
 #include "services/SingleJSEngine.h"
 #include "models/MivarRule.h"
 
+void printRules(const MivarClass& mClass, int deep = 1) {
+    for(int i = 0; i < deep; i++)
+        std::cout << "| ";
+    std::cout << "Правила:" << std::endl;
+    for (size_t i = 0; i < mClass.rules().size(); i++) {
+        for(int i = 0; i < deep + 1; i++)
+                std::cout << "| ";
+        std::cout << "ID: " << mClass.rules()[i]->id().toStdString() << std::endl;
+        for(int i = 0; i < deep + 1; i++)
+                std::cout << "| ";
+        std::cout << "Имя: " << mClass.rules()[i]->name().toStdString() << std::endl;
+        if (mClass.rules()[i]->params().size()) {
+            for(int i = 0; i < deep + 1; i++)
+                std::cout << "| ";
+            std::cout << "Параметры:" << std::endl;
+            for(auto param : mClass.rules()[i]->params()) {
+                for(int i = 0; i < deep + 2; i++)
+                    std::cout << "| ";
+                std::cout << param.first.toStdString() << " : " << param.second.toStdString() << std::endl;
+            }
+        }
+        for(int i = 0; i < deep + 1; i++)
+            std::cout << "| ";
+        std::cout << std::endl;
+    }
+}
+
 void printClass(const MivarClass& mClass, int deep = 1) {
     for(int i = 0; i < deep; i++)
         std::cout << "| ";
@@ -20,6 +47,8 @@ void printClass(const MivarClass& mClass, int deep = 1) {
         for(size_t i = 0; i < mClass.subclasses().size(); i++)
             printClass(mClass.subclasses()[i], deep + 1);
     }
+    if (mClass.rules().size())
+        printRules(mClass, deep);
     for(int i = 0; i < deep; i++)
         std::cout << "| ";
     std::cout << std::endl;
@@ -61,15 +90,6 @@ int main(int argc, char* argv[]) {
         QJSEngine& engine = SingleJSEngine::engine();
 
         MivarModel model = ModelLoader::load("./files/proj3.xml");
-        std::shared_ptr<MivarRelation> rel = model.relations()[0];
-        MivarRule rule(rel);
-        class tempObserver : public IObserver {
-            void handle() { std::cout << "ok" << std::endl; }
-        };
-        std::shared_ptr<IObserver> observer = std::make_shared<tempObserver>();
-        rule.addObserver(observer);
-        rel->addInput({"test", "double"});
-
 
         std::cout << "Модель: " << model.name().toStdString() << std::endl << "Классы:" << std::endl;
         printClass(model.modelClass());
@@ -78,6 +98,5 @@ int main(int argc, char* argv[]) {
         for(size_t i = 0; i < model.relations().size(); i++) {
             printRelation(model.relations()[i]);
         }
-
     }
 }

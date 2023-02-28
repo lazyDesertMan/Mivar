@@ -24,6 +24,7 @@ public:
 
     const std::vector<std::shared_ptr<MivarRelation>>& relations() const noexcept;
     bool addRelation(const std::shared_ptr<MivarRelation>& relation);
+    const std::shared_ptr<MivarRelation> getRelation(const QString& id) const;
     void removeRelation(const QString& id);
 };
 
