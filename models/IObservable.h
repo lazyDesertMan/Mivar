@@ -8,7 +8,7 @@
 class IObservable {
 protected:
     std::vector<std::shared_ptr<IObserver>> m_observers;
-    void sendEvent();
+    void sendEvent(int16_t code = 0);
 public:
     void addObserver(std::shared_ptr<IObserver> observer);
     void removeObserver(std::shared_ptr<IObserver> observer);

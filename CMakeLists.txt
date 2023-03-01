@@ -21,7 +21,6 @@ set(SOURCES
     models/MivarRule.h
     services/ModelLoader.h
     services/SingleJSEngine.h
-    ui/components/TreeView.h
     ui/MainWindow.h
     ui/MainWindow.ui
     models/IObservable.cpp
@@ -31,7 +30,6 @@ set(SOURCES
     models/MivarRelation.cpp
     models/MivarRule.cpp
     services/ModelLoader.cpp
-    ui/components/TreeView.cpp
     ui/MainWindow.cpp
     ui/ClassTree.cpp
     ui/ClassTree.h
@@ -39,6 +37,8 @@ set(SOURCES
     ui/RelationOptions.cpp
     ui/RelationOptions.h
     ui/RelationOptions.ui
+    ui/components/TreeClassDetail.h
+    ui/components/TreeClassDetail.cpp
     main.cpp
     resources.qrc
 )

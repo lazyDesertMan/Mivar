@@ -6,22 +6,22 @@
 #include "services/SingleJSEngine.h"
 #include "models/MivarRule.h"
 
-void printRules(const MivarClass& mClass, int deep = 1) {
+void printRules(const std::shared_ptr<MivarClass>& mClass, int deep = 1) {
     for(int i = 0; i < deep; i++)
         std::cout << "| ";
     std::cout << "Правила:" << std::endl;
-    for (size_t i = 0; i < mClass.rules().size(); i++) {
+    for (size_t i = 0; i < mClass->rules().size(); i++) {
         for(int i = 0; i < deep + 1; i++)
                 std::cout << "| ";
-        std::cout << "ID: " << mClass.rules()[i]->id().toStdString() << std::endl;
+        std::cout << "ID: " << mClass->rules()[i]->id().toStdString() << std::endl;
         for(int i = 0; i < deep + 1; i++)
                 std::cout << "| ";
-        std::cout << "Имя: " << mClass.rules()[i]->name().toStdString() << std::endl;
-        if (mClass.rules()[i]->params().size()) {
+        std::cout << "Имя: " << mClass->rules()[i]->name().toStdString() << std::endl;
+        if (mClass->rules()[i]->params().size()) {
             for(int i = 0; i < deep + 1; i++)
                 std::cout << "| ";
             std::cout << "Параметры:" << std::endl;
-            for(auto param : mClass.rules()[i]->params()) {
+            for(auto param : mClass->rules()[i]->params()) {
                 for(int i = 0; i < deep + 2; i++)
                     std::cout << "| ";
                 std::cout << param.first.toStdString() << " : " << param.second.toStdString() << std::endl;
@@ -33,21 +33,41 @@ void printRules(const MivarClass& mClass, int deep = 1) {
     }
 }
 
-void printClass(const MivarClass& mClass, int deep = 1) {
+void printParams(const std::shared_ptr<MivarClass>& mClass, int deep = 1) {
     for(int i = 0; i < deep; i++)
         std::cout << "| ";
-    std::cout << "ID: " << mClass.id().toStdString() << std::endl;
+    std::cout << "Параметры:" << std::endl;
+    for (size_t i = 0; i < mClass->params().size(); i++) {
+        for(int i = 0; i < deep + 1; i++)
+                std::cout << "| ";
+        std::cout << "ID: " << mClass->params()[i]->id().toStdString() << std::endl;
+        for(int i = 0; i < deep + 1; i++)
+                std::cout << "| ";
+        std::cout << "Имя: " << mClass->params()[i]->name().toStdString() << std::endl;
+        for(int i = 0; i < deep + 1; i++)
+                std::cout << "| ";
+        std::cout << "Тип: " << mClass->params()[i]->type() << std::endl;
+        for(int i = 0; i < deep + 1; i++)
+            std::cout << "| ";
+        std::cout << std::endl;
+    }
+}
+
+void printClass(const std::shared_ptr<MivarClass>& mClass, int deep = 1) {
     for(int i = 0; i < deep; i++)
         std::cout << "| ";
-    std::cout << "Имя: " << mClass.name().toStdString() << std::endl;
-    if (mClass.subclasses().size()) {
+    std::cout << "ID: " << mClass->id().toStdString() << std::endl;
+    for(int i = 0; i < deep; i++)
+        std::cout << "| ";
+    std::cout << "Имя: " << mClass->name().toStdString() << std::endl;
+    if (mClass->subclasses().size()) {
         for(int i = 0; i < deep; i++)
             std::cout << "| ";
         std::cout << "Подклассы:" << std::endl;
-        for(size_t i = 0; i < mClass.subclasses().size(); i++)
-            printClass(mClass.subclasses()[i], deep + 1);
+        for(size_t i = 0; i < mClass->subclasses().size(); i++)
+            printClass(mClass->subclasses()[i], deep + 1);
     }
-    if (mClass.rules().size())
+    if (mClass->rules().size())
         printRules(mClass, deep);
     for(int i = 0; i < deep; i++)
         std::cout << "| ";
@@ -74,6 +94,7 @@ void printRelation(const std::shared_ptr<MivarRelation>& rel) {
 
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
+    Q_INIT_RESOURCE(resources);
     bool isTesing = false;
 
     for (int i = 0; i < argc; i++) {
@@ -89,14 +110,14 @@ int main(int argc, char* argv[]) {
     else {
         QJSEngine& engine = SingleJSEngine::engine();
 
-        MivarModel model = ModelLoader::load("./files/proj3.xml");
+        std::shared_ptr<MivarModel> model = ModelLoader::load("./files/proj3.xml");
 
-        std::cout << "Модель: " << model.name().toStdString() << std::endl << "Классы:" << std::endl;
-        printClass(model.modelClass());
+        std::cout << "Модель: " << model->name().toStdString() << std::endl << "Классы:" << std::endl;
+        printClass(model->modelClass());
 
         std::cout << "Отношения:" << std::endl;
-        for(size_t i = 0; i < model.relations().size(); i++) {
-            printRelation(model.relations()[i]);
+        for(size_t i = 0; i < model->relations().size(); i++) {
+            printRelation(model->relations()[i]);
         }
     }
 }

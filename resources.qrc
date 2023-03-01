@@ -4,5 +4,8 @@
         <file>res/menu/saveFile.svg</file>
         <file>res/menu/loadFile.svg</file>
         <file>res/menu/exit.svg</file>
+        <file>res/icons/class.svg</file>
+        <file>res/icons/param.svg</file>
+        <file>res/icons/rule.svg</file>
     </qresource>
 </RCC>

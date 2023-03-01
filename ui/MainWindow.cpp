@@ -34,11 +34,10 @@ void MainWindow::on_exit_triggered()
 // Загрузка *.xml файла
 void MainWindow::on_loadFile_triggered()
 {
-    MivarModel MivarM;
+    std::shared_ptr<MivarModel> MivarM;
     QString pathFile = QFileDialog::getOpenFileName(this, "Выберите файл", QDir::currentPath(), "*.xml");
     if(pathFile.size() > 0){
         MivarM = ModelLoader::load(pathFile);
-        qDebug() << MivarM.name();
         ui->displayProject->DisplayMivar(MivarM);
     }
 }

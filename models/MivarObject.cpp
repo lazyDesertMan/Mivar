@@ -18,8 +18,10 @@ void MivarObject::setId(const QString& id) {
 
 void MivarObject::setName(const QString& name) {
     m_name = name;
+    sendEvent(EventCode::EC_NAME_UPDATE);
 }
 
 void MivarObject::setDescription(const QString& description) {
     m_description = description;
+    sendEvent(EventCode::EC_DESCRIPTION_UPDATE);
 }

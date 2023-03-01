@@ -12,19 +12,21 @@
 /**
  * @brief Модель
  */
-class MivarModel : public MivarObject, public IObservable {
-    MivarClass m_rootClass;
+class MivarModel : public MivarObject {
+    std::shared_ptr<MivarClass> m_rootClass;
     std::vector<std::shared_ptr<MivarRelation>> m_relations;
 
 public:
     MivarModel(const QString& id = "", const QString& name = "", const QString& description = "");
 
-    MivarClass& modelClass();
-    void setModelClass(const MivarClass& mivarClass);
+    std::shared_ptr<MivarClass>& modelClass();
+    const std::shared_ptr<MivarClass>& modelClass() const;
+    void setModelClass(const std::shared_ptr<MivarClass>& mivarClass);
 
     const std::vector<std::shared_ptr<MivarRelation>>& relations() const noexcept;
-    bool addRelation(const std::shared_ptr<MivarRelation>& relation);
-    const std::shared_ptr<MivarRelation> getRelation(const QString& id) const;
+    bool addRelation(const std::shared_ptr<MivarRelation> relation);
+    const std::shared_ptr<MivarRelation>& getRelation(const QString& id) const;
+    std::shared_ptr<MivarRelation>& getRelation(const QString& id);
     void removeRelation(const QString& id);
 };
 

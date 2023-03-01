@@ -53,7 +53,7 @@
          </column>
          <column>
           <property name="text">
-           <string>Описание</string>
+           <string>Тип</string>
           </property>
          </column>
         </widget>

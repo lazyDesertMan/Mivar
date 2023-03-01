@@ -19,6 +19,7 @@ bool MivarRule::isCorrect() {
 bool MivarRule::bindParam(const QString& paramName, const QString& paramId) {
     if (m_rule->params.find(paramName) != m_rule->params.end()) {
         m_rule->params[paramName] = paramId;
+        sendEvent();
         return true;
     }
     return false;
@@ -40,7 +41,7 @@ void MivarRule::MivarRuleLogic::syncWithRelation() {
             params[outParam.name] = "";
 }
 
-void MivarRule::MivarRuleLogic::handle() {
+void MivarRule::MivarRuleLogic::handle(int16_t code) {
     syncWithRelation();
     parent->sendEvent();
 }

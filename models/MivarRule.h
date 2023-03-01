@@ -6,14 +6,14 @@
 #include "MivarRelation.h"
 #include "MivarObject.h"
 
-class MivarRule : public MivarObject, public IObservable {
+class MivarRule : public MivarObject {
     struct MivarRuleLogic : public IObserver {
         std::shared_ptr<MivarRelation> relation;
         std::map<QString, QString> params;
 
         MivarRule* parent;
         void syncWithRelation();
-        void handle();
+        void handle(int16_t code);
     };
     std::shared_ptr<MivarRuleLogic> m_rule;
 

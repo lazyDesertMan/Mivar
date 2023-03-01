@@ -8,11 +8,15 @@ MivarModel::MivarModel(const QString& id, const QString& name, const QString& de
     m_description = description;
 }
 
-MivarClass& MivarModel::modelClass() {
+std::shared_ptr<MivarClass>& MivarModel::modelClass() {
     return m_rootClass;
 }
 
-void MivarModel::setModelClass(const MivarClass &mivarClass) {
+const std::shared_ptr<MivarClass>& MivarModel::modelClass() const {
+    return m_rootClass;
+}
+
+void MivarModel::setModelClass(const std::shared_ptr<MivarClass>& mivarClass) {
     m_rootClass = mivarClass;
 }
 
@@ -20,7 +24,7 @@ const std::vector<std::shared_ptr<MivarRelation>>& MivarModel::relations() const
     return m_relations;
 }
 
-bool MivarModel::addRelation(const std::shared_ptr<MivarRelation>& relation) {
+bool MivarModel::addRelation(const std::shared_ptr<MivarRelation> relation) {
     size_t idx = 0;
     while (idx < m_relations.size() && m_relations[idx]->id() != relation->id())
         idx++;
@@ -32,7 +36,15 @@ bool MivarModel::addRelation(const std::shared_ptr<MivarRelation>& relation) {
     return false;
 }
 
-const std::shared_ptr<MivarRelation> MivarModel::getRelation(const QString& id) const {
+const std::shared_ptr<MivarRelation>& MivarModel::getRelation(const QString& id) const {
+    for (size_t idx = 0; idx < m_relations.size(); idx++) {
+        if (m_relations[idx]->id() == id)
+            return m_relations[idx];
+    }
+    throw std::invalid_argument("Отношение не существует (" + id.toStdString() + ")");
+}
+
+std::shared_ptr<MivarRelation>& MivarModel::getRelation(const QString& id) {
     for (size_t idx = 0; idx < m_relations.size(); idx++) {
         if (m_relations[idx]->id() == id)
             return m_relations[idx];

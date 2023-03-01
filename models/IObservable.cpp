@@ -1,8 +1,8 @@
 #include "IObservable.h"
 
-void IObservable::sendEvent() {
+void IObservable::sendEvent(int16_t code) {
     for(const std::shared_ptr<IObserver>& observer : m_observers)
-        observer->handle();
+        observer->handle(code);
 }
 
 void IObservable::addObserver(std::shared_ptr<IObserver> observer) {

@@ -9,7 +9,7 @@
 /**
  * @brief Отношение
  */
-class MivarRelation : public MivarObject, public IObservable {
+class MivarRelation : public MivarObject {
 public:
     class InvalidTypeException {};
     
