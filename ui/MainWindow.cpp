@@ -1,5 +1,5 @@
 #include "MainWindow.h"
-#include "ClassOptions.h"
+#include "RelationOptions.h"
 #include "ui_MainWindow.h"
 #include "services/ModelLoader.h"
 #include "models/MivarModel.h"
@@ -39,6 +39,7 @@ void MainWindow::on_loadFile_triggered()
     if(pathFile.size() > 0){
         MivarM = ModelLoader::load(pathFile);
         qDebug() << MivarM.name();
+        ui->displayProject->DisplayMivar(MivarM);
     }
 }
 

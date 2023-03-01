@@ -36,9 +36,9 @@ set(SOURCES
     ui/ClassTree.cpp
     ui/ClassTree.h
     ui/ClassTree.ui
-    ui/ClassOptions.cpp
-    ui/ClassOptions.h
-    ui/ClassOptions.ui
+    ui/RelationOptions.cpp
+    ui/RelationOptions.h
+    ui/RelationOptions.ui
     main.cpp
     resources.qrc
 )

@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout" stretch=""/>
+     <layout class="QHBoxLayout" name="horizontalLayout"/>
     </item>
     <item>
      <widget class="QSplitter" name="splitter_1">
@@ -32,10 +32,10 @@
       <property name="childrenCollapsible">
        <bool>false</bool>
       </property>
-      <widget class="QTextBrowser" name="displayProject"/>
+      <widget class="ClassTree" name="displayProject" native="true"/>
       <widget class="QWidget" name="gridLayoutWidget">
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
+        <item row="0" column="1">
          <widget class="QSplitter" name="splitter_2">
           <property name="styleSheet">
            <string notr="true"/>
@@ -62,7 +62,7 @@
            <property name="childrenCollapsible">
             <bool>false</bool>
            </property>
-           <widget class="ClassOptions" name="displayOptions" native="true"/>
+           <widget class="RelationOptions" name="displayOptions" native="true"/>
            <widget class="QTextBrowser" name="displayRelative"/>
           </widget>
           <widget class="QTextBrowser" name="displayErrors">
@@ -155,9 +155,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ClassOptions</class>
+   <class>RelationOptions</class>
    <extends>QWidget</extends>
-   <header location="global">ui/ClassOptions.h</header>
+   <header location="global">ui/RelationOptions.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ClassTree</class>
+   <extends>QWidget</extends>
+   <header location="global">ui/ClassTree.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
