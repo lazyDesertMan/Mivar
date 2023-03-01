@@ -11,33 +11,46 @@
  * @brief Параметр класса
  */
 class MivarParam : public MivarObject {
-    QString m_type;
 public:
+    enum ParamType { PT_NONE, PT_DOUBLE, PT_STRING };
+
     class InvalidTypeException {};
-    
-    const QString& type() const noexcept;
+
+    MivarParam() : m_type(ParamType::PT_NONE) {}
+
+    const ParamType type() const noexcept;
     void setType(const QString& type);
+    void setType(const ParamType type);
+    bool isCorrect() const noexcept;
+
+protected:
+    ParamType m_type;
 };
 
 /**
  * @brief Класс
  */
 class MivarClass : public MivarObject {
-    std::vector<MivarParam>                 m_params;     //!< Параметры класса
-    std::vector<MivarClass>                 m_subclasses; //!< Подклассы
-    std::vector<std::shared_ptr<MivarRule>> m_rules;      //!< Правила
+    std::vector<std::shared_ptr<MivarParam>> m_params;     //!< Параметры класса
+    std::vector<std::shared_ptr<MivarClass>> m_subclasses; //!< Подклассы
+    std::vector<std::shared_ptr<MivarRule>>  m_rules;      //!< Правила
 
 public:
+    enum EventCode : int16_t { EC_PARAMS_UPDATE = 16, EC_SUBCLASSES_UPDATE, EC_RULES_UPDATE };
+
     MivarClass(const QString& id = "", const QString& name = "", const QString& description = "");
 
-    const std::vector<MivarParam>& params() const noexcept;
-    const std::vector<MivarClass>& subclasses() const noexcept;
-    const std::vector<std::shared_ptr<MivarRule>>& rules() const noexcept;
+    const std::vector<std::shared_ptr<MivarParam>>& params() const noexcept;
+    void addParam(const std::shared_ptr<MivarParam>& param);
     bool paramContains(const QString& id) const noexcept;
-    void addSubclass(const MivarClass& subclass);
-    bool contains(const QString& id) const noexcept;
 
+    const std::vector<std::shared_ptr<MivarClass>>& subclasses() const noexcept;
+    void addSubclass(const std::shared_ptr<MivarClass>& subclass);
+
+    const std::vector<std::shared_ptr<MivarRule>>& rules() const noexcept;
     void addRule(std::shared_ptr<MivarRule> rule);
+    
+    bool contains(const QString& id) const noexcept;
 };
 
 #endif
