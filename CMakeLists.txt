@@ -39,6 +39,8 @@ set(SOURCES
     ui/RelationOptions.ui
     ui/components/TreeClassDetail.h
     ui/components/TreeClassDetail.cpp
+    ui/components/TreeParamDetail.h
+    ui/components/TreeParamDetail.cpp
     main.cpp
     resources.qrc
 )

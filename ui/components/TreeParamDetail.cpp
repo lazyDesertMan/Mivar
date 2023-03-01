@@ -1,33 +1,33 @@
 #include <QDebug>
 #include <QBoxLayout>
-#include "TreeClassDetail.h"
+#include "TreeParamDetail.h"
 
-const std::shared_ptr<MivarClass> TreeClassDetail::getClass() const {
-    return m_class;
+const std::shared_ptr<MivarParam> TreeParamDetail::getParam() const {
+    return m_param;
 }
 
-QWidget* TreeClassDetail::name() {
+QWidget* TreeParamDetail::name() {
     return m_container;
 }
 
-void TreeClassDetail::update() {
-    m_name->setText(m_class->name());
+void TreeParamDetail::update() {
+    m_name->setText(m_param->name());
 }
 
-TreeClassDetail::TreeClassDetail(std::shared_ptr<MivarClass> observedClass) {
-    m_observer = std::make_shared<ClassObserver>();
+TreeParamDetail::TreeParamDetail(std::shared_ptr<MivarParam> observedParam) {
+    m_observer = std::make_shared<ParamObserver>();
     m_observer->parent = this;
-    m_class = observedClass;
-    m_class->addObserver(m_observer);
+    m_param = observedParam;
+    m_param->addObserver(m_observer);
     
     m_container = new QWidget();
     QHBoxLayout* layout = new QHBoxLayout(m_container);
     m_container->setLayout(layout);
     m_name = new QLabel(m_container);
-    m_name->setText(m_class->name());
+    m_name->setText(m_param->name());
 
     m_icon = new QLabel(m_container);
-    QPixmap classIcon("://image/res/icons/class.svg");
+    QPixmap classIcon("://image/res/icons/param.svg");
     m_icon->setPixmap(classIcon);
     m_icon->setScaledContents(true);
     m_icon->setFixedSize(16, 16);
@@ -41,12 +41,12 @@ TreeClassDetail::TreeClassDetail(std::shared_ptr<MivarClass> observedClass) {
     update();
 }
 
-TreeClassDetail::~TreeClassDetail() {
-    m_class->removeObserver(m_observer);
+TreeParamDetail::~TreeParamDetail() {
+    m_param->removeObserver(m_observer);
     delete m_container;
 }
 
-void TreeClassDetail::ClassObserver::handle(int16_t code) {
+void TreeParamDetail::ParamObserver::handle(int16_t code) {
     switch (code)
     {
     case MivarObject::EventCode::EC_NAME_UPDATE:

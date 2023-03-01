@@ -15,10 +15,12 @@ class TreeClassDetail : public QWidget {
     std::shared_ptr<ClassObserver> m_observer;
     std::shared_ptr<MivarClass> m_class;
 
-    QLabel* m_name;
+    QWidget* m_container;
+    QLabel*  m_icon;
+    QLabel*  m_name;
 public:
     const std::shared_ptr<MivarClass> getClass() const;
-    QLabel* name();
+    QWidget* name();
     void update();
 
     TreeClassDetail(std::shared_ptr<MivarClass> observedClass);

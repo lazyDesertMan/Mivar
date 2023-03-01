@@ -30,16 +30,32 @@ void ClassTree::DisplayMivar(std::shared_ptr<MivarModel> model){
     for(size_t i = 0; i < rootClass->subclasses().size(); i++){
         AddChild(item, rootClass->subclasses()[i]);
     }
+    for(size_t i = 0; i < rootClass->params().size(); i++) {
+        QTreeWidgetItem* paramItem = new QTreeWidgetItem();
+        TreeParamDetail* paramDetails = new TreeParamDetail(rootClass->params()[i]);
+        m_params.push_back(paramDetails);
+        ui->viewTree_Widget->setItemWidget(paramItem, 0, paramDetails->name());
+        paramItem->setText(1, "Параметр");
+        item->addChild(paramItem);
+    }
 }
 
-void ClassTree::AddChild(QTreeWidgetItem* item, const std::shared_ptr<MivarClass>& mivarClass) {
-    QTreeWidgetItem* childItem = new QTreeWidgetItem();
-    item->addChild(childItem);
+void ClassTree::AddChild(QTreeWidgetItem* parentClassItem, const std::shared_ptr<MivarClass>& mivarClass) {
+    QTreeWidgetItem* classItem = new QTreeWidgetItem();
+    parentClassItem->addChild(classItem);
     TreeClassDetail* classDetails = new TreeClassDetail(mivarClass);
     m_classes.push_back(classDetails);
-    ui->viewTree_Widget->setItemWidget(childItem, 0, classDetails->name());
-    childItem->setText(1, "Класс");
+    ui->viewTree_Widget->setItemWidget(classItem, 0, classDetails->name());
+    classItem->setText(1, "Класс");
     for(size_t i = 0; i < mivarClass->subclasses().size(); i++){
-        AddChild(childItem, mivarClass->subclasses()[i]);
+        AddChild(classItem, mivarClass->subclasses()[i]);
+    }
+    for(size_t i = 0; i < mivarClass->params().size(); i++) {
+        QTreeWidgetItem* paramItem = new QTreeWidgetItem();
+        classItem->addChild(paramItem);
+        TreeParamDetail* paramDetails = new TreeParamDetail(mivarClass->params()[i]);
+        m_params.push_back(paramDetails);
+        ui->viewTree_Widget->setItemWidget(paramItem, 0, paramDetails->name());
+        paramItem->setText(1, "Параметр");
     }
 }
