@@ -6,6 +6,8 @@
 #include <QFileDialog>
 #include <iostream>
 #include <QDebug>
+#include <QWidget>
+#include <QAction>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,6 +20,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->splitter_2->setStretchFactor(0, 10);
     ui->splitter_3->setStretchFactor(1, 1);
     ui->splitter_3->setStretchFactor(0, 10);
+
+    connect(ui->editClass, &QAction::triggered, this, &MainWindow::ShowClassEdit);
+    connect(ui->editRule, &QAction::triggered, this, &MainWindow::ShowRuleEdit);
+    connect(ui->editRelative, &QAction::triggered, this, &MainWindow::ShowRelativeEdit);
+    connect(ui->editParameter, &QAction::triggered, this, &MainWindow::ShowParameterEdit);
 }
 
 MainWindow::~MainWindow()
@@ -40,5 +47,29 @@ void MainWindow::on_loadFile_triggered()
         MivarM = ModelLoader::load(pathFile);
         ui->displayProject->DisplayMivar(MivarM);
     }
+}
+// Вывод формы для редактирования класса
+void MainWindow::ShowClassEdit()
+{
+    //classOpt->show();
+    ui->menuOptions->setCurrentIndex(0);
+}
+// Вывод формы для редактирования правила
+void MainWindow::ShowRuleEdit()
+{
+    //ruleOpt->show();
+    ui->menuOptions->setCurrentIndex(3);
+}
+// Вывод формы для редактирования отношения
+void MainWindow::ShowRelativeEdit()
+{
+    //relativeOpt->show();
+    ui->menuOptions->setCurrentIndex(2);
+}
+// Вывод формы для редактирования параметра
+void MainWindow::ShowParameterEdit()
+{
+    //paramOpt->show();
+    ui->menuOptions->setCurrentIndex(1);
 }
 

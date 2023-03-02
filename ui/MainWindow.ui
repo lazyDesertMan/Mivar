@@ -62,7 +62,12 @@
            <property name="childrenCollapsible">
             <bool>false</bool>
            </property>
-           <widget class="RelationOptions" name="displayOptions" native="true"/>
+           <widget class="QStackedWidget" name="menuOptions">
+            <widget class="ClassOptions" name="ClassOpt"/>
+            <widget class="ParameterOptions" name="ParamOpt"/>
+            <widget class="RelationOptions" name="RelativeOpt"/>
+            <widget class="RuleOptions" name="RuleOpt"/>
+           </widget>
            <widget class="QTextBrowser" name="displayRelative"/>
           </widget>
           <widget class="QTextBrowser" name="displayErrors">
@@ -98,7 +103,17 @@
     <addaction name="saveFile"/>
     <addaction name="exit"/>
    </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Проект</string>
+    </property>
+    <addaction name="editClass"/>
+    <addaction name="editParameter"/>
+    <addaction name="editRule"/>
+    <addaction name="editRelative"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menu_2"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="font">
@@ -152,6 +167,26 @@
     <string>Выход</string>
    </property>
   </action>
+  <action name="editClass">
+   <property name="text">
+    <string>Класс</string>
+   </property>
+  </action>
+  <action name="editParameter">
+   <property name="text">
+    <string>Параметр</string>
+   </property>
+  </action>
+  <action name="editRule">
+   <property name="text">
+    <string>Правило</string>
+   </property>
+  </action>
+  <action name="editRelative">
+   <property name="text">
+    <string>Отношение</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -164,6 +199,24 @@
    <class>ClassTree</class>
    <extends>QWidget</extends>
    <header location="global">ui/ClassTree.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ClassOptions</class>
+   <extends>QWidget</extends>
+   <header location="global">ui/ClassOptions.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ParameterOptions</class>
+   <extends>QWidget</extends>
+   <header location="global">ui/ParameterOptions.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RuleOptions</class>
+   <extends>QWidget</extends>
+   <header location="global">ui/RuleOptions.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

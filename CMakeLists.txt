@@ -37,6 +37,15 @@ set(SOURCES
     ui/RelationOptions.cpp
     ui/RelationOptions.h
     ui/RelationOptions.ui
+    ui/ParameterOptions.cpp
+    ui/ParameterOptions.h
+    ui/ParameterOptions.ui
+    ui/RuleOptions.cpp
+    ui/RuleOptions.h
+    ui/RuleOptions.ui
+    ui/ClassOptions.cpp
+    ui/ClassOptions.h
+    ui/ClassOptions.ui
     ui/components/TreeClassDetail.h
     ui/components/TreeClassDetail.cpp
     ui/components/TreeParamDetail.h
