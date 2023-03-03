@@ -13,40 +13,37 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,1,1,1,2">
-   <item row="2" column="0">
+   <item row="2" column="0" alignment="Qt::AlignTop">
     <widget class="QLabel" name="label_3">
      <property name="text">
       <string>Тело отношения</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item row="3" column="0" alignment="Qt::AlignTop">
     <widget class="QLabel" name="label_4">
      <property name="text">
       <string>Описание</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="1" column="0" alignment="Qt::AlignVCenter">
     <widget class="QLabel" name="label_2">
      <property name="text">
       <string>Тип отношения</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
-    <widget class="QWidget" name="widget" native="true"/>
-   </item>
-   <item row="0" column="0">
+   <item row="0" column="0" alignment="Qt::AlignVCenter">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>Наименование</string>
      </property>
     </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QTextEdit" name="nameRelative"/>
    </item>
    <item row="2" column="1">
     <widget class="QTextEdit" name="bodyRelative"/>
@@ -56,6 +53,9 @@
    </item>
    <item row="3" column="1" rowspan="2">
     <widget class="QTextEdit" name="description"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="nameRelative"/>
    </item>
   </layout>
  </widget>
