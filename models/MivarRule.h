@@ -6,23 +6,22 @@
 #include "MivarRelation.h"
 #include "MivarObject.h"
 
-class MivarRule : public MivarObject {
-    struct MivarRuleLogic : public IObserver {
-        std::shared_ptr<MivarRelation> relation;
-        std::map<QString, QString> params;
-
-        MivarRule* parent;
-        void syncWithRelation();
-        void handle(int16_t code);
-    };
-    std::shared_ptr<MivarRuleLogic> m_rule;
+class MivarRule : public MivarObject, public IObserver, public std::enable_shared_from_this<MivarRule> {
+    void handle(int16_t code);
+    void syncWithRelation();
+    std::shared_ptr<MivarRelation> m_relation;
+    std::map<QString, QString> m_params;
+    bool m_isBindet;
 
 public:
-    MivarRule(const std::shared_ptr<MivarRelation>& relation);
+    MivarRule() : m_isBindet(false) {}
     MivarRule(MivarRule&) = delete;
     MivarRule(MivarRule&&) = delete;
     MivarRule& operator=(MivarRule&) = delete;
     ~MivarRule();
+
+    void bindRelation(std::shared_ptr<MivarRelation> relation);
+    void unbindRelation();
 
     bool isCorrect();
     /**

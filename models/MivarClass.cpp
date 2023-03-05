@@ -1,9 +1,20 @@
 #include "MivarClass.h"
 
-MivarClass::MivarClass(const QString& id, const QString& name, const QString& description) {
+void MivarClass::remove() {
+    for(size_t i = 0; i < m_rules.size(); i++)
+        m_rules[i];
+}
+
+MivarClass::MivarClass(const QString &id, const QString &name, const QString &description) {
     m_id = id;
     m_name = name;
     m_description = description;
+}
+
+MivarClass::~MivarClass() {
+    for(size_t i = 0; i < m_rules.size(); i++) {
+        m_rules[i]->unbindRelation();
+    }
 }
 
 const std::vector<std::shared_ptr<MivarParam>>& MivarClass::params() const noexcept {
@@ -13,7 +24,7 @@ const std::vector<std::shared_ptr<MivarParam>>& MivarClass::params() const noexc
 void MivarClass::addParam(const std::shared_ptr<MivarParam>& param) {
     if (!contains(param->id())) {
         m_params.push_back(param);
-        sendEvent(EventCode::EC_PARAMS_UPDATE);
+        sendEvent(EventCode::EC_PARAM_ADD);
     }
 }
 
@@ -28,7 +39,7 @@ const std::vector<std::shared_ptr<MivarRule>>& MivarClass::rules() const noexcep
 void MivarClass::addSubclass(const std::shared_ptr<MivarClass>& subclass) {
     if (!contains(subclass->m_id)) {
         m_subclasses.push_back(subclass);
-        sendEvent(EventCode::EC_SUBCLASSES_UPDATE);
+        sendEvent(EventCode::EC_SUBCLASS_ADD);
     }
 }
 
@@ -47,10 +58,40 @@ bool MivarClass::contains(const QString& id) const noexcept {
     return true;
 }
 
+bool MivarClass::removeById(const QString& id) {
+    size_t idx = 0;
+    if (m_id != id) {
+        while (idx < m_subclasses.size() && m_subclasses[idx]->m_id != id)
+            idx++;
+        if (idx == m_subclasses.size()) {
+            idx = 0;
+            while (idx < m_params.size() && m_params[idx]->id() != id)
+                idx++;
+            if (idx == m_params.size()) {
+                idx = 0;
+                while (idx < m_subclasses.size()) {
+                    if(m_subclasses[idx]->removeById(id))
+                        return true;
+                    idx++;
+                }
+            } else {
+                m_params.erase(m_params.begin() + idx);
+                sendEvent(EventCode::EC_PARAM_REMOVE);
+                return true;
+            }
+        } else {
+            m_subclasses.erase(m_subclasses.begin() + idx);
+            sendEvent(EventCode::EC_SUBCLASS_REMOVE);
+            return true;
+        }
+    }
+    return false;
+}
+
 void MivarClass::addRule(std::shared_ptr<MivarRule> rule) {
     if (!contains(rule->id())) {
         m_rules.push_back(rule);
-        sendEvent(EventCode::EC_RULES_UPDATE);
+        sendEvent(EventCode::EC_RULE_ADD);
     }
 }
 

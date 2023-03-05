@@ -6,10 +6,6 @@ const std::shared_ptr<MivarParam> TreeParamDetail::getParam() const {
     return m_param;
 }
 
-QWidget* TreeParamDetail::name() {
-    return m_container;
-}
-
 void TreeParamDetail::update() {
     m_name->setText(m_param->name());
 }
@@ -20,13 +16,12 @@ TreeParamDetail::TreeParamDetail(std::shared_ptr<MivarParam> observedParam) {
     m_param = observedParam;
     m_param->addObserver(m_observer);
     
-    m_container = new QWidget();
-    QHBoxLayout* layout = new QHBoxLayout(m_container);
-    m_container->setLayout(layout);
-    m_name = new QLabel(m_container);
+    QHBoxLayout* layout = new QHBoxLayout(this);
+    setLayout(layout);
+    m_name = new QLabel(this);
     m_name->setText(m_param->name());
 
-    m_icon = new QLabel(m_container);
+    m_icon = new QLabel(this);
     QPixmap classIcon("://image/res/icons/param.svg");
     m_icon->setPixmap(classIcon);
     m_icon->setScaledContents(true);
@@ -43,7 +38,6 @@ TreeParamDetail::TreeParamDetail(std::shared_ptr<MivarParam> observedParam) {
 
 TreeParamDetail::~TreeParamDetail() {
     m_param->removeObserver(m_observer);
-    delete m_container;
 }
 
 void TreeParamDetail::ParamObserver::handle(int16_t code) {

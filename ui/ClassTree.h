@@ -15,9 +15,20 @@ class ClassTree : public QWidget
 {
     Q_OBJECT
 
-    std::vector<TreeClassDetail*> m_classes;
+    std::vector<std::pair<QTreeWidgetItem*, std::shared_ptr<MivarClass>>> m_classes;
     std::vector<TreeParamDetail*> m_params;
     std::shared_ptr<MivarModel>   m_model;
+
+    QTreeWidgetItem* addClass(QTreeWidgetItem* parent, const std::shared_ptr<MivarClass>& mivarClass);
+    void addParam(QTreeWidgetItem* parent, const std::shared_ptr<MivarParam>& mivarParam);
+
+    void clearView();
+    void removeClassItem(const std::shared_ptr<MivarClass>& mivarClass);
+
+protected slots:
+    void deleteClass(const std::shared_ptr<MivarClass>& mivarClass);
+signals:
+
 public:
     explicit ClassTree(QWidget *parent = nullptr);
     ~ClassTree();

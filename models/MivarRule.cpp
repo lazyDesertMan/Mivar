@@ -1,15 +1,23 @@
 #include "MivarRule.h"
 
-MivarRule::MivarRule(const std::shared_ptr<MivarRelation>& relation) { 
-    m_rule = std::make_shared<MivarRuleLogic>();
-    m_rule->parent = this;
-    m_rule->relation = relation;
-    m_rule->syncWithRelation();
-    m_rule->relation->addObserver(m_rule);
+MivarRule::~MivarRule() {
+    if(m_isBindet)
+        m_relation->removeObserver(shared_from_this());
 }
 
-MivarRule::~MivarRule() {
-    m_rule->relation->removeObserver(m_rule);
+void MivarRule::bindRelation(std::shared_ptr<MivarRelation> relation) {
+    if (m_isBindet)
+        m_relation->removeObserver(shared_from_this());
+    m_relation = relation;
+    relation->addObserver(shared_from_this());
+    m_isBindet = true;
+}
+
+void MivarRule::unbindRelation() {
+    if(m_isBindet) {
+        m_relation->removeObserver(shared_from_this());
+        m_isBindet = false;
+    }
 }
 
 bool MivarRule::isCorrect() {
@@ -17,8 +25,8 @@ bool MivarRule::isCorrect() {
 }
 
 bool MivarRule::bindParam(const QString& paramName, const QString& paramId) {
-    if (m_rule->params.find(paramName) != m_rule->params.end()) {
-        m_rule->params[paramName] = paramId;
+    if (m_params.find(paramName) != m_params.end()) {
+        m_params[paramName] = paramId;
         sendEvent();
         return true;
     }
@@ -26,22 +34,22 @@ bool MivarRule::bindParam(const QString& paramName, const QString& paramId) {
 }
 
 const std::map<QString, QString>& MivarRule::params() const noexcept {
-    return m_rule->params;
+    return m_params;
 }
 
-void MivarRule::MivarRuleLogic::syncWithRelation() {
-    for (std::pair<const QString, QString> param : params)
-        if (!relation->containsParam(param.first))
-            params.erase(param.first);
-    for (const MivarRelation::RelationParameter& inpParam : relation->inputs())
-        if (params.find(inpParam.name) == params.end())
-            params[inpParam.name] = "";
-    for (const MivarRelation::RelationParameter& outParam : relation->outputs())
-        if (params.find(outParam.name) == params.end())
-            params[outParam.name] = "";
+void MivarRule::syncWithRelation() {
+    for (std::pair<const QString, QString> param : m_params)
+        if (!m_relation->containsParam(param.first))
+            m_params.erase(param.first);
+    for (const MivarRelation::RelationParameter& inpParam : m_relation->inputs())
+        if (m_params.find(inpParam.name) == m_params.end())
+            m_params[inpParam.name] = "";
+    for (const MivarRelation::RelationParameter& outParam : m_relation->outputs())
+        if (m_params.find(outParam.name) == m_params.end())
+            m_params[outParam.name] = "";
 }
 
-void MivarRule::MivarRuleLogic::handle(int16_t code) {
+void MivarRule::handle(int16_t code) {
     syncWithRelation();
-    parent->sendEvent();
+    sendEvent();
 }

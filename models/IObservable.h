@@ -11,7 +11,7 @@ protected:
     void sendEvent(int16_t code = 0);
 public:
     void addObserver(std::shared_ptr<IObserver> observer);
-    void removeObserver(std::shared_ptr<IObserver> observer);
+    void removeObserver(const std::shared_ptr<IObserver>& observer);
     ~IObservable() = default;
 };
 

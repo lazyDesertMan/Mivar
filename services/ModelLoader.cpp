@@ -139,7 +139,8 @@ void ModelLoader::loadRules(const std::shared_ptr<MivarModel>& model, std::share
                         relationId = attribute.nodeValue();
                 }
                 std::shared_ptr<MivarRelation> ruleRelation = model->getRelation(relationId);
-                std::shared_ptr<MivarRule> rule = std::make_shared<MivarRule>(ruleRelation);
+                std::shared_ptr<MivarRule> rule = std::make_shared<MivarRule>();
+                rule->bindRelation(ruleRelation);
                 rule->setId(id);
                 rule->setName(name);
                 rule->setDescription(description);
