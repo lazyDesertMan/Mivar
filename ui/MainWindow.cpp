@@ -22,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->splitter_3->setStretchFactor(0, 10);
 
     connect(ui->editClass, &QAction::triggered, this, &MainWindow::ShowClassEdit);
+    connect(ui->displayProject, &ClassTree::editClassEvent, this, &MainWindow::ShowClassEditForm);
+    connect(ui->displayProject, &ClassTree::addClassEvent, this, &MainWindow::ShowNewSubclassForm);
     connect(ui->editRule, &QAction::triggered, this, &MainWindow::ShowRuleEdit);
     connect(ui->editRelative, &QAction::triggered, this, &MainWindow::ShowRelativeEdit);
     connect(ui->editParameter, &QAction::triggered, this, &MainWindow::ShowParameterEdit);
@@ -54,11 +56,20 @@ void MainWindow::ShowClassEdit()
     //classOpt->show();
     ui->menuOptions->setCurrentIndex(0);
 }
+void MainWindow::ShowClassEditForm(const std::shared_ptr<MivarClass> &mivarClass) {
+    qDebug() << mivarClass->name();
+}
+void MainWindow::ShowNewSubclassForm(const std::shared_ptr<MivarClass> &mivarClass) {
+    qDebug() << mivarClass->name();
+}
 // Вывод формы для редактирования правила
 void MainWindow::ShowRuleEdit()
 {
     //ruleOpt->show();
     ui->menuOptions->setCurrentIndex(3);
+}
+void MainWindow::ShowAddParameterForm(const std::shared_ptr<MivarClass> &mivarClass) {
+    qDebug() << mivarClass->name();
 }
 // Вывод формы для редактирования отношения
 void MainWindow::ShowRelativeEdit()

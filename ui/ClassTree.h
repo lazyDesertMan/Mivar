@@ -28,7 +28,10 @@ class ClassTree : public QWidget
 protected slots:
     void deleteClass(const std::shared_ptr<MivarClass>& mivarClass);
 signals:
-
+    void addClassEvent(const std::shared_ptr<MivarClass>& parent);
+    void editClassEvent(const std::shared_ptr<MivarClass>& mivarClass);
+    void addParamEvent(const std::shared_ptr<MivarClass>& mivarClass);
+    void editParamEvent(const std::shared_ptr<MivarParam>& mivarParam);
 public:
     explicit ClassTree(QWidget *parent = nullptr);
     ~ClassTree();
@@ -36,7 +39,7 @@ public:
     void AddChild (QTreeWidgetItem* parentClassItem, const std::shared_ptr<MivarClass>& mivarClass);
 
 private:
-    Ui::ClassTree *ui;
+    Ui::ClassTree* ui;
 };
 
 #endif // CLASSTREE_H

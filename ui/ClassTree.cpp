@@ -9,12 +9,15 @@ QTreeWidgetItem* ClassTree::addClass(QTreeWidgetItem* parent, const std::shared_
     
     TreeClassDetail* classDetails = new TreeClassDetail(mivarClass);
     ui->viewTree_Widget->setItemWidget(classItem, 0, classDetails);
+    connect(classDetails, &ClassActions::removeClick, this, &ClassTree::deleteClass);
+    connect(classDetails, &ClassActions::editClick, this, &ClassTree::editClassEvent);
+    connect(classDetails, &ClassActions::addSubclassClick, this, &ClassTree::addClassEvent);
 
     TreeClassDetailType* classDetailType = new TreeClassDetailType(mivarClass);
     ui->viewTree_Widget->setItemWidget(classItem, 1, classDetailType);
-
-    connect(classDetails, &ClassActions::removeClick, this, &ClassTree::deleteClass);
-    //connect(classDetails, ClassActions::removeClick, this, deleteClass);
+    connect(classDetailType, &ClassActions::removeClick, this, &ClassTree::deleteClass);
+    connect(classDetailType, &ClassActions::editClick, this, &ClassTree::editClassEvent);
+    connect(classDetailType, &ClassActions::addSubclassClick, this, &ClassTree::addClassEvent);
     
     m_classes.push_back({classItem, mivarClass});
     return classItem;
@@ -70,9 +73,13 @@ void ClassTree::DisplayMivar(std::shared_ptr<MivarModel> model) {
 
     TreeClassDetail* rootClassDetails = new TreeClassDetail(rootClass);
     ui->viewTree_Widget->setItemWidget(item, 0, rootClassDetails);
+    connect(rootClassDetails, &ClassActions::editClick, this, &ClassTree::editClassEvent);
+    connect(rootClassDetails, &ClassActions::addSubclassClick, this, &ClassTree::addClassEvent);
 
     TreeClassDetailType* classDetailType = new TreeClassDetailType(rootClass);
     ui->viewTree_Widget->setItemWidget(item, 1, classDetailType);
+    connect(classDetailType, &ClassActions::editClick, this, &ClassTree::editClassEvent);
+    connect(classDetailType, &ClassActions::addSubclassClick, this, &ClassTree::addClassEvent);
 
     m_classes.push_back({item, rootClass});
     ui->viewTree_Widget->addTopLevelItem(item);

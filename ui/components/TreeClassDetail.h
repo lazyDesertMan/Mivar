@@ -6,11 +6,16 @@
 #include <QAction>
 #include <models/MivarClass.h>
 
+/**
+ * @brief Виджет, предоставляющий меню для работы с миварными классами дочерним виджетам
+ */
 class ClassActions : public QWidget {
     Q_OBJECT
 public:
     explicit ClassActions(std::shared_ptr<MivarClass> mivarClass, QWidget* parent = nullptr);
     virtual ~ClassActions() = default;
+
+    const std::shared_ptr<MivarClass> getClass() const;
 protected:
     std::shared_ptr<MivarClass> m_class;
     
@@ -33,6 +38,9 @@ signals:
     void removeClick(std::shared_ptr<MivarClass> mivarClass);
 };
 
+/**
+ * @brief Отображение информации о типе миварного класса
+ */
 class TreeClassDetailType : public ClassActions {
     Q_OBJECT
 
@@ -42,6 +50,9 @@ public:
     ~TreeClassDetailType() = default;
 };
 
+/**
+ * @brief Отображение информации о имени миварного класса
+ */
 class TreeClassDetail : public ClassActions {
     Q_OBJECT
 
@@ -55,7 +66,6 @@ class TreeClassDetail : public ClassActions {
     QLabel*  m_icon;
     QLabel*  m_name;
 public:
-    const std::shared_ptr<MivarClass> getClass() const;
     void update();
 
     explicit TreeClassDetail(std::shared_ptr<MivarClass> observedClass, QWidget* parent = nullptr);

@@ -4,6 +4,8 @@
 #include <QMouseEvent>
 #include "TreeClassDetail.h"
 
+/*---ClassActions---*/
+
 ClassActions::ClassActions(std::shared_ptr<MivarClass> mivarClass, QWidget* parent) : QWidget(parent), m_menu(this) {
     m_class = mivarClass;
     
@@ -39,14 +41,23 @@ void ClassActions::onRemoveClick() {
     emit removeClick(m_class);
 }
 
+const std::shared_ptr<MivarClass> ClassActions::getClass() const {
+    return m_class;
+}
+
+/*---TreeClassDetailType---*/
+
 TreeClassDetailType::TreeClassDetailType(std::shared_ptr<MivarClass> mivarClass, QWidget* parent) : ClassActions(mivarClass, parent) {
     m_type = new QLabel(this);
     m_type->setText("Класс");
+
+    QHBoxLayout* layout = new QHBoxLayout(this);
+    layout->setAlignment(Qt::AlignVCenter);
+    layout->addWidget(m_type);
+    setLayout(layout);
 }
 
-const std::shared_ptr<MivarClass> TreeClassDetail::getClass() const {
-    return m_class;
-}
+/*---TreeClassDetail---*/
 
 void TreeClassDetail::update() {
     m_name->setText(m_class->name());
@@ -74,7 +85,7 @@ TreeClassDetail::TreeClassDetail(std::shared_ptr<MivarClass> observedClass, QWid
     layout->addWidget(m_name);
     layout->setStretch(0, 0);
     layout->setStretch(1, 1);
-    layout->setAlignment(Qt::AlignCenter);
+    layout->setAlignment(Qt::AlignVCenter);
 
     update();
 }
