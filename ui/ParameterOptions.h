@@ -15,6 +15,10 @@ public:
     explicit ParameterOptions(QWidget *parent = nullptr);
     ~ParameterOptions();
 
+public slots:
+    // Редактирование параметра
+    void EditParameter();
+
 private:
     Ui::ParameterOptions *ui;
 };

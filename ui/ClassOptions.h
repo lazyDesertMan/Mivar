@@ -15,6 +15,9 @@ public:
     explicit ClassOptions(QWidget *parent = nullptr);
     ~ClassOptions();
 
+private slots:
+    void on_editClass_Button_clicked();
+
 private:
     Ui::ClassOptions *ui;
 };

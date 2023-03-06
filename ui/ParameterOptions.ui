@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0,0,0">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0,0,0,0">
    <property name="leftMargin">
     <number>5</number>
    </property>
@@ -23,18 +23,15 @@
    <property name="rightMargin">
     <number>5</number>
    </property>
-   <item row="2" column="1">
-    <widget class="QComboBox" name="edit_ParameterListTypeD"/>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="label_7">
+   <item row="4" column="0" alignment="Qt::AlignTop">
+    <widget class="QLabel" name="label_5">
      <property name="text">
-      <string>Правила</string>
+      <string>Описание</string>
      </property>
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QComboBox" name="edit_ParameterListLvl"/>
+    <widget class="QComboBox" name="listLvlParameter"/>
    </item>
    <item row="7" column="0" colspan="2">
     <widget class="QTableWidget" name="rulesTable">
@@ -60,12 +57,52 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0" colspan="2">
-    <widget class="QLabel" name="label_6">
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>_____________________________________________________________________________________________________________________</string>
+      <string>Уровень</string>
      </property>
     </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="nameParameter"/>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Правила</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Тип данных</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>Ограничения</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <widget class="Line" name="line">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="listTypeDParameter"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="valParameter"/>
    </item>
    <item row="9" column="0" colspan="2">
     <widget class="QTableWidget" name="restrictionTable">
@@ -82,7 +119,7 @@
     </widget>
    </item>
    <item row="4" column="1">
-    <widget class="QTextEdit" name="edit_ParameterDescription"/>
+    <widget class="QTextEdit" name="descriptionParameter"/>
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="label">
@@ -91,39 +128,21 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_3">
+   <item row="10" column="1">
+    <widget class="QPushButton" name="editParameter_Button">
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
      <property name="text">
-      <string>Тип данных</string>
+      <string>Применить</string>
      </property>
     </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Уровень</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" alignment="Qt::AlignTop">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Описание</string>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0">
-    <widget class="QLabel" name="label_8">
-     <property name="text">
-      <string>Ограничения</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="edit_ParameterName"/>
-   </item>
-   <item row="3" column="1">
-    <widget class="QLineEdit" name="edit_ParameterVal"/>
    </item>
   </layout>
  </widget>

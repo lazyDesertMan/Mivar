@@ -14,7 +14,9 @@ class RelationOptions : public QWidget
 public:
     explicit RelationOptions(QWidget *parent = nullptr);
     ~RelationOptions();
-
+public slots:
+    // Редактирование отношения
+    void EditRelative();
 private:
     Ui::RelationOptions *ui;
 };

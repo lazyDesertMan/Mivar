@@ -14,7 +14,9 @@ class RuleOptions : public QWidget
 public:
     explicit RuleOptions(QWidget *parent = nullptr);
     ~RuleOptions();
-
+public slots:
+    // Редактирование правила
+    void EditRule();
 private:
     Ui::RuleOptions *ui;
 };

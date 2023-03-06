@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>679</width>
-    <height>426</height>
+    <height>429</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="1,2,20,0,0,0">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="1,0,0,0,0,0">
    <property name="leftMargin">
     <number>5</number>
    </property>
@@ -33,6 +33,9 @@
      </property>
     </widget>
    </item>
+   <item row="2" column="1">
+    <widget class="QTextEdit" name="ClassDescroption"/>
+   </item>
    <item row="1" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
@@ -40,11 +43,24 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
-    <widget class="QWidget" name="widget" native="true"/>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="ClassName"/>
    </item>
-   <item row="2" column="1">
-    <widget class="QTextEdit" name="edit_ClassDescroption"/>
+   <item row="5" column="1">
+    <widget class="QPushButton" name="editClass_Button">
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+     <property name="text">
+      <string>Применить</string>
+     </property>
+    </widget>
    </item>
    <item row="2" column="0" alignment="Qt::AlignTop">
     <widget class="QLabel" name="label_3">
@@ -53,11 +69,27 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="edit_ClassName"/>
-   </item>
    <item row="1" column="1">
-    <widget class="QComboBox" name="edit_ClassLvl"/>
+    <widget class="QComboBox" name="ClassLvl">
+     <item>
+      <property name="text">
+       <string>Первый элемент</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Второй элемент</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Третий элемент</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QWidget" name="widget" native="true"/>
    </item>
   </layout>
  </widget>
