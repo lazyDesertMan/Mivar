@@ -62,9 +62,9 @@ public:
 
 class MivarFunctionRelation : public MivarRelation {
 public:
-    virtual QString toJSFunction() const;
-    virtual ErrorData errorDetails() const;
-    virtual const QString type() const noexcept;
+    virtual QString toJSFunction() const override;
+    virtual ErrorData errorDetails() const override;
+    virtual const QString type() const noexcept override;
     virtual ~MivarFunctionRelation() = default;
 };
 

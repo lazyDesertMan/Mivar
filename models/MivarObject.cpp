@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "MivarObject.h"
 
 const QString& MivarObject::id() const noexcept {
@@ -24,4 +25,9 @@ void MivarObject::setName(const QString& name) {
 void MivarObject::setDescription(const QString& description) {
     m_description = description;
     sendEvent(EventCode::EC_DESCRIPTION_UPDATE);
+}
+
+MivarObject::~MivarObject() {
+    // TODO: Вывод имён удаляемых объектов, на время разработки (06.03.2023)
+    qDebug() << "Remove " << m_name;
 }

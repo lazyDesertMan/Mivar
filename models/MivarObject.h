@@ -23,6 +23,8 @@ public:
     void setId(const QString& id);
     void setName(const QString& name);
     void setDescription(const QString& description);
+
+    ~MivarObject();
 };
 
 #endif

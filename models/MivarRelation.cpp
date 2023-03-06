@@ -1,16 +1,14 @@
 #include "../services/SingleJSEngine.h"
 #include "MivarRelation.h"
 
-MivarRelation::RelationParameter::RelationParameter(const QString& name, const QString& type) {
-    this->name = name;
-    this->type = type;
-}
+MivarRelation::RelationParameter::RelationParameter(const QString& name, const QString& type) : name(name), type(type) {}
 
-MivarRelation::MivarRelation(const QString& id, const QString& name, const QString& description, const QString& code) {
+MivarRelation::MivarRelation(const QString& id, const QString& name, const QString& description, const QString& code) :
+    m_code(code)
+{
     m_id = id;
     m_name = name;
     m_description = description;
-    m_code = code;
 }
 
 const QString& MivarRelation::code() const noexcept {

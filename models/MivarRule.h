@@ -7,7 +7,6 @@
 #include "MivarObject.h"
 
 class MivarRule : public MivarObject, public IObserver, public std::enable_shared_from_this<MivarRule> {
-    void handle(int16_t code);
     void syncWithRelation();
     std::shared_ptr<MivarRelation> m_relation;
     std::map<QString, QString> m_params;
@@ -22,7 +21,8 @@ public:
 
     void bindRelation(std::shared_ptr<MivarRelation> relation);
     void unbindRelation();
-
+    void handle(int16_t code) override;
+    
     bool isCorrect();
     /**
      * @brief Привязывает параметр с именем paramName правила

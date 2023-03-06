@@ -44,8 +44,8 @@ void MivarClass::addSubclass(const std::shared_ptr<MivarClass>& subclass) {
 }
 
 bool MivarClass::contains(const QString& id) const noexcept {
-    size_t idx = 0;
     if (m_id != id) {
+        size_t idx = 0;
         while (idx < m_subclasses.size() && !m_subclasses[idx]->contains(id))
             idx++;
         if (idx == m_subclasses.size()) {
@@ -59,8 +59,8 @@ bool MivarClass::contains(const QString& id) const noexcept {
 }
 
 bool MivarClass::removeById(const QString& id) {
-    size_t idx = 0;
     if (m_id != id) {
+        size_t idx = 0;
         while (idx < m_subclasses.size() && m_subclasses[idx]->m_id != id)
             idx++;
         if (idx == m_subclasses.size()) {

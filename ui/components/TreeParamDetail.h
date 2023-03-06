@@ -21,7 +21,7 @@ public:
     const std::shared_ptr<MivarParam> getParam() const;
     void update();
 
-    TreeParamDetail(std::shared_ptr<MivarParam> observedParam);
+    explicit TreeParamDetail(std::shared_ptr<MivarParam> observedParam);
     ~TreeParamDetail();
 };
 

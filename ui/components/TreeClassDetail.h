@@ -9,7 +9,7 @@
 class ClassActions : public QWidget {
     Q_OBJECT
 public:
-    ClassActions(std::shared_ptr<MivarClass> mivarClass, QWidget* parent = nullptr);
+    explicit ClassActions(std::shared_ptr<MivarClass> mivarClass, QWidget* parent = nullptr);
     virtual ~ClassActions() = default;
 protected:
     std::shared_ptr<MivarClass> m_class;
@@ -38,7 +38,7 @@ class TreeClassDetailType : public ClassActions {
 
     QLabel* m_type;
 public:
-    TreeClassDetailType(std::shared_ptr<MivarClass> mivarClass, QWidget* parent = nullptr);
+    explicit TreeClassDetailType(std::shared_ptr<MivarClass> mivarClass, QWidget* parent = nullptr);
     ~TreeClassDetailType() = default;
 };
 
@@ -58,7 +58,7 @@ public:
     const std::shared_ptr<MivarClass> getClass() const;
     void update();
 
-    TreeClassDetail(std::shared_ptr<MivarClass> observedClass, QWidget* parent = nullptr);
+    explicit TreeClassDetail(std::shared_ptr<MivarClass> observedClass, QWidget* parent = nullptr);
     virtual ~TreeClassDetail();
 };
 

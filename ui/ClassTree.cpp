@@ -38,18 +38,13 @@ void ClassTree::clearView() {
 }
 
 void ClassTree::removeClassItem(const std::shared_ptr<MivarClass>& mivarClass) {
-    while(mivarClass->subclasses().size())
-        removeClassItem(mivarClass->subclasses()[0]);
+    for(const std::shared_ptr<MivarClass> subclass : mivarClass->subclasses())
+        removeClassItem(subclass);
     for(size_t classItemIdx = 0; classItemIdx < m_classes.size(); classItemIdx++)
-        if (m_classes[classItemIdx].second->id() == mivarClass->id()) {
-            QWidget* name = ui->viewTree_Widget->itemWidget(m_classes[classItemIdx].first, 0);
-            QWidget* type = ui->viewTree_Widget->itemWidget(m_classes[classItemIdx].first, 1);
-            QTreeWidgetItem* parent = m_classes[classItemIdx].first->parent();
-            parent->removeChild(m_classes[classItemIdx].first);
+        if (m_classes[classItemIdx].second->id() == mivarClass->id()) {;
             m_classes.erase(m_classes.begin() + classItemIdx);
             break;
         }
-    m_model->modelClass()->removeById(mivarClass->id());
 }
 
 ClassTree::ClassTree(QWidget *parent) : QWidget(parent),
@@ -96,5 +91,13 @@ void ClassTree::AddChild(QTreeWidgetItem* parentClassItem, const std::shared_ptr
 }
 
 void ClassTree::deleteClass(const std::shared_ptr<MivarClass>& mivarClass) {
+    for(size_t classItemIdx = 0; classItemIdx < m_classes.size(); classItemIdx++)
+        if (m_classes[classItemIdx].second->id() == mivarClass->id()) {
+            QTreeWidgetItem* parent = m_classes[classItemIdx].first->parent();
+            parent->removeChild(m_classes[classItemIdx].first);
+            m_classes.erase(m_classes.begin() + classItemIdx);
+            break;
+        }
     removeClassItem(mivarClass);
+    m_model->modelClass()->removeById(mivarClass->id());
 }
