@@ -18,6 +18,9 @@ RelationOptions::~RelationOptions()
 {
     delete ui;
 }
+void RelationOptions::reset()
+{
+}
 // Редактирование отношений
 void RelationOptions::EditRelative()
 {

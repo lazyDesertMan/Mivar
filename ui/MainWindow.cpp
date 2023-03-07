@@ -21,12 +21,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->splitter_3->setStretchFactor(1, 1);
     ui->splitter_3->setStretchFactor(0, 10);
 
-    connect(ui->editClass, &QAction::triggered, this, &MainWindow::ShowClassEdit);
     connect(ui->displayProject, &ClassTree::editClassEvent, this, &MainWindow::ShowClassEditForm);
     connect(ui->displayProject, &ClassTree::addClassEvent, this, &MainWindow::ShowNewSubclassForm);
-    connect(ui->editRule, &QAction::triggered, this, &MainWindow::ShowRuleEdit);
-    connect(ui->editRelative, &QAction::triggered, this, &MainWindow::ShowRelativeEdit);
-    connect(ui->editParameter, &QAction::triggered, this, &MainWindow::ShowParameterEdit);
+    connect(ui->displayProject, &ClassTree::editParamEvent, this, &MainWindow::ShowParameterEdit);
+
+    activeWidget = ui->HomeOpt;
 }
 
 MainWindow::~MainWindow()
@@ -43,44 +42,51 @@ void MainWindow::on_exit_triggered()
 // Загрузка *.xml файла
 void MainWindow::on_loadFile_triggered()
 {
-    std::shared_ptr<MivarModel> MivarM;
+    m_model.reset();
     QString pathFile = QFileDialog::getOpenFileName(this, "Выберите файл", QDir::currentPath(), "*.xml");
-    if(pathFile.size() > 0){
-        MivarM = ModelLoader::load(pathFile);
-        ui->displayProject->DisplayMivar(MivarM);
+    if(pathFile.size() > 0) {
+        m_model = ModelLoader::load(pathFile);
+        ui->displayProject->DisplayMivar(m_model);
     }
 }
 // Вывод формы для редактирования класса
-void MainWindow::ShowClassEdit()
-{
-    //classOpt->show();
-    ui->menuOptions->setCurrentIndex(0);
+void MainWindow::ShowClassEdit() {
+    activeWidget->reset();
+    ui->centralWidget->setCurrentWidget(ui->ClassOpt);
+    activeWidget = ui->ClassOpt;
 }
+
 void MainWindow::ShowClassEditForm(const std::shared_ptr<MivarClass> &mivarClass) {
     qDebug() << mivarClass->name();
 }
+
 void MainWindow::ShowNewSubclassForm(const std::shared_ptr<MivarClass> &mivarClass) {
     qDebug() << mivarClass->name();
 }
+
 // Вывод формы для редактирования правила
-void MainWindow::ShowRuleEdit()
-{
-    //ruleOpt->show();
-    ui->menuOptions->setCurrentIndex(3);
+void MainWindow::ShowRuleEdit() {
+    activeWidget->reset();
+    ui->centralWidget->setCurrentWidget(ui->RuleOpt);
+    activeWidget = ui->RuleOpt;
 }
-void MainWindow::ShowAddParameterForm(const std::shared_ptr<MivarClass> &mivarClass) {
+
+void MainWindow::ShowAddParameterForm(const std::shared_ptr<MivarClass>& mivarClass) {
     qDebug() << mivarClass->name();
 }
+
 // Вывод формы для редактирования отношения
-void MainWindow::ShowRelativeEdit()
-{
-    //relativeOpt->show();
-    ui->menuOptions->setCurrentIndex(2);
+void MainWindow::ShowRelativeEdit() {
+    activeWidget->reset();
+    ui->centralWidget->setCurrentWidget(ui->RelativeOpt);
+    activeWidget = ui->RelativeOpt;
 }
+
 // Вывод формы для редактирования параметра
-void MainWindow::ShowParameterEdit()
-{
-    //paramOpt->show();
-    ui->menuOptions->setCurrentIndex(1);
+void MainWindow::ShowParameterEdit(std::shared_ptr<MivarParam> param) {
+    activeWidget->reset();
+    ui->ParamOpt->setEditableParam(param);
+    ui->centralWidget->setCurrentWidget(ui->ParamOpt);
+    activeWidget = ui->ParamOpt;
 }
 

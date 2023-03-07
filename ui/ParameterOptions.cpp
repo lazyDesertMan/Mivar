@@ -11,15 +11,28 @@ ParameterOptions::ParameterOptions(QWidget *parent) :
     connect(ui->editParameter_Button, SIGNAL(clicked()), this, SLOT(EditParameter()));
 }
 
-ParameterOptions::~ParameterOptions()
-{
+void ParameterOptions::setEditableParam(std::shared_ptr<MivarParam> param) {
+    m_editableParam = param;
+    ui->nameParameter->setText(param->name());
+    ui->descriptionParameter->setText(param->description());
+}
+
+void ParameterOptions::reset() {
+    m_editableParam.reset();
+}
+
+ParameterOptions::~ParameterOptions() {
     delete ui;
 }
 
 // Редактирование параметров
 void ParameterOptions::EditParameter()
 {
-    QString _name = ui->nameParameter->text();
+    if(ui->nameParameter->text().size())
+        m_editableParam->setName(ui->nameParameter->text());
+    if(ui->descriptionParameter->toPlainText().size())
+        m_editableParam->setDescription(ui->descriptionParameter->toPlainText());
+    /*QString _name = ui->nameParameter->text();
     QString _desc = ui->descriptionParameter->toPlainText();
     QString _typeD = ui->listTypeDParameter->currentText();
     int indexTD = ui->listTypeDParameter->currentIndex();
@@ -32,6 +45,5 @@ void ParameterOptions::EditParameter()
         qDebug() << test;
     }else{
         qDebug() << "Не фортануло";
-    }
-
+    }*/
 }

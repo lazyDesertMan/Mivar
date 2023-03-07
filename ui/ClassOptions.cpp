@@ -16,6 +16,10 @@ ClassOptions::~ClassOptions()
     delete ui;
 }
 
+void ClassOptions::reset()
+{
+}
+
 // Редактирование классов
 void ClassOptions::on_editClass_Button_clicked()
 {

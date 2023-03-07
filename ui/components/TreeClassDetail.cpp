@@ -6,7 +6,7 @@
 
 /*---ClassActions---*/
 
-ClassActions::ClassActions(std::shared_ptr<MivarClass> mivarClass, QWidget* parent) : QWidget(parent), m_menu(this) {
+ClassActions::ClassActions(std::shared_ptr<MivarClass> mivarClass) : m_menu(this) {
     m_class = mivarClass;
     
     m_addParamAct = new QAction("Добавить параметр", this);
@@ -47,7 +47,7 @@ const std::shared_ptr<MivarClass> ClassActions::getClass() const {
 
 /*---TreeClassDetailType---*/
 
-TreeClassDetailType::TreeClassDetailType(std::shared_ptr<MivarClass> mivarClass, QWidget* parent) : ClassActions(mivarClass, parent) {
+TreeClassDetailType::TreeClassDetailType(std::shared_ptr<MivarClass> mivarClass) : ClassActions(mivarClass) {
     m_type = new QLabel(this);
     m_type->setText("Класс");
 
@@ -63,8 +63,8 @@ void TreeClassDetail::update() {
     m_name->setText(m_class->name());
 }
 
-TreeClassDetail::TreeClassDetail(std::shared_ptr<MivarClass> observedClass, QWidget* parent) :
-    ClassActions(observedClass, parent)
+TreeClassDetail::TreeClassDetail(std::shared_ptr<MivarClass> observedClass) :
+    ClassActions(observedClass)
 {
     m_observer = std::make_shared<ClassObserver>();
     m_observer->parent = this;
@@ -80,6 +80,7 @@ TreeClassDetail::TreeClassDetail(std::shared_ptr<MivarClass> observedClass, QWid
     m_icon->setPixmap(classIcon);
     m_icon->setScaledContents(true);
     m_icon->setFixedSize(16, 16);
+    m_icon->setAlignment(Qt::AlignVCenter);
 
     layout->addWidget(m_icon);
     layout->addWidget(m_name);

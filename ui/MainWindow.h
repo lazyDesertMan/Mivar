@@ -2,6 +2,7 @@
 #define MAINWINDOW2_H
 
 #include <QMainWindow>
+#include <models/MivarModel.h>
 #include <models/MivarClass.h>
 #include "ClassOptions.h"
 #include "ParameterOptions.h"
@@ -23,6 +24,8 @@ public:
     ParameterOptions *paramOpt = new ParameterOptions;
     RuleOptions *ruleOpt = new RuleOptions;
     RelationOptions *relativeOpt = new RelationOptions;
+
+    ResetableWidget* activeWidget;
 
 private slots:
     void on_exit_triggered();
@@ -48,7 +51,7 @@ public slots:
     void ShowRuleEdit();
     
     // Вывод формы для редактирования параметров
-    void ShowParameterEdit();
+    void ShowParameterEdit(std::shared_ptr<MivarParam> param);
     
     /**
      * @brief Отображение формы добавления нового параметра в mivarClass
@@ -61,7 +64,7 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
-
+    std::shared_ptr<MivarModel> m_model;
 };
 
 #endif // MAINWINDOW2_H

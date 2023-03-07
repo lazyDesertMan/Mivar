@@ -2,18 +2,20 @@
 #define RULEOPTIONS_H
 
 #include <QWidget>
+#include "ResetableWidget.h"
 
 namespace Ui {
 class RuleOptions;
 }
 
-class RuleOptions : public QWidget
+class RuleOptions : public QWidget, public ResetableWidget
 {
     Q_OBJECT
 
 public:
     explicit RuleOptions(QWidget *parent = nullptr);
     ~RuleOptions();
+    void reset() override;
 public slots:
     // Редактирование правила
     void EditRule();

@@ -115,18 +115,18 @@ const MivarParam::ParamType MivarParam::type() const noexcept {
 void MivarParam::setType(const QString& type) {
     if (type == "double") {
         m_type = ParamType::PT_DOUBLE;
-        sendEvent();
+        sendEvent(EventCode::EC_TYPE_CHANGE);
     }
     else if (type == "string") {
         m_type = ParamType::PT_STRING;
-        sendEvent();
+        sendEvent(EventCode::EC_TYPE_CHANGE);
     }
 }
 
 void MivarParam::setType(const ParamType type) {
     if (type != ParamType::PT_NONE) {
         m_type = type;
-        sendEvent();
+        sendEvent(EventCode::EC_TYPE_CHANGE);
     }
 }
 

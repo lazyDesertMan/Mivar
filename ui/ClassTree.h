@@ -15,9 +15,9 @@ class ClassTree : public QWidget
 {
     Q_OBJECT
 
-    std::vector<std::pair<QTreeWidgetItem*, std::shared_ptr<MivarClass>>> m_classes;
-    std::vector<TreeParamDetail*> m_params;
-    std::shared_ptr<MivarModel>   m_model;
+    std::map<QString, std::pair<QTreeWidgetItem*, std::shared_ptr<MivarClass>>> m_classes;
+    std::map<QString, std::pair<QTreeWidgetItem*, std::shared_ptr<MivarParam>>> m_params;
+    std::shared_ptr<MivarModel> m_model;
 
     QTreeWidgetItem* addClass(QTreeWidgetItem* parent, const std::shared_ptr<MivarClass>& mivarClass);
     void addParam(QTreeWidgetItem* parent, const std::shared_ptr<MivarParam>& mivarParam);
@@ -27,6 +27,7 @@ class ClassTree : public QWidget
 
 protected slots:
     void deleteClass(const std::shared_ptr<MivarClass>& mivarClass);
+    void deleteParam(const std::shared_ptr<MivarParam>& param);
 signals:
     void addClassEvent(const std::shared_ptr<MivarClass>& parent);
     void editClassEvent(const std::shared_ptr<MivarClass>& mivarClass);

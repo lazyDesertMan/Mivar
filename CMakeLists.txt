@@ -46,10 +46,14 @@ set(SOURCES
     ui/ClassOptions.cpp
     ui/ClassOptions.h
     ui/ClassOptions.ui
+    ui/HomeWidget.cpp
+    ui/HomeWidget.h
+    ui/HomeWidget.ui
     ui/components/TreeClassDetail.h
     ui/components/TreeClassDetail.cpp
     ui/components/TreeParamDetail.h
     ui/components/TreeParamDetail.cpp
+    ui/ResetableWidget.h
     main.cpp
     resources.qrc
 )

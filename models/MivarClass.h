@@ -13,6 +13,9 @@
 class MivarParam : public MivarObject {
 public:
     enum ParamType { PT_NONE, PT_DOUBLE, PT_STRING };
+    enum EventCode : int16_t {
+        EC_TYPE_CHANGE = 16
+    };
 
     class InvalidTypeException {};
 

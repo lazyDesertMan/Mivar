@@ -14,6 +14,9 @@ RuleOptions::~RuleOptions()
 {
     delete ui;
 }
+void RuleOptions::reset()
+{
+}
 // Редактирование правил
 void RuleOptions::EditRule()
 {
