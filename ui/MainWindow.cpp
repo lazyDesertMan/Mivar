@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->displayProject, &ClassTree::editClassEvent, this, &MainWindow::ShowClassEditForm);
     connect(ui->displayProject, &ClassTree::addClassEvent, this, &MainWindow::ShowNewSubclassForm);
     connect(ui->displayProject, &ClassTree::editParamEvent, this, &MainWindow::ShowParameterEdit);
+    connect(ui->displayProject, &ClassTree::addParamEvent, this, &MainWindow::ShowAddParameterForm);
 
     activeWidget = ui->HomeOpt;
 }
@@ -71,10 +72,6 @@ void MainWindow::ShowRuleEdit() {
     activeWidget = ui->RuleOpt;
 }
 
-void MainWindow::ShowAddParameterForm(const std::shared_ptr<MivarClass>& mivarClass) {
-    qDebug() << mivarClass->name();
-}
-
 // Вывод формы для редактирования отношения
 void MainWindow::ShowRelativeEdit() {
     activeWidget->reset();
@@ -85,8 +82,14 @@ void MainWindow::ShowRelativeEdit() {
 // Вывод формы для редактирования параметра
 void MainWindow::ShowParameterEdit(std::shared_ptr<MivarParam> param) {
     activeWidget->reset();
-    ui->ParamOpt->setEditableParam(param);
+    ui->ParamOpt->setEditableParam(m_model, param);
     ui->centralWidget->setCurrentWidget(ui->ParamOpt);
     activeWidget = ui->ParamOpt;
 }
 
+void MainWindow::ShowAddParameterForm(const std::shared_ptr<MivarClass>& mivarClass) {
+    activeWidget->reset();
+    ui->ParamOpt->prepareToAddParam(m_model, mivarClass);
+    ui->centralWidget->setCurrentWidget(ui->ParamOpt);
+    activeWidget = ui->ParamOpt;
+}

@@ -1,49 +1,101 @@
-
+#include <QUuid>
 #include <QDebug>
+#include <QTextStream>
 #include "ParameterOptions.h"
 #include "ui_ParameterOptions.h"
 
-ParameterOptions::ParameterOptions(QWidget *parent) :
+ParamTypeModel::ParamTypeModel(std::vector<ModelDataType> data, QObject* parent) : m_data(data), QAbstractListModel(parent) {}
+
+int ParamTypeModel::columnCount(const QModelIndex& parent) const {
+    return 2;
+}
+
+QVariant ParamTypeModel::data(const QModelIndex& index, int role) const {
+    QVariant variant;
+    if (index.row() < m_data.size()) {
+        switch (role)
+        {
+        case Qt::DisplayRole:
+            variant = m_data[index.row()].second;
+            break;
+        case Qt::UserRole:
+            variant = m_data[index.row()].first;
+            break;
+        default:
+            break;
+        }
+    }
+    return variant;
+}
+
+int ParamTypeModel::rowCount(const QModelIndex& parent) const {
+    return m_data.size();
+}
+
+ParameterOptions::ParameterOptions(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::ParameterOptions)
 {
     ui->setupUi(this);
-    connect(ui->editParameter_Button, SIGNAL(clicked()), this, SLOT(EditParameter()));
+    ParamTypeModel* mod = new ParamTypeModel({{MivarParam::PARAM_TYPE_DOUBLE, "Число"}, {MivarParam::PARAM_TYPE_STRING, "Строка"}});
+    ui->listTypeDParameter->setModel(mod);
+    connect(ui->editBtn, SIGNAL(clicked()), this, SLOT(EditParameter()));
+    connect(ui->addBtn, SIGNAL(clicked()), this, SLOT(AddParameter()));
 }
 
-void ParameterOptions::setEditableParam(std::shared_ptr<MivarParam> param) {
+void ParameterOptions::setEditableParam(std::shared_ptr<MivarModel> model, std::shared_ptr<MivarParam> param) {
+    m_model = model;
     m_editableParam = param;
     ui->nameParameter->setText(param->name());
     ui->descriptionParameter->setText(param->description());
+    ui->listLvlParameter->setEditable(false);
+    ui->listLvlParameter->clear();
+    if (param->type() == MivarParam::PARAM_TYPE_DOUBLE)
+        ui->listTypeDParameter->setCurrentIndex(0);
+    else
+        ui->listTypeDParameter->setCurrentIndex(1);
+    ui->editBtn->setVisible(true);
+    ui->addBtn->setVisible(false);
+}
+
+void ParameterOptions::prepareToAddParam(std::shared_ptr<MivarModel> model, std::shared_ptr<MivarClass> mivarClass) {
+    m_model = model;
+    m_mivarClass = mivarClass;
+    ui->nameParameter->setText("");
+    ui->descriptionParameter->setText("");
+    ui->listLvlParameter->setEditable(false);
+    ui->listLvlParameter->clear();
+    ui->listLvlParameter->addItem(mivarClass->name());
+    ui->listTypeDParameter->setCurrentIndex(0);
+    ui->editBtn->setVisible(false);
+    ui->addBtn->setVisible(true);
 }
 
 void ParameterOptions::reset() {
     m_editableParam.reset();
+    m_mivarClass.reset();
 }
 
 ParameterOptions::~ParameterOptions() {
     delete ui;
 }
 
+void ParameterOptions::AddParameter() {
+    if (ui->nameParameter->text().size() > 0) {
+        QString id = QUuid::createUuid().toString();
+        QString name = ui->nameParameter->text();
+        QString description = ui->descriptionParameter->toPlainText();
+        std::shared_ptr<MivarParam> param = std::make_shared<MivarParam>();
+    }
+}
+
 // Редактирование параметров
-void ParameterOptions::EditParameter()
-{
+void ParameterOptions::EditParameter() {
+    const int16_t type = ui->listTypeDParameter->currentData(Qt::UserRole).toInt();
     if(ui->nameParameter->text().size())
         m_editableParam->setName(ui->nameParameter->text());
     if(ui->descriptionParameter->toPlainText().size())
         m_editableParam->setDescription(ui->descriptionParameter->toPlainText());
-    /*QString _name = ui->nameParameter->text();
-    QString _desc = ui->descriptionParameter->toPlainText();
-    QString _typeD = ui->listTypeDParameter->currentText();
-    int indexTD = ui->listTypeDParameter->currentIndex();
-    QString _lvl = ui->listLvlParameter->currentText();
-    int indexLvl = ui->listLvlParameter->currentIndex();
-    QString _value = ui->valParameter->text();
-    if(indexTD != -1 && indexLvl != -1 && _name.size() > 0 && _value.size() > 0){
-        // Функция для добавления
-        QString test = "Name: " + _name + "; Desc: " + _desc + "; TypeD: " + _typeD + " " + QString::number(indexTD) + "; Lvl: " + _lvl + " " + QString::number(indexLvl) + "; Value: " + _value;
-        qDebug() << test;
-    }else{
-        qDebug() << "Не фортануло";
-    }*/
+    if(m_editableParam->type() != type)
+        m_editableParam->setType(type);
 }

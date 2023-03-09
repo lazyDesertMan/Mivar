@@ -108,28 +108,28 @@ bool MivarClass::paramContains(const QString& id) const noexcept {
     return true;
 }
 
-const MivarParam::ParamType MivarParam::type() const noexcept {
+const int16_t MivarParam::type() const noexcept {
     return m_type;
 }
 
 void MivarParam::setType(const QString& type) {
     if (type == "double") {
-        m_type = ParamType::PT_DOUBLE;
+        m_type = PARAM_TYPE_DOUBLE;
         sendEvent(EventCode::EC_TYPE_CHANGE);
     }
     else if (type == "string") {
-        m_type = ParamType::PT_STRING;
+        m_type = PARAM_TYPE_STRING;
         sendEvent(EventCode::EC_TYPE_CHANGE);
     }
 }
 
-void MivarParam::setType(const ParamType type) {
-    if (type != ParamType::PT_NONE) {
+void MivarParam::setType(const int16_t type) {
+    if (type == PARAM_TYPE_DOUBLE || type == PARAM_TYPE_STRING) {
         m_type = type;
         sendEvent(EventCode::EC_TYPE_CHANGE);
     }
 }
 
 bool MivarParam::isCorrect() const noexcept {
-    return m_id.size() > 0 && m_name.size() > 0 && m_type != ParamType::PT_NONE;
+    return m_id.size() > 0 && m_name.size() > 0 && (m_type == PARAM_TYPE_DOUBLE || m_type == PARAM_TYPE_STRING);
 }

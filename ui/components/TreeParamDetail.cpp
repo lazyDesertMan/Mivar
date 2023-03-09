@@ -73,6 +73,7 @@ void TreeParamDetail::ParamObserver::handle(int16_t code) {
     {
     case MivarObject::EventCode::EC_NAME_UPDATE:
         parent->update();
+        emit parent->onNameChange();
         break;
     default:
         break;
@@ -114,10 +115,10 @@ void TreeParamType::ParamObserver::handle(int16_t code) {
 
 void TreeParamType::update() {
     switch(m_param->type()) {
-        case MivarParam::ParamType::PT_DOUBLE:
+        case MivarParam::PARAM_TYPE_DOUBLE:
             m_type->setText("123");
             break;
-        case MivarParam::ParamType::PT_STRING:
+        case MivarParam::PARAM_TYPE_STRING:
             m_type->setText("АБВ");
             break;
         default:

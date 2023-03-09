@@ -52,6 +52,9 @@ public:
 
     explicit TreeParamDetail(std::shared_ptr<MivarParam> observedParam);
     ~TreeParamDetail();
+
+signals:
+    void onNameChange();
 };
 
 /**

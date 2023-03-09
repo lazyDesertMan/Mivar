@@ -12,22 +12,25 @@
  */
 class MivarParam : public MivarObject {
 public:
-    enum ParamType { PT_NONE, PT_DOUBLE, PT_STRING };
+    static constexpr int16_t PARAM_TYPE_NONE   = 0;
+    static constexpr int16_t PARAM_TYPE_DOUBLE = 1;
+    static constexpr int16_t PARAM_TYPE_STRING = 2;
+
     enum EventCode : int16_t {
         EC_TYPE_CHANGE = 16
     };
 
     class InvalidTypeException {};
 
-    MivarParam() : m_type(ParamType::PT_NONE) {}
+    MivarParam() : m_type(PARAM_TYPE_NONE) {}
 
-    const ParamType type() const noexcept;
+    const int16_t type() const noexcept;
     void setType(const QString& type);
-    void setType(const ParamType type);
+    void setType(const int16_t type);
     bool isCorrect() const noexcept;
 
 protected:
-    ParamType m_type;
+    int16_t m_type;
 };
 
 /**

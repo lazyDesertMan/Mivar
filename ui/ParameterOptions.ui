@@ -23,6 +23,30 @@
    <property name="rightMargin">
     <number>5</number>
    </property>
+   <item row="3" column="0" alignment="Qt::AlignTop">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Значение</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="4">
+    <widget class="Line" name="line">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Правила</string>
+     </property>
+    </widget>
+   </item>
    <item row="4" column="0" alignment="Qt::AlignTop">
     <widget class="QLabel" name="label_5">
      <property name="text">
@@ -30,10 +54,29 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
+   <item row="2" column="3">
+    <widget class="QComboBox" name="listTypeDParameter"/>
+   </item>
+   <item row="4" column="3">
+    <widget class="QTextEdit" name="descriptionParameter"/>
+   </item>
+   <item row="0" column="3">
+    <widget class="QLineEdit" name="nameParameter"/>
+   </item>
+   <item row="3" column="3">
+    <widget class="QLineEdit" name="valParameter"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Наименование</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
     <widget class="QComboBox" name="listLvlParameter"/>
    </item>
-   <item row="7" column="0" colspan="2">
+   <item row="7" column="0" colspan="4">
     <widget class="QTableWidget" name="rulesTable">
      <property name="cornerButtonEnabled">
       <bool>false</bool>
@@ -50,30 +93,6 @@
      </column>
     </widget>
    </item>
-   <item row="3" column="0" alignment="Qt::AlignTop">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Значение</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Уровень</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="nameParameter"/>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="label_7">
-     <property name="text">
-      <string>Правила</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="0">
     <widget class="QLabel" name="label_3">
      <property name="text">
@@ -88,23 +107,7 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0" colspan="2">
-    <widget class="Line" name="line">
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QComboBox" name="listTypeDParameter"/>
-   </item>
-   <item row="3" column="1">
-    <widget class="QLineEdit" name="valParameter"/>
-   </item>
-   <item row="9" column="0" colspan="2">
+   <item row="9" column="0" colspan="4">
     <widget class="QTableWidget" name="restrictionTable">
      <column>
       <property name="text">
@@ -118,31 +121,33 @@
      </column>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QTextEdit" name="descriptionParameter"/>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Наименование</string>
+      <string>Уровень</string>
      </property>
     </widget>
    </item>
-   <item row="10" column="1">
-    <widget class="QPushButton" name="editParameter_Button">
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::RightToLeft</enum>
-     </property>
-     <property name="text">
-      <string>Применить</string>
-     </property>
-    </widget>
+   <item row="10" column="3">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0">
+     <item>
+      <widget class="QWidget" name="widget" native="true"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="editBtn">
+       <property name="text">
+        <string>Изменить</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="addBtn">
+       <property name="text">
+        <string>Добавить</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
