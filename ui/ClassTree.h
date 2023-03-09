@@ -19,12 +19,13 @@ class ClassTree : public QWidget
     std::map<QString, std::pair<QTreeWidgetItem*, std::shared_ptr<MivarParam>>> m_params;
     std::shared_ptr<MivarModel> m_model;
 
+    void configureClass(QTreeWidgetItem* mivarClassItem, const std::shared_ptr<MivarClass>& mivarClass, bool isRoot = false);
     QTreeWidgetItem* addClass(QTreeWidgetItem* parent, const std::shared_ptr<MivarClass>& mivarClass);
     void addParam(QTreeWidgetItem* parent, const std::shared_ptr<MivarParam>& mivarParam);
 
     void clearView();
     void removeClassItem(const std::shared_ptr<MivarClass>& mivarClass);
-
+    
 protected slots:
     void deleteClass(const std::shared_ptr<MivarClass>& mivarClass);
     void deleteParam(const std::shared_ptr<MivarParam>& param);

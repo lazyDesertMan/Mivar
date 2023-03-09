@@ -6,7 +6,7 @@
 
 /*---ClassActions---*/
 
-ClassActions::ClassActions(std::shared_ptr<MivarClass> mivarClass) : m_menu(this) {
+ClassActions::ClassActions(std::shared_ptr<MivarClass> mivarClass, bool isRootClass) : m_menu(this) {
     m_class = mivarClass;
     
     m_addParamAct = new QAction("Добавить параметр", this);
@@ -15,9 +15,13 @@ ClassActions::ClassActions(std::shared_ptr<MivarClass> mivarClass) : m_menu(this
     connect(m_addSubclassAct, &QAction::triggered, this, &ClassActions::onAddSubclassClick);
     m_editAct = new QAction("Изменить", this);
     connect(m_editAct, &QAction::triggered, this, &ClassActions::onEditClick);
-    m_removeAct = new QAction("Удалить", this);
-    connect(m_removeAct, &QAction::triggered, this, &ClassActions::onRemoveClick);
-    m_menu.addActions({m_addParamAct, m_addSubclassAct, m_editAct, m_removeAct});
+    if (!isRootClass) {
+        m_removeAct = new QAction("Удалить", this);
+        connect(m_removeAct, &QAction::triggered, this, &ClassActions::onRemoveClick);
+        m_menu.addActions({m_addParamAct, m_addSubclassAct, m_editAct, m_removeAct});
+    }
+    else
+        m_menu.addActions({m_addParamAct, m_addSubclassAct, m_editAct});
 }
 
 void ClassActions::mousePressEvent(QMouseEvent* event) {
@@ -47,7 +51,7 @@ const std::shared_ptr<MivarClass> ClassActions::getClass() const {
 
 /*---TreeClassDetailType---*/
 
-TreeClassDetailType::TreeClassDetailType(std::shared_ptr<MivarClass> mivarClass) : ClassActions(mivarClass) {
+TreeClassDetailType::TreeClassDetailType(std::shared_ptr<MivarClass> mivarClass, bool isRootClass) : ClassActions(mivarClass, isRootClass) {
     m_type = new QLabel(this);
     m_type->setText("Класс");
 
@@ -63,8 +67,8 @@ void TreeClassDetail::update() {
     m_name->setText(m_class->name());
 }
 
-TreeClassDetail::TreeClassDetail(std::shared_ptr<MivarClass> observedClass) :
-    ClassActions(observedClass)
+TreeClassDetail::TreeClassDetail(std::shared_ptr<MivarClass> observedClass, bool isRootClass) :
+    ClassActions(observedClass, isRootClass)
 {
     m_observer = std::make_shared<ClassObserver>();
     m_observer->parent = this;
