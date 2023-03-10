@@ -67,6 +67,10 @@ void TreeClassDetail::paramAdded()
 {
     emit onParamAdd(m_class);
 }
+void TreeClassDetail::classAdded()
+{
+    emit onSubclassAdd(m_class);
+}
 
 void TreeClassDetail::update() {
     m_name->setText(m_class->name());
@@ -112,6 +116,9 @@ void TreeClassDetail::ClassObserver::handle(int16_t code) {
         break;
     case MivarClass::EventCode::EC_PARAM_ADD:
         parent->paramAdded();
+        break;
+    case MivarClass::EventCode::EC_SUBCLASS_ADD:
+        parent->classAdded();
         break;
     default:
         break;

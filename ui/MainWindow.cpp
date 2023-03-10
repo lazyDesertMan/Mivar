@@ -56,14 +56,18 @@ void MainWindow::ShowClassEdit()
 
 }
 // Вывод формы для редактирования класса
-void MainWindow::ShowClassEditForm(const std::shared_ptr<MivarClass> &mivarClass) {
+void MainWindow::ShowClassEditForm(const std::shared_ptr<MivarClass> &mivarClass, const std::shared_ptr<MivarClass>& parent) {
     activeWidget->reset();
+    ui->ClassOpt->setEditableClass(mivarClass, parent);
     ui->centralWidget->setCurrentWidget(ui->ClassOpt);
     activeWidget = ui->ClassOpt;
 }
 
 void MainWindow::ShowNewSubclassForm(const std::shared_ptr<MivarClass> &mivarClass) {
-    qDebug() << mivarClass->name();
+    activeWidget->reset();
+    ui->ClassOpt->prepareToAddClass(mivarClass);
+    ui->centralWidget->setCurrentWidget(ui->ClassOpt);
+    activeWidget = ui->ClassOpt;
 }
 
 // Вывод формы для редактирования правила

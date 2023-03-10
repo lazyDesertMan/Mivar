@@ -66,9 +66,11 @@ class TreeClassDetail : public ClassActions {
     QLabel*  m_name;
 signals:
     void onParamAdd(std::shared_ptr<MivarClass> mc);
+    void onSubclassAdd(std::shared_ptr<MivarClass> mc);
 public:
     void paramAdded();
     void update();
+    void classAdded();
 
     explicit TreeClassDetail(std::shared_ptr<MivarClass> observedClass, bool isRootClass = false);
     virtual ~TreeClassDetail();

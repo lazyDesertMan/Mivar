@@ -38,7 +38,7 @@ public slots:
      * 
      * @param mivarClass 
      */
-    void ShowClassEditForm(const std::shared_ptr<MivarClass>& mivarClass);
+    void ShowClassEditForm(const std::shared_ptr<MivarClass>& mivarClass, const std::shared_ptr<MivarClass>& parent);
 
     /**
      * @brief Отображение формы добавления нового подкласса для mivarClass 

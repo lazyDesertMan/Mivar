@@ -7,16 +7,18 @@ void ClassTree::configureClass(QTreeWidgetItem* mivarClassItem, const std::share
     TreeClassDetail* classDetails = new TreeClassDetail(mivarClass, isRoot);
     ui->viewTree_Widget->setItemWidget(mivarClassItem, 0, classDetails);
     connect(classDetails, &ClassActions::removeClick, this, &ClassTree::deleteClass);
-    connect(classDetails, &ClassActions::editClick, this, &ClassTree::editClassEvent);
+    connect(classDetails, &ClassActions::editClick, this, &ClassTree::editClass);
     connect(classDetails, &ClassActions::addSubclassClick, this, &ClassTree::addClassEvent);
     connect(classDetails, &ClassActions::addParamClick, this, &ClassTree::addParamEvent);
     connect(classDetails, &TreeClassDetail::onParamAdd, this, &ClassTree::addParam_slot);
+    connect(classDetails, &TreeClassDetail::onSubclassAdd, this, &ClassTree::addSubclass_slot);
 
     TreeClassDetailType* classDetailType = new TreeClassDetailType(mivarClass, isRoot);
     ui->viewTree_Widget->setItemWidget(mivarClassItem, 1, classDetailType);
     connect(classDetailType, &ClassActions::removeClick, this, &ClassTree::deleteClass);
-    connect(classDetailType, &ClassActions::editClick, this, &ClassTree::editClassEvent);
+    connect(classDetailType, &ClassActions::editClick, this, &ClassTree::editClass);
     connect(classDetailType, &ClassActions::addSubclassClick, this, &ClassTree::addClassEvent);
+    connect(classDetailType, &ClassActions::addParamClick, this, &ClassTree::addParamEvent);
 }
 
 QTreeWidgetItem *ClassTree::addClass(QTreeWidgetItem *parent, const std::shared_ptr<MivarClass> &mivarClass)
@@ -32,17 +34,17 @@ void ClassTree::addParam(QTreeWidgetItem* parent, const std::shared_ptr<MivarPar
     QTreeWidgetItem* paramItem = new QTreeWidgetItem();
     parent->addChild(paramItem);
     
-    TreeParamDetail* paramDetails = new TreeParamDetail(mivarParam);
-    m_params.insert({mivarParam->id(), {paramItem, mivarParam}});
+    TreeParamDetail* paramDetails = new TreeParamDetail(mivarParam);  
     ui->viewTree_Widget->setItemWidget(paramItem, 0, paramDetails);
     connect(paramDetails, &ParamActions::removeClick, this, &ClassTree::deleteParam);
     connect(paramDetails, &ParamActions::editClick, this, &ClassTree::editParamEvent);
-    
+
     TreeParamType* paramType = new TreeParamType(mivarParam);
-    m_params.insert({mivarParam->id(), {paramItem, mivarParam}});
     ui->viewTree_Widget->setItemWidget(paramItem, 1, paramType);
     connect(paramType, &ParamActions::removeClick, this, &ClassTree::deleteParam);
     connect(paramType, &ParamActions::editClick, this, &ClassTree::editParamEvent);
+
+    m_params.insert({mivarParam->id(), {paramItem, mivarParam}});
 }
 
 void ClassTree::clearView() {
@@ -102,6 +104,14 @@ void ClassTree::addParam_slot(std::shared_ptr<MivarClass> mc)
             addParam(classItem, mc->params()[idx]);
     }
 }
+void ClassTree::addSubclass_slot(std::shared_ptr<MivarClass> mc)
+{
+    std::pair<QTreeWidgetItem*, std::shared_ptr<MivarClass>> classItem = m_classes[mc->id()];
+    for (size_t idx = 0; idx < classItem.second->subclasses().size(); idx++) {
+        if (m_classes.find(classItem.second->subclasses()[idx]->id()) == m_classes.end())
+            addClass(classItem.first, classItem.second->subclasses()[idx]);
+    }
+}
 
 void ClassTree::deleteClass(const std::shared_ptr<MivarClass>& mivarClass) {
     if(m_classes.find(mivarClass->id()) != m_classes.end()) {
@@ -122,4 +132,14 @@ void ClassTree::deleteParam(const std::shared_ptr<MivarParam>& param) {
         m_params.erase(param->id());
     }
     m_model->modelClass()->removeById(param->id());
+}
+
+void ClassTree::editClass(const std::shared_ptr<MivarClass> &mivarClass)
+{
+    QTreeWidgetItem* item = m_classes[mivarClass->id()].first->parent();
+    for(std::pair<QString, std::pair<QTreeWidgetItem*, std::shared_ptr<MivarClass>>> i:m_classes){
+        if(i.second.first == item){
+            emit editClassEvent(mivarClass, i.second.second);
+        }
+    }
 }

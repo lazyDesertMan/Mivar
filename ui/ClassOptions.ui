@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>679</width>
-    <height>429</height>
+    <height>464</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,41 +26,8 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Наименование</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QTextEdit" name="ClassDescroption"/>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Уровень</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="ClassName"/>
-   </item>
-   <item row="5" column="1">
-    <widget class="QPushButton" name="editClass_Button">
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::RightToLeft</enum>
-     </property>
-     <property name="text">
-      <string>Применить</string>
-     </property>
-    </widget>
+   <item row="2" column="2">
+    <widget class="QTextEdit" name="descriptionClass"/>
    </item>
    <item row="2" column="0" alignment="Qt::AlignTop">
     <widget class="QLabel" name="label_3">
@@ -69,27 +36,68 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QComboBox" name="ClassLvl">
-     <item>
-      <property name="text">
-       <string>Первый элемент</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Второй элемент</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Третий элемент</string>
-      </property>
-     </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Родительский класс</string>
+     </property>
     </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLineEdit" name="nameClass"/>
    </item>
    <item row="5" column="0">
     <widget class="QWidget" name="widget" native="true"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Наименование</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QLineEdit" name="parentClass">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="2">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QWidget" name="widget_2" native="true"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="editClassBtn">
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>100</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Изменить</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="addClassBtn">
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>100</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Добавить</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
