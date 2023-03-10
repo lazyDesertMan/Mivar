@@ -10,7 +10,7 @@
 #include "IObservable.h"
 
 /**
- * @brief Модель
+ * @brief Миварная модель
  */
 class MivarModel : public MivarObject {
     std::shared_ptr<MivarClass> m_rootClass;

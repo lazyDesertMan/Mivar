@@ -22,10 +22,7 @@ int main(int argc, char* argv[]) {
         app.exec();
     }
     else {
-        QJSEngine& engine = SingleJSEngine::engine();
-
         std::shared_ptr<MivarModel> model = ModelLoader::load("./files/proj3.xml");
-        model->modelClass()->removeById("163d9b33-b18f-44c1-9799-7fe2f283fffc");
-        std::cout << std::endl << "end" << std::endl << std::endl;
+        ModelLoader::save(model, "./files/text.xml");
     }
 }

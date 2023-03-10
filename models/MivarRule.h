@@ -21,7 +21,17 @@ public:
 
     void bindRelation(std::shared_ptr<MivarRelation> relation);
     void unbindRelation();
+    const std::shared_ptr<MivarRelation> getBindetRelation() const;
+
     void handle(int16_t code) override;
+
+    /**
+     * @brief Запрос ID связанного параметра по имени
+     * 
+     * @param paramName Имя параметра
+     * @return QString ID параметра
+     */
+    QString paramID(const QString& paramName);
     
     bool isCorrect();
     /**

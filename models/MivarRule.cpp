@@ -11,6 +11,7 @@ void MivarRule::bindRelation(std::shared_ptr<MivarRelation> relation) {
     m_relation = relation;
     relation->addObserver(shared_from_this());
     m_isBindet = true;
+    syncWithRelation();
 }
 
 void MivarRule::unbindRelation() {
@@ -20,7 +21,18 @@ void MivarRule::unbindRelation() {
     }
 }
 
-bool MivarRule::isCorrect() {
+const std::shared_ptr<MivarRelation> MivarRule::getBindetRelation() const {
+    return m_relation;
+}
+
+QString MivarRule::paramID(const QString& paramName) {
+    if(m_params.find(paramName) != m_params.end())
+        return m_params[paramName];
+    return "";
+}
+
+bool MivarRule::isCorrect()
+{
     return true;
 }
 

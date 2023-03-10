@@ -59,7 +59,7 @@ set(SOURCES
 )
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-find_package(QT REQUIRED NAMES Qt5 COMPONENTS Widgets Xml Qml)
+find_package(QT REQUIRED NAMES Qt6 Qt5 COMPONENTS Widgets Xml Qml)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Xml Qml)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Xml Qt${QT_VERSION_MAJOR}::Qml)
