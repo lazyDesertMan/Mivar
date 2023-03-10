@@ -63,6 +63,11 @@ TreeClassDetailType::TreeClassDetailType(std::shared_ptr<MivarClass> mivarClass,
 
 /*---TreeClassDetail---*/
 
+void TreeClassDetail::paramAdded()
+{
+    emit onParamAdd(m_class);
+}
+
 void TreeClassDetail::update() {
     m_name->setText(m_class->name());
 }
@@ -104,6 +109,9 @@ void TreeClassDetail::ClassObserver::handle(int16_t code) {
     {
     case MivarObject::EventCode::EC_NAME_UPDATE:
         parent->update();
+        break;
+    case MivarClass::EventCode::EC_PARAM_ADD:
+        parent->paramAdded();
         break;
     default:
         break;

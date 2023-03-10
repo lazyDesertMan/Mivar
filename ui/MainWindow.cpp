@@ -50,15 +50,16 @@ void MainWindow::on_loadFile_triggered()
         ui->displayProject->DisplayMivar(m_model);
     }
 }
+
+void MainWindow::ShowClassEdit()
+{
+
+}
 // Вывод формы для редактирования класса
-void MainWindow::ShowClassEdit() {
+void MainWindow::ShowClassEditForm(const std::shared_ptr<MivarClass> &mivarClass) {
     activeWidget->reset();
     ui->centralWidget->setCurrentWidget(ui->ClassOpt);
     activeWidget = ui->ClassOpt;
-}
-
-void MainWindow::ShowClassEditForm(const std::shared_ptr<MivarClass> &mivarClass) {
-    qDebug() << mivarClass->name();
 }
 
 void MainWindow::ShowNewSubclassForm(const std::shared_ptr<MivarClass> &mivarClass) {

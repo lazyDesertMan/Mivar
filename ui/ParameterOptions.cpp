@@ -83,9 +83,15 @@ ParameterOptions::~ParameterOptions() {
 void ParameterOptions::AddParameter() {
     if (ui->nameParameter->text().size() > 0) {
         QString id = QUuid::createUuid().toString();
+        const int16_t type = ui->listTypeDParameter->currentData(Qt::UserRole).toInt();
         QString name = ui->nameParameter->text();
         QString description = ui->descriptionParameter->toPlainText();
         std::shared_ptr<MivarParam> param = std::make_shared<MivarParam>();
+        param->setId(id);
+        param->setName(name);
+        param->setDescription(description);
+        param->setType(type);
+        m_mivarClass->addParam(param);
     }
 }
 

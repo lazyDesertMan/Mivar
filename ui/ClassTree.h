@@ -39,7 +39,8 @@ public:
     ~ClassTree();
     void DisplayMivar (std::shared_ptr<MivarModel> model);
     void AddChild (QTreeWidgetItem* parentClassItem, const std::shared_ptr<MivarClass>& mivarClass);
-
+private slots:
+    void addParam_slot(std::shared_ptr<MivarClass> mc);
 private:
     Ui::ClassTree* ui;
 };
