@@ -96,8 +96,11 @@ void ClassTree::AddChild(QTreeWidgetItem* parentClassItem, const std::shared_ptr
 
 void ClassTree::addParam_slot(std::shared_ptr<MivarClass> mc)
 {
-    QTreeWidgetItem* tree = m_classes[mc->id()].first;
-    //addParam(tree, );
+    QTreeWidgetItem* classItem = m_classes[mc->id()].first;
+    for (size_t idx = 0; idx < mc->params().size(); idx++) {
+        if (m_params.find(mc->params()[idx]->id()) == m_params.end())
+            addParam(classItem, mc->params()[idx]);
+    }
 }
 
 void ClassTree::deleteClass(const std::shared_ptr<MivarClass>& mivarClass) {
