@@ -52,7 +52,12 @@ bool MivarClass::contains(const QString& id) const noexcept {
             idx = 0;
             while (idx < m_params.size() && m_params[idx]->id() != id)
                 idx++;
-            return idx != m_params.size();
+            if (idx == m_params.size()) {
+                idx = 0;
+                while (idx < m_rules.size() && m_rules[idx]->id() != id)
+                    idx++;
+                return idx != m_rules.size();
+            }
         }
     }
     return true;

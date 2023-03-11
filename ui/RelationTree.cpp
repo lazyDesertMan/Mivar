@@ -9,6 +9,7 @@ void RelationTree::ClassObserver::bind(std::weak_ptr<MivarClass> observedClass) 
     if (m_isBindet && !m_observedClass.expired())
         m_observedClass.lock()->removeObserver(shared_from_this());
     m_observedClass = observedClass;
+    m_observedClass.lock()->addObserver(shared_from_this());
     m_isBindet = true;
 }
 
@@ -18,6 +19,9 @@ const std::weak_ptr<MivarClass> RelationTree::ClassObserver::observed() {
 
 void RelationTree::ClassObserver::handle(int16_t code) {
     switch (code) {
+    case MivarClass::EventCode::EC_SUBCLASS_REMOVE:
+        m_parent->syncModel();
+        break;
     case MivarClass::EventCode::EC_RULE_REMOVE:
     case MivarClass::EventCode::EC_RULE_ADD:
         m_parent->updateRules(m_observedClass.lock()->id());
@@ -57,8 +61,35 @@ RelationTree::ModelObserver::~ModelObserver() {
         m_observedModel.lock()->removeObserver(shared_from_this());
 }
 
+void RelationTree::syncModel()
+{
+    // Очистка правил
+    for (auto it = m_rules.begin(); it != m_rules.end();) {
+        if(m_model->modelClass()->contains(it->first))
+            it++;
+        else {
+            QTreeWidgetItem* ruleItem = it->second.first;
+            QTreeWidgetItem* parentItem = ruleItem->parent();
+            if (parentItem)
+                parentItem->removeChild(ruleItem);
+            it = m_rules.erase(it);
+        }
+    }
+    // Очистка подклассов
+    for (auto it = m_classes.cbegin(); it != m_classes.cend();) {
+        if(m_model->modelClass()->contains(it->first))
+            it++;
+        else {
+            it = m_classes.erase(it);
+        }
+    }
+    
+}
+
 void RelationTree::displayRules(std::shared_ptr<MivarClass> mivarClass) {
     m_classes.insert({mivarClass->id(), mivarClass});
+    std::shared_ptr<ClassObserver> observer = std::make_shared<ClassObserver>(this);
+    observer->bind(mivarClass);
     for (const std::shared_ptr<MivarRule>& rule : mivarClass->rules()) {
         QTreeWidgetItem* parent = m_relations[rule->getBindetRelation()->id()].first;
         QTreeWidgetItem* item = new QTreeWidgetItem();
@@ -76,7 +107,7 @@ RelationTree::RelationTree(QWidget *parent) : QWidget(parent), ui(new Ui::Relati
     ui->setupUi(this);
 }
 
-void RelationTree::updateRules(QString classID) {
+void RelationTree::updateRules(const QString& classID) {
     if (m_classes.find(classID) != m_classes.end()) {
         std::shared_ptr<MivarClass> mivarClass = m_classes[classID];
     }

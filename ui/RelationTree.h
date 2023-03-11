@@ -48,13 +48,18 @@ private:
     std::map<QString, std::pair<QTreeWidgetItem*, std::shared_ptr<MivarRelation>>> m_relations;
     std::map<QString, std::pair<QTreeWidgetItem*, std::shared_ptr<MivarRule>>> m_rules;
 
+    /**
+     * @brief Удаление хранимых данных о классах и правилах, не содержащихся в модели
+     */
+    void syncModel();
+
     void displayRules(std::shared_ptr<MivarClass> mivarClass);
 
 public:
     explicit RelationTree(QWidget* parent = nullptr);
     ~RelationTree();
 
-    void updateRules(QString classID);
+    void updateRules(const QString& classID);
     void updateRelations();
 
     void DisplayMivar(std::shared_ptr<MivarModel> model);
