@@ -69,6 +69,7 @@ public:
 
     const std::vector<std::shared_ptr<MivarRule>>& rules() const noexcept;
     void addRule(std::shared_ptr<MivarRule> rule);
+    void removeRule(const QString& id);
     
     bool contains(const QString& id) const noexcept;
     bool removeById(const QString& id);

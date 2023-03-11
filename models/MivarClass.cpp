@@ -69,10 +69,19 @@ bool MivarClass::removeById(const QString& id) {
                 idx++;
             if (idx == m_params.size()) {
                 idx = 0;
-                while (idx < m_subclasses.size()) {
-                    if(m_subclasses[idx]->removeById(id))
-                        return true;
+                while (idx < m_rules.size() && m_rules[idx]->id() != id)
                     idx++;
+                if (idx == m_rules.size()) {
+                    idx = 0;
+                    while (idx < m_subclasses.size()) {
+                        if(m_subclasses[idx]->removeById(id))
+                            return true;
+                        idx++;
+                    }
+                } else {
+                    m_rules.erase(m_rules.begin() + idx);
+                    sendEvent(EventCode::EC_RULE_REMOVE);
+                    return true;
                 }
             } else {
                 m_params.erase(m_params.begin() + idx);
@@ -93,6 +102,16 @@ void MivarClass::addRule(std::shared_ptr<MivarRule> rule) {
         m_rules.push_back(rule);
         sendEvent(EventCode::EC_RULE_ADD);
     }
+}
+
+void MivarClass::removeRule(const QString& id) {
+    for(size_t i = 0; i < m_rules.size(); i++)
+        if(m_rules[i]->id() == id) {
+            m_rules[i]->unbindRelation();
+            m_rules.erase(m_rules.begin() + i);
+            sendEvent(EventCode::EC_RULE_REMOVE);
+            return;
+        }
 }
 
 bool MivarClass::paramContains(const QString& id) const noexcept {
