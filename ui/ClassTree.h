@@ -26,8 +26,8 @@ private:
     void addParam(QTreeWidgetItem* parent, const std::shared_ptr<MivarParam>& mivarParam);
 
     void clearView();
-    void removeClassItem(const std::shared_ptr<MivarClass>& mivarClass);
     
+    void deleteStoredClassData(const std::shared_ptr<MivarClass>& mivarClass);
 protected slots:
     void deleteClass(const std::shared_ptr<MivarClass>& mivarClass);
     void deleteParam(const std::shared_ptr<MivarParam>& param);

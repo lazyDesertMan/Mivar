@@ -53,12 +53,6 @@ void ClassTree::clearView() {
     ui->viewTree_Widget->clear();
 }
 
-void ClassTree::removeClassItem(const std::shared_ptr<MivarClass>& mivarClass) {
-    for(const std::shared_ptr<MivarClass> subclass : mivarClass->subclasses())
-        removeClassItem(subclass);
-    m_classes.erase(mivarClass->id());
-}
-
 ClassTree::ClassTree(QWidget *parent) : QWidget(parent),
                                         ui(new Ui::ClassTree)
 {
@@ -113,15 +107,20 @@ void ClassTree::addSubclass_slot(std::shared_ptr<MivarClass> mc)
     }
 }
 
+void ClassTree::deleteStoredClassData(const std::shared_ptr<MivarClass> &mivarClass) {
+    m_classes.erase(mivarClass->id());
+    for(size_t i = 0; i < mivarClass->params().size(); i++)
+        m_params.erase(mivarClass->params()[i]->id());
+    for(auto subclass : mivarClass->subclasses())
+        deleteStoredClassData(subclass);
+}
+
 void ClassTree::deleteClass(const std::shared_ptr<MivarClass>& mivarClass) {
     if(m_classes.find(mivarClass->id()) != m_classes.end()) {
         QTreeWidgetItem* parent = m_classes[mivarClass->id()].first->parent();
         parent->removeChild(m_classes[mivarClass->id()].first);
-        m_classes.erase(mivarClass->id());
     }
-    for(size_t i = 0; i < mivarClass->params().size(); i++)
-        m_params.erase(mivarClass->params()[i]->id());
-    removeClassItem(mivarClass);
+    deleteStoredClassData(mivarClass);
     m_model->modelClass()->removeById(mivarClass->id());
 }
 
