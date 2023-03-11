@@ -69,7 +69,7 @@
             <widget class="RelationOptions" name="RelativeOpt"/>
             <widget class="RuleOptions" name="RuleOpt"/>
            </widget>
-           <widget class="QTextBrowser" name="displayRelative"/>
+           <widget class="RelationTree" name="displayRelative" native="true"/>
           </widget>
           <widget class="QTextBrowser" name="displayErrors">
            <property name="baseSize">
@@ -220,6 +220,12 @@
    <class>HomeWidget</class>
    <extends>QWidget</extends>
    <header location="global">ui/HomeWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RelationTree</class>
+   <extends>QWidget</extends>
+   <header location="global">ui/RelationTree.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

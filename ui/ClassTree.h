@@ -15,6 +15,8 @@ class ClassTree : public QWidget
 {
     Q_OBJECT
 
+private:
+    Ui::ClassTree* ui;
     std::map<QString, std::pair<QTreeWidgetItem*, std::shared_ptr<MivarClass>>> m_classes;
     std::map<QString, std::pair<QTreeWidgetItem*, std::shared_ptr<MivarParam>>> m_params;
     std::shared_ptr<MivarModel> m_model;
@@ -43,8 +45,6 @@ public:
 private slots:
     void addParam_slot(std::shared_ptr<MivarClass> mc);
     void addSubclass_slot(std::shared_ptr<MivarClass> mc);
-private:
-    Ui::ClassTree* ui;
 };
 
 #endif // CLASSTREE_H

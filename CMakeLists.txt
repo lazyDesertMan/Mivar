@@ -53,7 +53,14 @@ set(SOURCES
     ui/components/TreeClassDetail.cpp
     ui/components/TreeParamDetail.h
     ui/components/TreeParamDetail.cpp
+    ui/components/TreeRelationDetail.h
+    ui/components/TreeRelationDetail.cpp
+    ui/components/TreeRuleDetail.h
+    ui/components/TreeRuleDetail.cpp
     ui/ResetableWidget.h
+    ui/RelationTree.h
+    ui/RelationTree.cpp
+    ui/RelationTree.ui
     main.cpp
     resources.qrc
 )

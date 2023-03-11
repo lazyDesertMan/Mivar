@@ -38,7 +38,7 @@ signals:
 class TreeParamDetail : public ParamActions {
     Q_OBJECT
 
-    struct ParamObserver : IObserver {
+    struct ParamObserver : public IObserver {
         TreeParamDetail* parent;
         void handle(int16_t code);
     };
@@ -63,7 +63,7 @@ signals:
 class TreeParamType : public ParamActions {
     Q_OBJECT
 
-    struct ParamObserver : IObserver {
+    struct ParamObserver : public IObserver {
         TreeParamType* parent;
         void handle(int16_t code);
     };

@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->displayProject, &ClassTree::addClassEvent, this, &MainWindow::ShowNewSubclassForm);
     connect(ui->displayProject, &ClassTree::editParamEvent, this, &MainWindow::ShowParameterEdit);
     connect(ui->displayProject, &ClassTree::addParamEvent, this, &MainWindow::ShowAddParameterForm);
+    connect(ui->saveFile, &QAction::triggered, this, &MainWindow::saveModel);
 
     activeWidget = ui->HomeOpt;
 }
@@ -46,18 +47,24 @@ void MainWindow::on_loadFile_triggered()
     m_model.reset();
     QString pathFile = QFileDialog::getOpenFileName(this, "Выберите файл", QDir::currentPath(), "*.xml");
     if(pathFile.size() > 0) {
+        m_fileSavePath = pathFile;
         m_model = ModelLoader::load(pathFile);
         ui->displayProject->DisplayMivar(m_model);
+        ui->displayRelative->DisplayMivar(m_model);
     }
 }
 
-void MainWindow::ShowClassEdit()
-{
+void MainWindow::saveModel() {
+    if(m_fileSavePath.size())
+        ModelLoader::save(m_model, m_fileSavePath);
+}
+
+void MainWindow::ShowClassEdit() {
 
 }
+
 // Вывод формы для редактирования класса
 void MainWindow::ShowClassEditForm(const std::shared_ptr<MivarClass> &mivarClass, const std::shared_ptr<MivarClass>& parent) {
-    activeWidget->reset();
     ui->ClassOpt->setEditableClass(mivarClass, parent);
     ui->centralWidget->setCurrentWidget(ui->ClassOpt);
     activeWidget = ui->ClassOpt;

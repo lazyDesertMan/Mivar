@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW2_H
-#define MAINWINDOW2_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include <QMainWindow>
 #include <models/MivarModel.h>
@@ -30,6 +30,7 @@ public:
 private slots:
     void on_exit_triggered();
     void on_loadFile_triggered();
+    void saveModel();
 public slots:
     void ShowClassEdit();
     
@@ -65,6 +66,7 @@ public slots:
 private:
     Ui::MainWindow *ui;
     std::shared_ptr<MivarModel> m_model;
+    QString m_fileSavePath;
 };
 
-#endif // MAINWINDOW2_H
+#endif // MAINWINDOW_H

@@ -1,9 +1,5 @@
+#include <QDebug>
 #include "MivarRule.h"
-
-MivarRule::~MivarRule() {
-    if(m_isBindet)
-        m_relation->removeObserver(shared_from_this());
-}
 
 void MivarRule::bindRelation(std::shared_ptr<MivarRelation> relation) {
     if (m_isBindet)
@@ -31,8 +27,7 @@ QString MivarRule::paramID(const QString& paramName) {
     return "";
 }
 
-bool MivarRule::isCorrect()
-{
+bool MivarRule::isCorrect() {
     return true;
 }
 
@@ -64,4 +59,9 @@ void MivarRule::syncWithRelation() {
 void MivarRule::handle(int16_t code) {
     syncWithRelation();
     sendEvent();
+}
+
+MivarRule::~MivarRule() {
+    if(m_isBindet)
+        m_relation->removeObserver(shared_from_this());
 }

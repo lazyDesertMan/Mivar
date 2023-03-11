@@ -56,7 +56,7 @@ public:
 class TreeClassDetail : public ClassActions {
     Q_OBJECT
 
-    struct ClassObserver : IObserver {
+    struct ClassObserver : public IObserver {
         TreeClassDetail* parent;
         void handle(int16_t code);
     };

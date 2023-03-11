@@ -7,5 +7,6 @@
         <file>res/icons/class.svg</file>
         <file>res/icons/param.svg</file>
         <file>res/icons/rule.svg</file>
+        <file>res/icons/relation.svg</file>
     </qresource>
 </RCC>

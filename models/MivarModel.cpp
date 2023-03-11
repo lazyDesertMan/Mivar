@@ -30,7 +30,7 @@ bool MivarModel::addRelation(const std::shared_ptr<MivarRelation> relation) {
         idx++;
     if (idx == m_relations.size()) {
         m_relations.push_back(relation);
-        sendEvent();
+        sendEvent(EventCode::EC_RELATION_ADD);
         return true;
     }
     return false;
@@ -58,6 +58,6 @@ void MivarModel::removeRelation(const QString& id) {
         idx++;
     if (idx != m_relations.size()) {
         m_relations.erase(m_relations.begin() + idx);
-        sendEvent();
+        sendEvent(EventCode::EC_RELATION_REMOVE);
     }
 }

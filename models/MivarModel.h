@@ -17,6 +17,8 @@ class MivarModel : public MivarObject {
     std::vector<std::shared_ptr<MivarRelation>> m_relations;
 
 public:
+    enum EventCode : int16_t { EC_RELATION_ADD = 16, EC_RELATION_REMOVE };
+
     MivarModel(const QString& id = "", const QString& name = "", const QString& description = "");
 
     std::shared_ptr<MivarClass>& modelClass();
