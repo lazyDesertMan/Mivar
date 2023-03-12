@@ -1,7 +1,38 @@
 #include <QBoxLayout>
+#include <QMouseEvent>
 #include "TreeRuleDetail.h"
 
-TreeRuleDetail::TreeRuleDetail(std::shared_ptr<MivarRule> rule) : TreeRuleActions(), m_rule(rule) {
+RuleActions::RuleActions(std::shared_ptr<MivarRule> mivarRule) : m_menu(this) {
+    m_rule = mivarRule;
+
+    m_editAct = new QAction("Изменить", this);
+    connect(m_editAct, &QAction::triggered, this, &RuleActions::onEditClick);
+    m_removeAct = new QAction("Удалить", this);
+    connect(m_removeAct, &QAction::triggered, this, &RuleActions::onRemoveClick);
+    m_menu.addActions({m_editAct, m_removeAct});
+}
+const std::shared_ptr<MivarRule> RuleActions::getRule() const {
+    return m_rule;
+}
+
+void RuleActions::mousePressEvent(QMouseEvent* event) {
+    if (event->button() == Qt::MouseButton::RightButton)
+        m_menu.exec(QCursor::pos());
+}
+
+void RuleActions::onEditClick() {
+    emit editClick(m_rule);
+}
+
+void RuleActions::onRemoveClick() {
+    emit removeClick(m_rule);
+}
+
+/*
+ * TreeRuleDetail
+*/
+
+TreeRuleDetail::TreeRuleDetail(std::shared_ptr<MivarRule> rule) : RuleActions(rule) {
     m_observer = std::make_shared<RuleObserver>();
     m_observer->parent = this;
     m_rule->addObserver(m_observer);

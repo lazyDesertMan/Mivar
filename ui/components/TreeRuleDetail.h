@@ -3,17 +3,40 @@
 
 #include <QWidget>
 #include <QLabel>
+#include <QMenu>
 #include <models/IObserver.h>
 #include <models/MivarRule.h>
 
-class TreeRuleActions : public QWidget {
+/**
+ * @brief Виджет, предоставляющий меню для работы с отношениями
+ */
+class RuleActions : public QWidget {
     Q_OBJECT
-
 public:
-    
+    explicit RuleActions(std::shared_ptr<MivarRule> mivarRule);
+    virtual ~RuleActions() = default;
+
+    const std::shared_ptr<MivarRule> getRule() const;
+protected:
+    std::shared_ptr<MivarRule> m_rule;
+
+    QAction* m_editAct;
+    QAction* m_removeAct;
+    QMenu    m_menu;
+    virtual void mousePressEvent(QMouseEvent* event);
+
+private slots:
+    void onEditClick();
+    void onRemoveClick();
+signals:
+    void editClick(std::shared_ptr<MivarRule> rule);
+    void removeClick(std::shared_ptr<MivarRule> rule);
 };
 
-class TreeRuleDetail : public TreeRuleActions {
+/**
+ * @brief Отображение информации о имени правила
+ */
+class TreeRuleDetail : public RuleActions {
     Q_OBJECT
 
     struct RuleObserver : IObserver {
@@ -22,7 +45,6 @@ class TreeRuleDetail : public TreeRuleActions {
     };
 
     std::shared_ptr<RuleObserver> m_observer;
-    std::shared_ptr<MivarRule> m_rule;
     QLabel*  m_icon;
     QLabel*  m_name;
 public:
