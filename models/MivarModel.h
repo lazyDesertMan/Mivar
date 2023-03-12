@@ -26,6 +26,7 @@ public:
     void setModelClass(const std::shared_ptr<MivarClass>& mivarClass);
 
     const std::vector<std::shared_ptr<MivarRelation>>& relations() const noexcept;
+    const bool containsRelation(const QString& id) const;
     bool addRelation(const std::shared_ptr<MivarRelation> relation);
     const std::shared_ptr<MivarRelation>& getRelation(const QString& id) const;
     std::shared_ptr<MivarRelation>& getRelation(const QString& id);
