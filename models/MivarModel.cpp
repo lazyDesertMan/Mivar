@@ -64,6 +64,7 @@ void MivarModel::removeRelation(const QString& id) {
     while (idx < m_relations.size() && m_relations[idx]->id() != id)
         idx++;
     if (idx != m_relations.size()) {
+        m_rootClass->removeRel(m_relations[idx]->id());
         m_relations.erase(m_relations.begin() + idx);
         sendEvent(EventCode::EC_RELATION_REMOVE);
     }

@@ -7,6 +7,7 @@
 #include <models/MivarModel.h>
 #include <models/MivarRelation.h>
 #include <models/MivarRule.h>
+#include <ui/components/TreeRelationDetail.h>
 
 namespace Ui {
 class RelationTree;
@@ -60,9 +61,15 @@ public:
     ~RelationTree();
 
     void updateRules(const QString& classID);
-    void updateRelations();
+
 
     void DisplayMivar(std::shared_ptr<MivarModel> model);
+public slots:
+    void updateRelations();
+private:
+    void configureRel(QTreeWidgetItem* mivarRelItem, const std::shared_ptr<MivarRelation>& mivarRel);
+protected slots:
+    void deleteRel(const std::shared_ptr<MivarRelation>& mivarRel);
 };
 
 #endif // RELATIONTREE_H

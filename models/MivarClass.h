@@ -73,6 +73,7 @@ public:
     
     bool contains(const QString& id) const noexcept;
     bool removeById(const QString& id);
+    void removeRel(const QString& id);
 };
 
 #endif

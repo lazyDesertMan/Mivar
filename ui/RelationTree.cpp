@@ -105,35 +105,66 @@ void RelationTree::displayRules(std::shared_ptr<MivarClass> mivarClass) {
 RelationTree::RelationTree(QWidget *parent) : QWidget(parent), ui(new Ui::RelationTree)
 {
     ui->setupUi(this);
-}
 
+}
+void RelationTree::configureRel(QTreeWidgetItem* mivarRelItem, const std::shared_ptr<MivarRelation>& mivarRel) {
+    TreeRelationDetail* relDetails = new TreeRelationDetail(mivarRel);
+    ui->treeWidget->setItemWidget(mivarRelItem, 0, relDetails);
+    connect(relDetails, &RelActions::removeClick, this, &RelationTree::deleteRel);
+}
+void RelationTree::deleteRel(const std::shared_ptr<MivarRelation>& rel) {
+    m_model->removeRelation(rel->id());
+}
 void RelationTree::updateRules(const QString& classID) {
     if (m_classes.find(classID) != m_classes.end()) {
         std::shared_ptr<MivarClass> mivarClass = m_classes[classID];
+        // Очистка отношений
+        for (auto it = m_rules.begin(); it != m_rules.end();) {
+            if(m_model->modelClass()->contains(it->first))
+                it++;
+            else {
+                QTreeWidgetItem* ruleItem = it->second.first;
+                if (ruleItem){
+                    QTreeWidgetItem* parent = ruleItem->parent();
+                    parent->removeChild(ruleItem);
+                }
+                qDebug() << it->second.second.use_count();
+                it = m_rules.erase(it);
+            }
+        }
+        for (const std::shared_ptr<MivarRule> rule : mivarClass->rules()){
+            if(m_rules.find(rule->id()) == m_rules.end()){
+                QTreeWidgetItem* item = new QTreeWidgetItem();
+                QTreeWidgetItem* parent = m_relations[rule->getBindetRelation()->id()].first;
+                parent->addChild(item);
+                m_rules.insert({rule->id(), {item, rule}});
+            }
+        }
     }
+
 }
 
 void RelationTree::updateRelations() {
+
     // Очистка отношений
     for (auto it = m_relations.begin(); it != m_relations.end();) {
-        if(m_model->)
+        if(m_model->containsRelation(it->first))
             it++;
         else {
             QTreeWidgetItem* relItem = it->second.first;
-            if (relItem)
-                relItem->treeWidget()->dele;
+            if (relItem){
+                int idx = ui->treeWidget->indexOfTopLevelItem(relItem);
+                delete ui->treeWidget->takeTopLevelItem(idx);
+            }
+            qDebug() << it->second.second.use_count();
             it = m_relations.erase(it);
         }
     }
-
     for (const std::shared_ptr<MivarRelation> rel : m_model->relations()){
-        if(m_relations.find(rel->id()) != m_relations.end()){
-            m_relations.erase(rel->id());
-        }
-    }
-    for (const std::shared_ptr<MivarRelation> rel : m_relations->second{
-        if(m_relations.find(rel->id()) != m_relations.end()){
-            m_relations.erase(rel->id());
+        if(m_relations.find(rel->id()) == m_relations.end()){
+            QTreeWidgetItem* item = new QTreeWidgetItem();
+            ui->treeWidget->addTopLevelItem(item);
+            m_relations.insert({rel->id(), {item, rel}});
         }
     }
 }
@@ -150,8 +181,7 @@ void RelationTree::DisplayMivar(std::shared_ptr<MivarModel> model) {
     for(size_t i = 0; i < m_model->relations().size(); i++) {
         QTreeWidgetItem* item = new QTreeWidgetItem();
         ui->treeWidget->addTopLevelItem(item);
-        TreeRelationDetail* details = new TreeRelationDetail(model->relations()[i]);
-        ui->treeWidget->setItemWidget(item, 0, details);
+        configureRel(item, m_model->relations()[i]);
         m_relations.insert({model->relations()[i]->id(), {item, model->relations()[i]}});
     }
     displayRules(m_model->modelClass());

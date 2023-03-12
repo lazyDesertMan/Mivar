@@ -102,6 +102,19 @@ bool MivarClass::removeById(const QString& id) {
     return false;
 }
 
+void MivarClass::removeRel(const QString &id)
+{
+    for(size_t i = 0; i < m_rules.size(); i++){
+        if(m_rules[i]->getBindetRelation()->id() == id){
+            m_rules[i]->unbindRelation();
+            m_rules.erase(m_rules.begin() + i);
+        }
+    }
+    for(size_t i = 0; i < m_subclasses.size(); i++){
+        m_subclasses[i]->removeRel(id);
+    }
+}
+
 void MivarClass::addRule(std::shared_ptr<MivarRule> rule) {
     if (!contains(rule->id())) {
         m_rules.push_back(rule);
