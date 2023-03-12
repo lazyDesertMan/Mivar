@@ -114,7 +114,28 @@ void RelationTree::updateRules(const QString& classID) {
 }
 
 void RelationTree::updateRelations() {
+    // Очистка отношений
+    for (auto it = m_relations.begin(); it != m_relations.end();) {
+        if(m_model->)
+            it++;
+        else {
+            QTreeWidgetItem* relItem = it->second.first;
+            if (relItem)
+                relItem->treeWidget()->dele;
+            it = m_relations.erase(it);
+        }
+    }
 
+    for (const std::shared_ptr<MivarRelation> rel : m_model->relations()){
+        if(m_relations.find(rel->id()) != m_relations.end()){
+            m_relations.erase(rel->id());
+        }
+    }
+    for (const std::shared_ptr<MivarRelation> rel : m_relations->second{
+        if(m_relations.find(rel->id()) != m_relations.end()){
+            m_relations.erase(rel->id());
+        }
+    }
 }
 
 void RelationTree::DisplayMivar(std::shared_ptr<MivarModel> model) {
