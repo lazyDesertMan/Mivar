@@ -24,6 +24,13 @@ const std::vector<std::shared_ptr<MivarRelation>>& MivarModel::relations() const
     return m_relations;
 }
 
+const bool MivarModel::containsRelation(const QString &id) const {
+    for (size_t idx = 0; idx < m_relations.size(); idx++)
+        if(m_relations[idx]->id() == id)
+            return true;
+    return false;
+}
+
 bool MivarModel::addRelation(const std::shared_ptr<MivarRelation> relation) {
     size_t idx = 0;
     while (idx < m_relations.size() && m_relations[idx]->id() != relation->id())
