@@ -141,7 +141,6 @@ void RelationTree::updateRules(const QString& classID) {
             }
         }
     }
-
 }
 
 void RelationTree::updateRelations() {
