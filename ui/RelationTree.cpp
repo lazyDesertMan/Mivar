@@ -83,7 +83,6 @@ void RelationTree::syncModel()
             it = m_classes.erase(it);
         }
     }
-    
 }
 
 void RelationTree::displayRules(std::shared_ptr<MivarClass> mivarClass) {
@@ -128,7 +127,6 @@ void RelationTree::updateRules(const QString& classID) {
                     QTreeWidgetItem* parent = ruleItem->parent();
                     parent->removeChild(ruleItem);
                 }
-                qDebug() << it->second.second.use_count();
                 it = m_rules.erase(it);
             }
         }
@@ -144,7 +142,6 @@ void RelationTree::updateRules(const QString& classID) {
 }
 
 void RelationTree::updateRelations() {
-
     // Очистка отношений
     for (auto it = m_relations.begin(); it != m_relations.end();) {
         if(m_model->containsRelation(it->first))
@@ -155,7 +152,6 @@ void RelationTree::updateRelations() {
                 int idx = ui->treeWidget->indexOfTopLevelItem(relItem);
                 delete ui->treeWidget->takeTopLevelItem(idx);
             }
-            qDebug() << it->second.second.use_count();
             it = m_relations.erase(it);
         }
     }
@@ -166,6 +162,7 @@ void RelationTree::updateRelations() {
             m_relations.insert({rel->id(), {item, rel}});
         }
     }
+    syncModel();
 }
 
 void RelationTree::DisplayMivar(std::shared_ptr<MivarModel> model) {

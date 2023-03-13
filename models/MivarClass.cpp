@@ -108,11 +108,11 @@ void MivarClass::removeRel(const QString &id)
         if(m_rules[i]->getBindetRelation()->id() == id){
             m_rules[i]->unbindRelation();
             m_rules.erase(m_rules.begin() + i);
+            i--;
         }
     }
-    for(size_t i = 0; i < m_subclasses.size(); i++){
+    for(size_t i = 0; i < m_subclasses.size(); i++)
         m_subclasses[i]->removeRel(id);
-    }
 }
 
 void MivarClass::addRule(std::shared_ptr<MivarRule> rule) {
@@ -122,14 +122,18 @@ void MivarClass::addRule(std::shared_ptr<MivarRule> rule) {
     }
 }
 
-void MivarClass::removeRule(const QString& id) {
+bool MivarClass::removeRule(const QString& id) {
     for(size_t i = 0; i < m_rules.size(); i++)
         if(m_rules[i]->id() == id) {
             m_rules[i]->unbindRelation();
             m_rules.erase(m_rules.begin() + i);
             sendEvent(EventCode::EC_RULE_REMOVE);
-            return;
+            return true;
         }
+    for(std::shared_ptr<MivarClass>& subclass : m_subclasses)
+        if (subclass->removeRule(id))
+            return true;
+    return false;
 }
 
 bool MivarClass::paramContains(const QString& id) const noexcept {
