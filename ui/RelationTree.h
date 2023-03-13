@@ -69,7 +69,8 @@ public slots:
 private:
     void configureRel(QTreeWidgetItem* mivarRelItem, const std::shared_ptr<MivarRelation>& mivarRel);
 protected slots:
-    void deleteRel(const std::shared_ptr<MivarRelation>& mivarRel);
+    void deleteRelation(const std::shared_ptr<MivarRelation>& mivarRel);
+    void deleteRule(const std::shared_ptr<MivarRule>& rule);
 };
 
 #endif // RELATIONTREE_H

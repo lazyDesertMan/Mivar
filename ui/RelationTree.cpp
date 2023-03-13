@@ -94,6 +94,7 @@ void RelationTree::displayRules(std::shared_ptr<MivarClass> mivarClass) {
         QTreeWidgetItem* item = new QTreeWidgetItem();
         parent->addChild(item);
         TreeRuleDetail* details = new TreeRuleDetail(rule);
+        connect(details, &TreeRuleDetail::removeClick, this, &RelationTree::deleteRule);
         m_rules.insert({rule->id(), {item, rule}});
         ui->treeWidget->setItemWidget(item, 0, details);
     }
@@ -109,11 +110,19 @@ RelationTree::RelationTree(QWidget *parent) : QWidget(parent), ui(new Ui::Relati
 void RelationTree::configureRel(QTreeWidgetItem* mivarRelItem, const std::shared_ptr<MivarRelation>& mivarRel) {
     TreeRelationDetail* relDetails = new TreeRelationDetail(mivarRel);
     ui->treeWidget->setItemWidget(mivarRelItem, 0, relDetails);
-    connect(relDetails, &RelActions::removeClick, this, &RelationTree::deleteRel);
+    connect(relDetails, &RelActions::removeClick, this, &RelationTree::deleteRelation);
 }
-void RelationTree::deleteRel(const std::shared_ptr<MivarRelation>& rel) {
+
+void RelationTree::deleteRule(const std::shared_ptr<MivarRule>& rule) {
+    m_model->modelClass()->removeRule(rule->id());
+    syncModel();
+}
+
+void RelationTree::deleteRelation(const std::shared_ptr<MivarRelation> &rel)
+{
     m_model->removeRelation(rel->id());
 }
+
 void RelationTree::updateRules(const QString& classID) {
     if (m_classes.find(classID) != m_classes.end()) {
         std::shared_ptr<MivarClass> mivarClass = m_classes[classID];
