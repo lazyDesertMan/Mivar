@@ -137,3 +137,37 @@ MivarRelation::ErrorData MivarFunctionRelation::errorDetails() const {
 const QString MivarFunctionRelation::type() const noexcept {
     return "prog";
 }
+
+/*const int16_t MivarRelation::get_type() const noexcept {
+    return m_type;
+}
+
+void MivarRelation::setType(const QString& type) {
+    if (type == "simple") {
+        m_type = RELATIVE_TYPE_SIMPLE;
+        sendEvent(EventCode::EC_TYPE_CHANGE);
+    }
+    else if (type == "constr") {
+        m_type = RELATIVE_TYPE_CONSTRAINT;
+        sendEvent(EventCode::EC_TYPE_CHANGE);
+    }
+    else if (type == "ifclause") {
+        m_type = RELATIVE_TYPE_IFCLAUSE;
+        sendEvent(EventCode::EC_TYPE_CHANGE);
+    }
+    else if (type == "prog") {
+        m_type = RELATIVE_TYPE_FUNCTION;
+        sendEvent(EventCode::EC_TYPE_CHANGE);
+    }
+}
+
+void MivarRelation::setType(const int16_t type) {
+    if (type == RELATIVE_TYPE_SIMPLE || type == RELATIVE_TYPE_CONSTRAINT || type == RELATIVE_TYPE_IFCLAUSE || type == RELATIVE_TYPE_FUNCTION) {
+        m_type = type;
+        sendEvent(EventCode::EC_TYPE_CHANGE);
+    }
+}*/
+
+bool MivarRelation::isCorrect() const noexcept {
+    return m_id.size() > 0 && m_name.size() > 0 && (m_type == RELATIVE_TYPE_SIMPLE || m_type == RELATIVE_TYPE_CONSTRAINT || m_type == RELATIVE_TYPE_IFCLAUSE || m_type == RELATIVE_TYPE_FUNCTION);
+}

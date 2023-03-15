@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->displayProject, &ClassTree::addClassEvent, this, &MainWindow::ShowNewSubclassForm);
     connect(ui->displayProject, &ClassTree::editParamEvent, this, &MainWindow::ShowParameterEdit);
     connect(ui->displayProject, &ClassTree::addParamEvent, this, &MainWindow::ShowAddParameterForm);
+    connect(ui->displayProject, &ClassTree::addRelEvent, this, &MainWindow::ShowAddRelativeForm);
     connect(ui->saveFile, &QAction::triggered, this, &MainWindow::saveModel);
 
     activeWidget = ui->HomeOpt;
@@ -104,4 +105,10 @@ void MainWindow::ShowAddParameterForm(const std::shared_ptr<MivarClass>& mivarCl
     ui->ParamOpt->prepareToAddParam(m_model, mivarClass);
     ui->centralWidget->setCurrentWidget(ui->ParamOpt);
     activeWidget = ui->ParamOpt;
+}
+void MainWindow::ShowAddRelativeForm() {
+    activeWidget->reset();
+    ui->RelativeOpt->prepareToAddRel(m_model);
+    ui->centralWidget->setCurrentWidget(ui->RelativeOpt);
+    activeWidget = ui->RelativeOpt;
 }

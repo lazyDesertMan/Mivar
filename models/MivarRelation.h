@@ -11,7 +11,25 @@
  */
 class MivarRelation : public MivarObject {
 public:
+    static constexpr int16_t RELATIVE_TYPE_NONE   = 0;
+    static constexpr int16_t RELATIVE_TYPE_SIMPLE = 1;
+    static constexpr int16_t RELATIVE_TYPE_CONSTRAINT = 2;
+    static constexpr int16_t RELATIVE_TYPE_IFCLAUSE = 3;
+    static constexpr int16_t RELATIVE_TYPE_FUNCTION = 4;
+
+    enum EventCode : int16_t {
+        EC_TYPE_CHANGE = 16
+    };
+
     class InvalidTypeException {};
+
+    //const int16_t get_type() const noexcept;
+
+    //MivarRelation() : m_type(RELATIVE_TYPE_NONE) {}
+
+    //void setType(const QString& type);
+    //void setType(const int16_t type);
+    bool isCorrect() const noexcept;
     
     struct RelationParameter {
         QString name;
@@ -28,6 +46,7 @@ public:
     };
 
 protected:
+    int16_t m_type;
     QString m_code;
     std::vector<RelationParameter> m_inputs;
     std::vector<RelationParameter> m_outputs;

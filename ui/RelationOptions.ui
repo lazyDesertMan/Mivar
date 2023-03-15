@@ -16,14 +16,7 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,1,1,1,2,0">
-   <item row="3" column="0" alignment="Qt::AlignTop">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Описание</string>
-     </property>
-    </widget>
-   </item>
+  <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0,0,0,0,0">
    <item row="1" column="0" alignment="Qt::AlignVCenter">
     <widget class="QLabel" name="label_2">
      <property name="text">
@@ -31,22 +24,8 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" alignment="Qt::AlignTop">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Тело отношения</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QTextEdit" name="bodyRelative"/>
-   </item>
-   <item row="0" column="0" alignment="Qt::AlignVCenter">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Наименование</string>
-     </property>
-    </widget>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="nameRelative"/>
    </item>
    <item row="1" column="1">
     <widget class="QComboBox" name="typeRelative">
@@ -67,27 +46,68 @@
      </item>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="nameRelative"/>
+   <item row="0" column="0" alignment="Qt::AlignVCenter">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Наименование</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" alignment="Qt::AlignTop">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Описание</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QTextEdit" name="bodyRelative"/>
    </item>
    <item row="3" column="1" rowspan="2">
     <widget class="QTextEdit" name="descriptionRelative"/>
    </item>
-   <item row="5" column="1">
-    <widget class="QPushButton" name="editRelative_Button">
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::RightToLeft</enum>
-     </property>
+   <item row="2" column="0" alignment="Qt::AlignTop">
+    <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>Применить</string>
+      <string>Тело отношения</string>
      </property>
     </widget>
+   </item>
+   <item row="5" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QWidget" name="widget_2" native="true"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="editBtn">
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>100</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Изменить</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="addBtn">
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>100</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Добавить</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="5" column="0">
+    <widget class="QWidget" name="widget" native="true"/>
    </item>
   </layout>
  </widget>

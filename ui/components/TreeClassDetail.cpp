@@ -11,6 +11,8 @@ ClassActions::ClassActions(std::shared_ptr<MivarClass> mivarClass, bool isRootCl
     
     m_addParamAct = new QAction("Добавить параметр", this);
     connect(m_addParamAct, &QAction::triggered, this, &ClassActions::onAddParamClick);
+    m_addRelAct = new QAction("Добавить отношение", this);
+    connect(m_addRelAct, &QAction::triggered, this, &ClassActions::onAddRelClick);
     m_addSubclassAct = new QAction("Добавить подкласс", this);
     connect(m_addSubclassAct, &QAction::triggered, this, &ClassActions::onAddSubclassClick);
     m_editAct = new QAction("Изменить", this);
@@ -21,7 +23,7 @@ ClassActions::ClassActions(std::shared_ptr<MivarClass> mivarClass, bool isRootCl
         m_menu.addActions({m_addParamAct, m_addSubclassAct, m_editAct, m_removeAct});
     }
     else
-        m_menu.addActions({m_addParamAct, m_addSubclassAct, m_editAct});
+        m_menu.addActions({m_addParamAct, m_addSubclassAct, m_editAct, m_addRelAct});
 }
 
 void ClassActions::mousePressEvent(QMouseEvent* event) {
@@ -31,6 +33,9 @@ void ClassActions::mousePressEvent(QMouseEvent* event) {
 
 void ClassActions::onAddParamClick() {
     emit addParamClick(m_class);
+}
+void ClassActions::onAddRelClick() {
+    emit addRelClick();
 }
 
 void ClassActions::onAddSubclassClick() {
@@ -66,6 +71,10 @@ TreeClassDetailType::TreeClassDetailType(std::shared_ptr<MivarClass> mivarClass,
 void TreeClassDetail::paramAdded()
 {
     emit onParamAdd(m_class);
+}
+void TreeClassDetail::relAdded()
+{
+    emit onRelAdd(m_model);
 }
 void TreeClassDetail::classAdded()
 {

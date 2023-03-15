@@ -59,6 +59,11 @@ public slots:
      * @param mivarClass Класс, в который добавляется параметр
      */
     void ShowAddParameterForm(const std::shared_ptr<MivarClass>& mivarClass);
+    /**
+     * @brief Отображение формы добавления нового отношения в MivarModel
+     * @param MivarModel Модель, в которую добавляется отнеошение
+     */
+    void ShowAddRelativeForm();
 
     // Вывод формы для редактирования отношений
     void ShowRelativeEdit();

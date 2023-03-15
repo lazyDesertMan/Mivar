@@ -5,6 +5,7 @@
 #include <QMenu>
 #include <QAction>
 #include <models/MivarClass.h>
+#include <models/MivarModel.h>
 
 /**
  * @brief Виджет, предоставляющий меню для работы с миварными классами дочерним виджетам
@@ -18,11 +19,13 @@ public:
     const std::shared_ptr<MivarClass> getClass() const;
 protected:
     std::shared_ptr<MivarClass> m_class;
+    std::shared_ptr<MivarModel> m_model;
     
     QAction* m_editAct;
     QAction* m_removeAct;
     QAction* m_addSubclassAct;
     QAction* m_addParamAct;
+    QAction* m_addRelAct;
     QMenu    m_menu;
     virtual void mousePressEvent(QMouseEvent* event);
 
@@ -30,11 +33,13 @@ private slots:
     void onEditClick();
     void onAddSubclassClick();
     void onAddParamClick();
+    void onAddRelClick();
     void onRemoveClick();
 signals:
     void editClick(std::shared_ptr<MivarClass> mivarClass);
     void addSubclassClick(std::shared_ptr<MivarClass> mivarClass);
     void addParamClick(std::shared_ptr<MivarClass> mivarClass);
+    void addRelClick();
     void removeClick(std::shared_ptr<MivarClass> mivarClass);
 };
 
@@ -66,9 +71,11 @@ class TreeClassDetail : public ClassActions {
     QLabel*  m_name;
 signals:
     void onParamAdd(std::shared_ptr<MivarClass> mc);
+    void onRelAdd(std::shared_ptr<MivarModel> mm);
     void onSubclassAdd(std::shared_ptr<MivarClass> mc);
 public:
     void paramAdded();
+    void relAdded();
     void update();
     void classAdded();
 

@@ -12,6 +12,8 @@ void ClassTree::configureClass(QTreeWidgetItem* mivarClassItem, const std::share
     connect(classDetails, &ClassActions::addParamClick, this, &ClassTree::addParamEvent);
     connect(classDetails, &TreeClassDetail::onParamAdd, this, &ClassTree::addParam_slot);
     connect(classDetails, &TreeClassDetail::onSubclassAdd, this, &ClassTree::addSubclass_slot);
+    connect(classDetails, &ClassActions::addRelClick, this, &ClassTree::addRelEvent);
+    //connect(classDetails, &TreeClassDetail::onRelAdd, this, &ClassTree::addRel_slot);
 
     TreeClassDetailType* classDetailType = new TreeClassDetailType(mivarClass, isRoot);
     ui->viewTree_Widget->setItemWidget(mivarClassItem, 1, classDetailType);
@@ -19,6 +21,7 @@ void ClassTree::configureClass(QTreeWidgetItem* mivarClassItem, const std::share
     connect(classDetailType, &ClassActions::editClick, this, &ClassTree::editClass);
     connect(classDetailType, &ClassActions::addSubclassClick, this, &ClassTree::addClassEvent);
     connect(classDetailType, &ClassActions::addParamClick, this, &ClassTree::addParamEvent);
+    connect(classDetailType, &ClassActions::addRelClick, this, &ClassTree::addRelEvent);
 }
 
 QTreeWidgetItem *ClassTree::addClass(QTreeWidgetItem *parent, const std::shared_ptr<MivarClass> &mivarClass)

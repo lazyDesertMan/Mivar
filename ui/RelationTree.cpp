@@ -111,6 +111,7 @@ void RelationTree::configureRel(QTreeWidgetItem* mivarRelItem, const std::shared
     TreeRelationDetail* relDetails = new TreeRelationDetail(mivarRel);
     ui->treeWidget->setItemWidget(mivarRelItem, 0, relDetails);
     connect(relDetails, &RelActions::removeClick, this, &RelationTree::deleteRelation);
+    //connect(relDetails, &RelActions::removeClick, this, &RelationTree::deleteRelation);
 }
 
 void RelationTree::deleteRule(const std::shared_ptr<MivarRule>& rule) {
