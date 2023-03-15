@@ -1,9 +1,21 @@
 #include <iostream>
+#include <fstream>
+#include <iterator>
+
+// QT
 #include <QApplication>
 #include <QJSEngine>
+#include <QDebug>
+
+// Boost
+#include <boost/graph/adjacency_list.hpp>
+
+// Собственные
 #include "ui/MainWindow.h"
 #include "services/ModelLoader.h"
-#include "services/SingleJSEngine.h"
+#include "services/ParamCalculator.h"
+#include "services/GraphService.h"
+#include "models/MivarRule.h"
 #include "models/MivarRule.h"
 
 int main(int argc, char* argv[]) {
@@ -22,7 +34,9 @@ int main(int argc, char* argv[]) {
         app.exec();
     }
     else {
+        //std::shared_ptr<MivarModel> model = ModelLoader::load("./files/lab1_2.xml");
         std::shared_ptr<MivarModel> model = ModelLoader::load("./files/proj3.xml");
-        ModelLoader::save(model, "./files/text.xml");
+        model->removeRelation("076991f6-9575-496f-b3ea-b558d6ae4262");
+        qDebug() << "clear";
     }
 }

@@ -2,6 +2,7 @@
 #include "RelationOptions.h"
 #include "ui_MainWindow.h"
 #include "services/ModelLoader.h"
+#include <services/GraphService.h>
 #include "models/MivarModel.h"
 #include <QFileDialog>
 #include <iostream>
@@ -21,6 +22,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->splitter_3->setStretchFactor(1, 1);
     ui->splitter_3->setStretchFactor(0, 10);
 
+    ui->GraphView->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->GraphView->setUrl(QUrl("qrc:///graph/res/graph/index.html"));
+    connect(ui->GraphView, &QWebEngineView::loadFinished, this, &MainWindow::afterLoad);
+
     connect(ui->displayProject, &ClassTree::editClassEvent, this, &MainWindow::ShowClassEditForm);
     connect(ui->displayProject, &ClassTree::addClassEvent, this, &MainWindow::ShowNewSubclassForm);
     connect(ui->displayProject, &ClassTree::editParamEvent, this, &MainWindow::ShowParameterEdit);
@@ -29,6 +34,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->saveFile, &QAction::triggered, this, &MainWindow::saveModel);
 
     activeWidget = ui->HomeOpt;
+}
+
+void MainWindow::afterLoad(bool) {
+    qDebug() << GraphService::ruleDependencyJson(m_model);
+    ui->GraphView->page()->runJavaScript(
+        QString("setData(" + GraphService::ruleDependencyJson(m_model) + ");")
+    );
 }
 
 MainWindow::~MainWindow()
@@ -53,6 +65,16 @@ void MainWindow::on_loadFile_triggered()
         ui->displayProject->DisplayMivar(m_model);
         ui->displayRelative->DisplayMivar(m_model);
     }
+}
+
+void MainWindow::on_showGraph_triggered() {
+    activeWidget->reset();
+    ui->centralWidget->setCurrentWidget(ui->GraphView);
+    ui->GraphView->load(QUrl("qrc:/graph/res/graph/index.html"));
+}
+
+void MainWindow::on_testModel_triggered() {
+
 }
 
 void MainWindow::saveModel() {

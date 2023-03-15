@@ -68,6 +68,7 @@
             <widget class="ParameterOptions" name="ParamOpt"/>
             <widget class="RelationOptions" name="RelativeOpt"/>
             <widget class="RuleOptions" name="RuleOpt"/>
+            <widget class="QWebEngineView" name="GraphView"/>
            </widget>
            <widget class="RelationTree" name="displayRelative" native="true"/>
           </widget>
@@ -136,6 +137,9 @@
    <addaction name="loadFile"/>
    <addaction name="saveFile"/>
    <addaction name="exit"/>
+   <addaction name="separator"/>
+   <addaction name="showGraph"/>
+   <addaction name="testModel"/>
   </widget>
   <action name="loadFile">
    <property name="icon">
@@ -184,6 +188,30 @@
     <string>Отношение</string>
    </property>
   </action>
+  <action name="showGraph">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/image/res/menu/graph.svg</normaloff>:/image/res/menu/graph.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Граф решения</string>
+   </property>
+   <property name="toolTip">
+    <string>Граф решения</string>
+   </property>
+  </action>
+  <action name="testModel">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/image/res/menu/testing.svg</normaloff>:/image/res/menu/testing.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Тестировать модель</string>
+   </property>
+   <property name="toolTip">
+    <string>Тестировать модель</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -227,6 +255,11 @@
    <extends>QWidget</extends>
    <header location="global">ui/RelationTree.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QWebEngineView</class>
+   <extends>QWidget</extends>
+   <header>qwebengineview.h</header>
   </customwidget>
  </customwidgets>
  <resources>

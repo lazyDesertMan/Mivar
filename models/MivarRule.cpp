@@ -44,6 +44,20 @@ const std::map<QString, QString>& MivarRule::params() const noexcept {
     return m_params;
 }
 
+const std::vector<QString> MivarRule::inputsId() {
+    std::vector<QString> inputs;
+    for(const MivarRelation::RelationParameter& param : m_relation->inputs())
+        inputs.push_back(m_params[param.name]);
+    return inputs;
+}
+
+const std::vector<QString> MivarRule::outputsId() {
+    std::vector<QString> outputs;
+    for(const MivarRelation::RelationParameter& param : m_relation->outputs())
+        outputs.push_back(m_params[param.name]);
+    return outputs;
+}
+
 void MivarRule::syncWithRelation() {
     for (std::pair<const QString, QString> param : m_params)
         if (!m_relation->containsParam(param.first))

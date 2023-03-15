@@ -46,6 +46,8 @@ public:
     bool bindParam(const QString& paramName, const QString& paramId);
 
     const std::map<QString, QString>& params() const noexcept;
+    const std::vector<QString> inputsId();
+    const std::vector<QString> outputsId();
 };
 
 #endif

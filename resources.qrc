@@ -4,9 +4,15 @@
         <file>res/menu/saveFile.svg</file>
         <file>res/menu/loadFile.svg</file>
         <file>res/menu/exit.svg</file>
+        <file>res/menu/graph.svg</file>
+        <file>res/menu/testing.svg</file>
         <file>res/icons/class.svg</file>
         <file>res/icons/param.svg</file>
         <file>res/icons/rule.svg</file>
         <file>res/icons/relation.svg</file>
+    </qresource>
+    <qresource prefix="/graph">
+        <file>res/graph/d3.min.js</file>
+        <file>res/graph/index.html</file>
     </qresource>
 </RCC>
