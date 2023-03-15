@@ -12,6 +12,7 @@ set(CMAKE_AUTORCC ON)
 include_directories("./")
 
 set(SOURCES
+    models/CalculateTree.h
     models/IObservable.h
     models/IObserver.h
     models/MivarClass.h
@@ -19,7 +20,9 @@ set(SOURCES
     models/MivarObject.h
     models/MivarRelation.h
     models/MivarRule.h
+    services/GraphService.h
     services/ModelLoader.h
+    services/ParamCalculator.h
     services/SingleJSEngine.h
     ui/MainWindow.h
     ui/MainWindow.ui
@@ -29,7 +32,9 @@ set(SOURCES
     models/MivarObject.cpp
     models/MivarRelation.cpp
     models/MivarRule.cpp
+    services/GraphService.cpp
     services/ModelLoader.cpp
+    services/ParamCalculator.cpp
     ui/MainWindow.cpp
     ui/ClassTree.cpp
     ui/ClassTree.h
@@ -64,9 +69,12 @@ set(SOURCES
     main.cpp
     resources.qrc
 )
+
+find_package(Boost REQUIRED COMPONENTS graph)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Xml Qml WebEngineWidgets)
+
 add_executable(${PROJECT_NAME} ${SOURCES})
-
-find_package(QT REQUIRED NAMES Qt6 Qt5 COMPONENTS Widgets Xml Qml)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Xml Qml)
-
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Xml Qt${QT_VERSION_MAJOR}::Qml)
+if(Boost_FOUND AND Qt5_FOUND)
+    target_link_libraries(${PROJECT_NAME} PRIVATE Boost::graph)
+    target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets Qt5::Xml Qt5::Qml Qt5::WebEngineWidgets)
+endif()
