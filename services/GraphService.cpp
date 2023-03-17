@@ -4,10 +4,13 @@
 // Добавление пустой реализации для функции, требуемой в Boost graph_concepts.hpp, стр.459
 namespace boost { void renumber_vertex_indices(const Graph&) {} }
 
-QString GraphService::genNodeName(std::shared_ptr<MivarObject> parent, std::shared_ptr<MivarObject> child) {
+QString GraphService::genNodeName(std::shared_ptr<MivarObject> parent, std::shared_ptr<MivarObject> child, QString prefix) {
+    auto normalize = [](QString& str) -> QString& {
+        return str.remove("\"").replace("\n", " ").remove("\r").replace(".", " ");
+    };
     QString parentName = parent->name();
-    QString childName = child->name();
-    return (parentName.remove("\"").remove("\n").remove("\r").replace(".", " ")) + "." + (childName.remove("\"").remove("\n").remove("\r").replace(".", " "));
+    QString childName = prefix + child->name();
+    return normalize(parentName) + "." + normalize(childName);
 }
 
 void GraphService::loadParams(std::map<QString, size_t> &paramIndexList, std::shared_ptr<MivarClass> &mivarClass)
@@ -39,7 +42,7 @@ void GraphService::loadRules(std::map<QString, std::pair<QString, QString>>& par
             inputs += "\"" + paramList[paramId].first + "\",";
         }
         inputs += "]";
-        const QString ruleName = genNodeName(mivarClass, rule);
+        const QString ruleName = genNodeName(mivarClass, rule, "[R]: ");
         for(QString paramId : rule->outputsId()) {
             paramList[paramId].second += "\"" + ruleName + "\",";
         }

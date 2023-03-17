@@ -37,7 +37,6 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::afterLoad(bool) {
-    qDebug() << GraphService::ruleDependencyJson(m_model);
     ui->GraphView->page()->runJavaScript(
         QString("setData(" + GraphService::ruleDependencyJson(m_model) + ");")
     );

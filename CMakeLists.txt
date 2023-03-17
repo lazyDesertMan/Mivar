@@ -12,7 +12,6 @@ set(CMAKE_AUTORCC ON)
 include_directories("./")
 
 set(SOURCES
-    models/CalculateTree.h
     models/IObservable.h
     models/IObserver.h
     models/MivarClass.h

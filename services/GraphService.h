@@ -38,7 +38,7 @@ class GraphService {
         };
     };
 
-    static QString genNodeName(std::shared_ptr<MivarObject> parent, std::shared_ptr<MivarObject> child);
+    static QString genNodeName(std::shared_ptr<MivarObject> parent, std::shared_ptr<MivarObject> child, QString prefix = "");
     static void loadParams(std::map<QString, size_t>& paramIndexList, std::shared_ptr<MivarClass>& mivarClass);
     static void loadParams(std::map<QString, std::pair<QString, QString>>& paramList, std::shared_ptr<MivarClass>& mivarClass);
     static void loadRules(std::map<QString, size_t>& ruleIndexList, std::shared_ptr<MivarClass>& mivarClass);

@@ -3,12 +3,11 @@
 
 MivarRelation::RelationParameter::RelationParameter(const QString& name, const QString& type) : name(name), type(type) {}
 
-MivarRelation::MivarRelation(const QString& id, const QString& name, const QString& description, const QString& code) :
-    m_code(code)
-{
+MivarRelation::MivarRelation(const QString& id, const QString& name, const QString& description, const QString& code) {
     m_id = id;
     m_name = name;
     m_description = description;
+    setCode(code);
 }
 
 const QString& MivarRelation::code() const noexcept {
@@ -17,6 +16,7 @@ const QString& MivarRelation::code() const noexcept {
 
 void MivarRelation::setCode(const QString& code) {
     m_code = code;
+    m_code.replace("\n", " ").remove("\r");
     sendEvent();
 }
 
@@ -121,13 +121,13 @@ QString MivarFunctionRelation::toJSFunction() const {
             code += ", " + m_outputs[i].name;
         code += ";\n";
     }
-    code += m_code;
-    if (m_outputs.size() == 1) {
-        code += "\n;return " + m_outputs[0].name + ";";
-    } else if (m_outputs.size() > 1) {
-        
+    code += m_code + "\n;return [";
+    if (m_outputs.size()) {
+        code += m_outputs[0].name;
+        for (size_t i = 1; i < m_outputs.size(); i++)
+            code += ", " + m_outputs[0].name;
     }
-    code += "})";
+    code += "];})";
     return code;
 }
 
