@@ -20,6 +20,7 @@ const QString ModelLoader::ID_ATTRIBUTE = "id";
 const QString ModelLoader::NAME_ATTRIBUTE = "shortName";
 const QString ModelLoader::DESCRIPTION_ATTRIBUTE = "description";
 const QString ModelLoader::PARAM_TYPE_ATTRIBUTE = "type";
+const QString ModelLoader::PARAM_DEFAULT_VAL_ATTRIBUTE = "defaultValue";
 const QString ModelLoader::RELATION_TYPE_ATTRIBUTE = "relationType";
 const QString ModelLoader::RELATION_INPUTS_ATTRIBUTE = "inObj";
 const QString ModelLoader::RELATION_OUTPUTS_ATTRIBUTE = "outObj";
@@ -50,6 +51,7 @@ void ModelLoader::loadClassParams(std::shared_ptr<MivarClass>& mivarClass, const
         QDomNode curNode = paramsNode.childNodes().at(relIdx);
         if (curNode.nodeName() == PARAM_TAG) {
             std::shared_ptr<MivarParam> param = std::make_shared<MivarParam>();
+            QString defaultVal = "";
             for (int attIdx = 0; attIdx < curNode.attributes().size(); attIdx++) {
                 QDomNode attribute = curNode.attributes().item(attIdx);
                 if (attribute.nodeName() == ID_ATTRIBUTE)
@@ -60,7 +62,11 @@ void ModelLoader::loadClassParams(std::shared_ptr<MivarClass>& mivarClass, const
                     param->setDescription(attribute.nodeValue());
                 else if (attribute.nodeName() == PARAM_TYPE_ATTRIBUTE)
                     param->setType(attribute.nodeValue());
+                else if (attribute.nodeName() == PARAM_DEFAULT_VAL_ATTRIBUTE)
+                    defaultVal = attribute.nodeValue();
             }
+            if (defaultVal.size())
+                param->setDefaultValue(defaultVal);
             if(param->isCorrect())
                 mivarClass->addParam(param);
         }
@@ -262,6 +268,7 @@ void ModelLoader::saveParam(QDomDocument& doc, std::shared_ptr<MivarParam>& para
     paramNode.setAttribute(ID_ATTRIBUTE, param->id());
     paramNode.setAttribute(NAME_ATTRIBUTE, param->name());
     paramNode.setAttribute(DESCRIPTION_ATTRIBUTE, param->description());
+    paramNode.setAttribute(PARAM_DEFAULT_VAL_ATTRIBUTE, param->defaultValue());
     paramNode.setAttribute(PARAM_TYPE_ATTRIBUTE, type);
     parentNode.appendChild(paramNode);
 }

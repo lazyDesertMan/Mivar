@@ -21,6 +21,7 @@ class ModelLoader {
     static const QString NAME_ATTRIBUTE;              //!< Атрибут имени
     static const QString DESCRIPTION_ATTRIBUTE;       //!< Атрибут описания
     static const QString PARAM_TYPE_ATTRIBUTE;        //!< Атрибут типа параметра
+    static const QString PARAM_DEFAULT_VAL_ATTRIBUTE; //!< Атрибут значения по умолчанию для параметра
     static const QString RELATION_TYPE_ATTRIBUTE;     //!< Атрибут типа отношения
     static const QString RELATION_INPUTS_ATTRIBUTE;   //!< Атрибут входных параметров отношения
     static const QString RELATION_OUTPUTS_ATTRIBUTE;  //!< Атрибут выходных параметров отношения

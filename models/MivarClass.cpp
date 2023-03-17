@@ -1,5 +1,7 @@
 #include "MivarClass.h"
 
+const QRegExp MivarParam::doubleExp = QRegExp("^(-)?(0|([1-9][0-9]*))(\\.[0-9]+)?$");
+
 void MivarClass::remove() {
     for(size_t i = 0; i < m_rules.size(); i++)
         m_rules[i];
@@ -168,7 +170,21 @@ void MivarParam::setType(const int16_t type) {
     if (type == PARAM_TYPE_DOUBLE || type == PARAM_TYPE_STRING) {
         m_type = type;
         sendEvent(EventCode::EC_TYPE_CHANGE);
+        if (m_type == PARAM_TYPE_DOUBLE && !doubleExp.exactMatch(m_defaultValue))
+            m_defaultValue = "";
     }
+}
+
+const QString &MivarParam::defaultValue() const noexcept {
+    return m_defaultValue;
+}
+
+void MivarParam::setDefaultValue(const QString& val) {
+    if (m_type == PARAM_TYPE_DOUBLE) {
+        if (doubleExp.exactMatch(val))
+            m_defaultValue = val;
+    } else
+        m_defaultValue = val;
 }
 
 bool MivarParam::isCorrect() const noexcept {

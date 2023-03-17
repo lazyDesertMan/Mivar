@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <QString>
+#include <QRegExp>
 #include "MivarObject.h"
 #include "MivarRule.h"
 #include "IObservable.h"
@@ -12,6 +13,7 @@
  */
 class MivarParam : public MivarObject {
 public:
+    static const QRegExp doubleExp;
     static constexpr int16_t PARAM_TYPE_NONE   = 0;
     static constexpr int16_t PARAM_TYPE_DOUBLE = 1;
     static constexpr int16_t PARAM_TYPE_STRING = 2;
@@ -27,10 +29,13 @@ public:
     const int16_t type() const noexcept;
     void setType(const QString& type);
     void setType(const int16_t type);
+    const QString& defaultValue() const noexcept;
+    void setDefaultValue(const QString& val);
     bool isCorrect() const noexcept;
 
 protected:
     int16_t m_type;
+    QString m_defaultValue;
 };
 
 /**
