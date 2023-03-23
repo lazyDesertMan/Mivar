@@ -152,10 +152,6 @@ std::shared_ptr<MivarParam> ClassTree::getParamByItem(QTreeWidgetItem *paramItem
 };
 
 void ClassTree::swapChilds(QTreeWidgetItem* item, int firstIdx, int secondIdx) {
-    ui->viewTree_Widget->removeItemWidget(item->child(firstIdx), 0);
-    ui->viewTree_Widget->removeItemWidget(item->child(firstIdx), 1);
-    ui->viewTree_Widget->removeItemWidget(item->child(secondIdx), 0);
-    ui->viewTree_Widget->removeItemWidget(item->child(secondIdx), 1);
     // Порядок удаления и вставки потомков не менять
     QTreeWidgetItem* secondChild = item->takeChild(secondIdx);
     QTreeWidgetItem* firstChild = item->takeChild(firstIdx);
