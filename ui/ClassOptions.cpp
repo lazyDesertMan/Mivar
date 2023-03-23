@@ -26,7 +26,10 @@ void ClassOptions::setEditableClass(std::shared_ptr<MivarClass> mc, const std::s
 {
     m_mivarClass = mc;
     ui->nameClass->setText(mc->name());
-    ui->parentClass->setText(parent->name());
+    if (parent.get() != nullptr)
+        ui->parentClass->setText(parent->name());
+    else
+        ui->parentClass->setText("");
     ui->descriptionClass->setText(mc->description());
     ui->editClassBtn->setVisible(true);
     ui->addClassBtn->setVisible(false);
