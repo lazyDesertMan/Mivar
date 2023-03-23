@@ -22,12 +22,18 @@ private:
     std::shared_ptr<MivarModel> m_model;
 
     void configureClass(QTreeWidgetItem* mivarClassItem, const std::shared_ptr<MivarClass>& mivarClass, bool isRoot = false);
+    void configureParam(QTreeWidgetItem* paramItem, const std::shared_ptr<MivarParam>& param);
     QTreeWidgetItem* addClass(QTreeWidgetItem* parent, const std::shared_ptr<MivarClass>& mivarClass);
     void addParam(QTreeWidgetItem* parent, const std::shared_ptr<MivarParam>& mivarParam);
 
     void clearView();
     
+    void bindWidgets(QTreeWidgetItem* classItem);
     void deleteStoredClassData(const std::shared_ptr<MivarClass>& mivarClass);
+    std::shared_ptr<MivarClass> getClassByItem(QTreeWidgetItem* classItem);
+    std::shared_ptr<MivarParam> getParamByItem(QTreeWidgetItem* paramItem);
+    void swapChilds(QTreeWidgetItem* item, int firstIdx, int secondIdx);
+    void sortTree(QTreeWidgetItem* item);
 protected slots:
     void deleteClass(const std::shared_ptr<MivarClass>& mivarClass);
     void deleteParam(const std::shared_ptr<MivarParam>& param);
@@ -47,6 +53,7 @@ private slots:
     void addParam_slot(std::shared_ptr<MivarClass> mc);
     //void addRel_slot();
     void addSubclass_slot(std::shared_ptr<MivarClass> mc);
+    void sortClass(std::shared_ptr<MivarClass> mc);
 };
 
 #endif // CLASSTREE_H

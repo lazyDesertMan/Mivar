@@ -52,7 +52,6 @@ class TreeClassDetailType : public ClassActions {
     QLabel* m_type;
 public:
     explicit TreeClassDetailType(std::shared_ptr<MivarClass> mivarClass, bool isRootClass = false);
-    ~TreeClassDetailType() = default;
 };
 
 /**
@@ -73,6 +72,7 @@ signals:
     void onParamAdd(std::shared_ptr<MivarClass> mc);
     void onRelAdd(std::shared_ptr<MivarModel> mm);
     void onSubclassAdd(std::shared_ptr<MivarClass> mc);
+    void onNameUpdate(std::shared_ptr<MivarClass> mc);
 public:
     void paramAdded();
     void relAdded();

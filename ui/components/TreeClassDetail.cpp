@@ -83,6 +83,7 @@ void TreeClassDetail::classAdded()
 
 void TreeClassDetail::update() {
     m_name->setText(m_class->name());
+    emit onNameUpdate(m_class);
 }
 
 TreeClassDetail::TreeClassDetail(std::shared_ptr<MivarClass> observedClass, bool isRootClass) :
