@@ -20,6 +20,10 @@ void MivarModel::setModelClass(const std::shared_ptr<MivarClass>& mivarClass) {
     m_rootClass = mivarClass;
 }
 
+const bool MivarModel::contains(const QString &id) const {
+    m_rootClass->contains(id);
+}
+
 const std::vector<std::shared_ptr<MivarRelation>>& MivarModel::relations() const noexcept {
     return m_relations;
 }

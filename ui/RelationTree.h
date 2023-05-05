@@ -7,7 +7,6 @@
 #include <models/MivarModel.h>
 #include <models/MivarRelation.h>
 #include <models/MivarRule.h>
-#include <ui/components/TreeRelationDetail.h>
 
 namespace Ui {
 class RelationTree;

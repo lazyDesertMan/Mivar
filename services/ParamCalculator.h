@@ -24,7 +24,14 @@ class ParamCalculator {
 
     void loadRules(IDMap<MivarRule>& rules, const std::shared_ptr<MivarClass>& mivarClass);
 public:
-    std::vector<QString> findWays(
+    struct ParamCalcResult {
+        QString id;
+        std::vector<QString> values;
+
+        ParamCalcResult(const QString& id, const std::vector<QString> vals) : id(id), values(vals) {}
+    };
+
+    std::vector<ParamCalcResult> findWays(
         const std::shared_ptr<MivarModel> model,
         std::map<QString, QString> inputVals,
         const std::vector<QString> searchingValsID

@@ -20,8 +20,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->splitter_2->setStretchFactor(1, 1);
     ui->splitter_2->setStretchFactor(0, 10);
     ui->splitter_3->setStretchFactor(1, 1);
-    ui->splitter_3->setStretchFactor(0, 10);
+    ui->splitter_3->setStretchFactor(0, 5);
 
+    ui->paramCalc->setParamOutputWidget(ui->displayErrors);
     ui->GraphView->setContextMenuPolicy(Qt::NoContextMenu);
     ui->GraphView->setUrl(QUrl("qrc:///graph/res/graph/index.html"));
     connect(ui->GraphView, &QWebEngineView::loadFinished, this, &MainWindow::afterLoad);
@@ -32,7 +33,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->displayProject, &ClassTree::addParamEvent, this, &MainWindow::ShowAddParameterForm);
     connect(ui->displayProject, &ClassTree::addRelEvent, this, &MainWindow::ShowAddRelativeForm);
     connect(ui->saveFile, &QAction::triggered, this, &MainWindow::saveModel);
-
+    connect(ui->testModel, &QAction::triggered, this, &MainWindow::testingModel);
+    
     activeWidget = ui->HomeOpt;
 }
 
@@ -67,18 +69,25 @@ void MainWindow::on_loadFile_triggered()
 }
 
 void MainWindow::on_showGraph_triggered() {
-    activeWidget->reset();
-    ui->centralWidget->setCurrentWidget(ui->GraphView);
-    ui->GraphView->load(QUrl("qrc:/graph/res/graph/index.html"));
-}
-
-void MainWindow::on_testModel_triggered() {
-
+    if (m_model) {
+        activeWidget->reset();
+        ui->centralWidget->setCurrentWidget(ui->GraphView);
+        ui->GraphView->load(QUrl("qrc:/graph/res/graph/index.html"));
+    }
 }
 
 void MainWindow::saveModel() {
     if(m_fileSavePath.size())
         ModelLoader::save(m_model, m_fileSavePath);
+}
+
+void MainWindow::testingModel() {
+    if (m_model) {
+        activeWidget->reset();
+        ui->paramCalc->setModel(m_model);
+        ui->centralWidget->setCurrentWidget(ui->paramCalc);
+        activeWidget = ui->paramCalc;
+    }
 }
 
 void MainWindow::ShowClassEdit() {

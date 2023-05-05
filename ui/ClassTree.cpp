@@ -2,6 +2,8 @@
 #include "ui_ClassTree.h"
 #include <QPushButton>
 #include <QDebug>
+#include <ui/components/modelTree/TreeClassDetail.h>
+#include <ui/components/modelTree/TreeParamDetail.h>
 
 void ClassTree::configureClass(QTreeWidgetItem* mivarClassItem, const std::shared_ptr<MivarClass>& mivarClass, bool isRoot) {
     TreeClassDetail* classDetails = new TreeClassDetail(mivarClass, isRoot);

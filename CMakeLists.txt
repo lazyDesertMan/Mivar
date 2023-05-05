@@ -53,18 +53,25 @@ set(SOURCES
     ui/HomeWidget.cpp
     ui/HomeWidget.h
     ui/HomeWidget.ui
-    ui/components/TreeClassDetail.h
-    ui/components/TreeClassDetail.cpp
-    ui/components/TreeParamDetail.h
-    ui/components/TreeParamDetail.cpp
-    ui/components/TreeRelationDetail.h
-    ui/components/TreeRelationDetail.cpp
-    ui/components/TreeRuleDetail.h
-    ui/components/TreeRuleDetail.cpp
+    ui/components/modelTree/TreeClassDetail.h
+    ui/components/modelTree/TreeClassDetail.cpp
+    ui/components/modelTree/TreeParamDetail.h
+    ui/components/modelTree/TreeParamDetail.cpp
+    ui/components/relationsTree/TreeRelationDetail.h
+    ui/components/relationsTree/TreeRelationDetail.cpp
+    ui/components/relationsTree/TreeRuleDetail.h
+    ui/components/relationsTree/TreeRuleDetail.cpp
+    ui/components/calculateTree/CalculateTreeClass.h
+    ui/components/calculateTree/CalculateTreeClass.cpp
+    ui/components/calculateTree/CalculateTreeParam.h
+    ui/components/calculateTree/CalculateTreeParam.cpp
     ui/ResetableWidget.h
     ui/RelationTree.h
     ui/RelationTree.cpp
     ui/RelationTree.ui
+    ui/ParamCalculateForm.h
+    ui/ParamCalculateForm.cpp
+    ui/ParamCalculateForm.ui
     main.cpp
     resources.qrc
 )

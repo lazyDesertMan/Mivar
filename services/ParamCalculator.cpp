@@ -63,7 +63,7 @@ void ParamCalculator::loadRules(IDMap<MivarRule> &rules, const std::shared_ptr<M
         loadRules(rules, subclass);
 }
 
-std::vector<QString> ParamCalculator::findWays(
+std::vector<ParamCalculator::ParamCalcResult> ParamCalculator::findWays(
     const std::shared_ptr<MivarModel> model,
     std::map<QString, QString> inputVals,
     std::vector<QString> outputValsID)
@@ -77,7 +77,9 @@ std::vector<QString> ParamCalculator::findWays(
     for(QString& paramID : outputValsID) {
         paramWaySearch(rules, params, paramID);
     }
-    for(auto param : outputValsID)
-        qDebug() << params[param];
-    return std::vector<QString>();
+    std::vector<ParamCalcResult> outValues;
+    for(auto param : params) {
+        outValues.push_back({param.first, param.second});
+    }
+    return outValues;
 }

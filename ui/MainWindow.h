@@ -31,8 +31,7 @@ private slots:
     void on_exit_triggered();
     void on_loadFile_triggered();
     void saveModel();
-    void on_testModel_triggered();
-
+    void testingModel();
     void on_showGraph_triggered();
 
 public slots:

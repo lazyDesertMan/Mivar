@@ -4,6 +4,7 @@
 #include <QVariant>
 #include <QWidget>
 #include <QAbstractListModel>
+#include <QRegExpValidator>
 #include <models/MivarModel.h>
 #include <models/MivarClass.h>
 #include "ResetableWidget.h"
@@ -41,11 +42,16 @@ public slots:
     void EditParameter();
     void AddParameter();
 
+private slots:
+    void onTypeChange(int index);
 private:
     Ui::ParameterOptions *ui;
     std::shared_ptr<MivarParam> m_editableParam;
     std::shared_ptr<MivarClass> m_mivarClass;
     std::shared_ptr<MivarModel> m_model;
+
+    QRegExpValidator* m_stringValidator;
+    QRegExpValidator* m_doubleValidator;
 };
 
 #endif // PARAMETEROPTIONS_H

@@ -1,7 +1,7 @@
 #include <services/ModelLoader.h>
 #include <QDebug>
-#include <ui/components/TreeRuleDetail.h>   
-#include <ui/components/TreeRelationDetail.h>   
+#include <ui/components/relationsTree/TreeRuleDetail.h>   
+#include <ui/components/relationsTree/TreeRelationDetail.h>   
 #include "RelationTree.h"
 #include "ui_RelationTree.h"
 
