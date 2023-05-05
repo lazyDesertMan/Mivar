@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <QDebug>
 #include <QLineEdit>
 #include <QCheckBox>
@@ -120,6 +121,31 @@ void ParamCalculateForm::sortTree(QTreeWidgetItem* item) {
     bindWidgets(item);
 }
 
+void ParamCalculateForm::printCalcResult(const std::vector<ParamCalculator::ParamCalcResult>& results,
+                         const std::vector<QString>& outputs,
+                         const std::map<QString, QString>& inputs) {
+    if (m_browser) {
+        m_browser->clear();
+        m_browser->setText("Результаты вычислений:");
+        for (const ParamCalculator::ParamCalcResult& res : results) {
+            if (res.values.size()) {
+                QString paramHeader = m_params.at(res.id).param->name() + " = ";
+                QString paramValues = "";
+                for (size_t i = 0; i < res.values.size(); i++) {
+                    if (res.values[i] != m_params.at(res.id).param->defaultValue() && (inputs.find(res.id) == inputs.end() || inputs.at(res.id) != res.values[i]))
+                        paramValues += res.values[i] + ", ";
+                }
+                if (paramValues.length() > 0) {
+                    paramHeader += paramValues.remove(paramValues.size() - 2, 2);
+                    if (std::find(outputs.begin(), outputs.end(), res.id) != outputs.end())
+                        paramHeader = "<div style=\"font-weight: bold; text-decoration: underline;\">" + paramHeader + "</div>";
+                    m_browser->append(paramHeader);
+                }
+            }
+        }
+    }
+}
+
 void ParamCalculateForm::onSubclassAdd(std::shared_ptr<MivarClass> parent) {
     qDebug() << "Subclass add event";
 }
@@ -165,20 +191,7 @@ void ParamCalculateForm::onCalculateClick() {
             outputs.push_back(param.first);
     }
     std::vector<ParamCalculator::ParamCalcResult> results = m_calculator.findWays(m_model, inputs, outputs);
-    if (m_browser) {
-        m_browser->setText("");
-        for (const ParamCalculator::ParamCalcResult& res : results) {
-            QString line = m_params.at(res.id).param->name();
-            if (res.values.size()) {
-                line += " = " + res.values[0];
-                for (size_t i = 1; i < res.values.size(); i++)
-                    line += ", " + res.values[i];
-            }
-            else
-                line += ": значение не найдено.";
-            m_browser->append(line);
-        }
-    }
+    printCalcResult(results, outputs, inputs);
 }
 
 ParamCalculateForm::ParamCalculateForm(QWidget *parent) : QWidget(parent),

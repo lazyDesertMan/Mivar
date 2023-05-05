@@ -49,6 +49,9 @@ class ParamCalculateForm : public QWidget, public ResetableWidget
     void swapChilds(QTreeWidgetItem* item, int firstIdx, int secondIdx);
     void sortTree(QTreeWidgetItem* item);
 
+    void printCalcResult(const std::vector<ParamCalculator::ParamCalcResult>& results,
+                         const std::vector<QString>& outputs,
+                         const std::map<QString, QString>& inputs);
 protected slots:
     void onSubclassAdd(std::shared_ptr<MivarClass> parent);
     void onSubclassDelete();
