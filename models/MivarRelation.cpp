@@ -1,3 +1,4 @@
+#include <QUuid>
 #include "../services/SingleJSEngine.h"
 #include "MivarRelation.h"
 
@@ -140,4 +141,23 @@ MivarRelation::ErrorData MivarFunctionRelation::errorDetails() const {
 
 const QString MivarFunctionRelation::type() const noexcept {
     return "prog";
+}
+
+std::shared_ptr<MivarRelation> RelationFactory::operator()(const int16_t type, const QString& name, const QString& description, const QString& code) {
+    QString id = QUuid::createUuid().toString();
+    switch (type)
+    {
+    case MivarRelation::RELATIVE_TYPE_SIMPLE:
+        // return std::make_shared<MivarSimpleRelation>(id, name, description, code);
+        break;
+    case MivarRelation::RELATIVE_TYPE_CONSTRAINT:
+        // return std::make_shared<MivarConstraintRelation>(id, name, description, code);
+        break;
+    case MivarRelation::RELATIVE_TYPE_IFCLAUSE:
+        // return std::make_shared<MivarIfclauseRelation>(id, name, description, code);
+        break;
+    case MivarRelation::RELATIVE_TYPE_FUNCTION:
+        return std::make_shared<MivarFunctionRelation>(id, name, description, code);
+    }
+    return nullptr;
 }

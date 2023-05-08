@@ -51,9 +51,8 @@ protected:
     std::vector<RelationParameter> m_inputs;
     std::vector<RelationParameter> m_outputs;
 
-public:
     MivarRelation(const QString& id = "", const QString& name = "", const QString& description = "", const QString& code = "");
-
+public:
     virtual const QString type() const noexcept = 0;
     
     const QString& code() const noexcept;
@@ -81,10 +80,16 @@ public:
 
 class MivarFunctionRelation : public MivarRelation {
 public:
+    MivarFunctionRelation(const QString& id = "", const QString& name = "", const QString& description = "", const QString& code = "") : MivarRelation(id, name, description, code) {}
     virtual QString toJSFunction() const override;
     virtual ErrorData errorDetails() const override;
     virtual const QString type() const noexcept override;
     virtual ~MivarFunctionRelation() = default;
+};
+
+class RelationFactory {
+public:
+    std::shared_ptr<MivarRelation> operator()(const int16_t type, const QString& name = "", const QString& description = "", const QString& code = "");
 };
 
 #endif

@@ -7,8 +7,6 @@
 #include "ResetableWidget.h"
 #include <models/MivarModel.h>
 
-
-
 class RelTypeModel : public QAbstractListModel {
     Q_OBJECT
 public:
@@ -37,18 +35,20 @@ public:
     ~RelationOptions();
     void reset() override;
 private slots:
-    void onTypeChange(int);
-public slots:
+    void onNextClick();
+    void onBackClick();
+    void onTypeChange(int id);
     // Редактирование отношения
-    void EditRelative();
+    void editRelation();
     // Добавление отношения
-    void AddRelative();
+    void addRelation();
 private:
     Ui::RelationOptions *ui;
     std::shared_ptr<MivarRelation> m_editableRel;
     std::shared_ptr<MivarRelation> m_relative;
     std::shared_ptr<MivarModel> m_model;
     QWidget* m_activeInput;
+    RelationFactory m_relFactory;
 };
 
 #endif // RELATIONOPTIONS_H

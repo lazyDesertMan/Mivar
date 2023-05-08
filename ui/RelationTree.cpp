@@ -105,7 +105,7 @@ void RelationTree::displayRules(std::shared_ptr<MivarClass> mivarClass) {
 RelationTree::RelationTree(QWidget *parent) : QWidget(parent), ui(new Ui::RelationTree)
 {
     ui->setupUi(this);
-    connect(ui->addBtn_Rel, SIGNAL(clicked()), this, SLOT(AddRelative()));
+    connect(ui->addRelBtn, SIGNAL(clicked()), this, SLOT(AddRelative()));
     
 }
 void RelationTree::AddRelative() {
@@ -130,7 +130,7 @@ void RelationTree::deleteRelation(const std::shared_ptr<MivarRelation> &rel)
 void RelationTree::updateRules(const QString& classID) {
     if (m_classes.find(classID) != m_classes.end()) {
         std::shared_ptr<MivarClass> mivarClass = m_classes[classID];
-        // Очистка отношений
+        // Очистка правил
         for (auto it = m_rules.begin(); it != m_rules.end();) {
             if(m_model->modelClass()->contains(it->first))
                 it++;
@@ -172,6 +172,7 @@ void RelationTree::updateRelations() {
         if(m_relations.find(rel->id()) == m_relations.end()){
             QTreeWidgetItem* item = new QTreeWidgetItem();
             ui->treeWidget->addTopLevelItem(item);
+            configureRel(item, rel);
             m_relations.insert({rel->id(), {item, rel}});
         }
     }

@@ -16,103 +16,14 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,1,0" rowminimumheight="0,0,0,0,0,0">
-   <item row="1" column="0" alignment="Qt::AlignVCenter">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Тип отношения</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="nameRelative"/>
-   </item>
-   <item row="1" column="1">
-    <widget class="QComboBox" name="typeRelative">
-     <item>
-      <property name="text">
-       <string>Первое отношение</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Второе отношение</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Третье отношение</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="0" column="0" alignment="Qt::AlignVCenter">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Наименование</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" alignment="Qt::AlignTop">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Описание</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1" rowspan="2">
-    <widget class="QTextEdit" name="descriptionRelative"/>
-   </item>
-   <item row="2" column="0" alignment="Qt::AlignTop">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Тело отношения</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QWidget" name="widget_2" native="true"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="editBtn">
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>100</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Изменить</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="addBtn">
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>100</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Добавить</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="5" column="0">
-    <widget class="QWidget" name="widget" native="true"/>
-   </item>
-   <item row="2" column="1" alignment="Qt::AlignTop">
-    <widget class="QStackedWidget" name="stackedWidget">
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <widget class="QStackedWidget" name="pagesStack">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
-     <widget class="QWidget" name="page">
-      <layout class="QGridLayout" name="gridLayout">
+     <widget class="QWidget" name="page_3">
+      <layout class="QGridLayout" name="gridLayout_4" rowstretch="0,0,0,1,0,0">
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -126,24 +37,147 @@
         <number>0</number>
        </property>
        <property name="spacing">
-        <number>0</number>
+        <number>6</number>
        </property>
-       <item row="0" column="0" alignment="Qt::AlignVCenter">
-        <widget class="QLineEdit" name="simpleCodeEdit">
-         <property name="font">
-          <font>
-           <family>Monospace</family>
-          </font>
+       <item row="3" column="2">
+        <widget class="QTextEdit" name="descriptionRelative"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Наименование</string>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QComboBox" name="typeRelative">
+         <item>
+          <property name="text">
+           <string>Первое отношение</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Второе отношение</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Третье отношение</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Тип отношения</string>
          </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLineEdit" name="nameRelative"/>
+       </item>
+       <item row="5" column="2">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QWidget" name="widget_2" native="true"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="nextBtn">
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>100</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Далее</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Описание</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Тело отношения</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QStackedWidget" name="codeInputStack">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="page">
+          <layout class="QGridLayout" name="gridLayout">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0" alignment="Qt::AlignVCenter">
+            <widget class="QLineEdit" name="simpleCodeEdit">
+             <property name="font">
+              <font/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_2">
+          <layout class="QGridLayout" name="gridLayout_3">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QTextEdit" name="functionCodeEdit">
+             <property name="font">
+              <font/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_2">
-      <layout class="QGridLayout" name="gridLayout_3">
+     <widget class="QWidget" name="page_4">
+      <layout class="QGridLayout" name="gridLayout_6">
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -156,16 +190,41 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <property name="spacing">
-        <number>0</number>
-       </property>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0,0,0">
+         <item>
+          <widget class="QWidget" name="widget" native="true"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="backBtn">
+           <property name="text">
+            <string>Назад</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="editBtn">
+           <property name="text">
+            <string>Изменить</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="addBtn">
+           <property name="text">
+            <string>Добавить</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
        <item row="0" column="0">
-        <widget class="QTextEdit" name="functionCodeEdit">
-         <property name="font">
-          <font>
-           <family>Monospace</family>
-          </font>
-         </property>
+        <widget class="QTreeWidget" name="treeWidget">
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>

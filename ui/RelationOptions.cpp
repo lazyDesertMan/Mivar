@@ -35,6 +35,14 @@ int RelTypeModel::rowCount(const QModelIndex& parent) const {
     return m_data.size();
 }
 
+void RelationOptions::onNextClick() {
+    ui->pagesStack->setCurrentIndex(1);
+}
+
+void RelationOptions::onBackClick() {
+    ui->pagesStack->setCurrentIndex(0);
+}
+
 void RelationOptions::onTypeChange(int i) {
     int data = ui->typeRelative->currentData(Qt::UserRole).toInt();
     switch (data)
@@ -44,7 +52,7 @@ void RelationOptions::onTypeChange(int i) {
         m_activeInput->setVisible(false);
         m_activeInput = ui->simpleCodeEdit;
         m_activeInput->setVisible(true);
-        ui->stackedWidget->setCurrentIndex(0);
+        ui->codeInputStack->setCurrentIndex(0);
     }
     break;
     case MivarRelation::RELATIVE_TYPE_CONSTRAINT:
@@ -58,7 +66,7 @@ void RelationOptions::onTypeChange(int i) {
         m_activeInput->setVisible(false);
         m_activeInput = ui->functionCodeEdit;
         m_activeInput->setVisible(true);
-        ui->stackedWidget->setCurrentIndex(1);
+        ui->codeInputStack->setCurrentIndex(1);
     }
     break;
     default:
@@ -76,7 +84,9 @@ RelationOptions::RelationOptions(QWidget *parent) :
                                           {MivarRelation::RELATIVE_TYPE_IFCLAUSE, "Условная функция"}, {MivarRelation::RELATIVE_TYPE_FUNCTION, "Функция"}});
     ui->typeRelative->setModel(mod);
     //connect(ui->editBtn, SIGNAL(clicked()), this, SLOT(EditRelative()));
-    connect(ui->addBtn, SIGNAL(clicked()), this, SLOT(AddRelative()));
+    connect(ui->nextBtn, SIGNAL(clicked()), this, SLOT(onNextClick()));
+    connect(ui->backBtn, SIGNAL(clicked()), this, SLOT(onBackClick()));
+    connect(ui->addBtn, SIGNAL(clicked()), this, SLOT(addRelation()));
     connect(ui->typeRelative, SIGNAL(currentIndexChanged(int)), this, SLOT(onTypeChange(int)));
 }
 
@@ -104,17 +114,22 @@ void RelationOptions::reset()
 
 void RelationOptions::prepareToAddRel(std::shared_ptr<MivarModel> model) {
     m_model = model;
-    ui->nameRelative->setText("");
-    ui->descriptionRelative->setText("");
+    // Очистка полей ввода
+    ui->nameRelative->clear();
+    ui->descriptionRelative->clear();
+    ui->simpleCodeEdit->clear();
+    ui->functionCodeEdit->clear();
+    // По умолчанию устанавливается тип отношения "простое"
     ui->typeRelative->setCurrentIndex(0);
-    ui->editBtn->setVisible(false);
-    ui->addBtn->setVisible(true);
     ui->simpleCodeEdit->setVisible(true);
     m_activeInput = ui->simpleCodeEdit;
     ui->functionCodeEdit->setVisible(false);
+    
+    ui->editBtn->setVisible(false);
+    ui->pagesStack->setCurrentIndex(0);
 }
 // Редактирование отношений
-void RelationOptions::EditRelative()
+void RelationOptions::editRelation()
 {
     QString _name = ui->nameRelative->text();
     QString _desc = ui->descriptionRelative->toPlainText();
@@ -131,8 +146,47 @@ void RelationOptions::EditRelative()
 
 }
 
-void RelationOptions::AddRelative()
+void RelationOptions::addRelation()
 {
-
+    QString name = ui->nameRelative->text();
+    QString desc = ui->descriptionRelative->toPlainText();
+    QString code;
+    uint type = ui->typeRelative->currentData(Qt::UserRole).toUInt();
+    switch (type)
+    {
+    case MivarRelation::RELATIVE_TYPE_SIMPLE:
+        code = ui->simpleCodeEdit->text();
+        break;
+    /*
+    case MivarRelation::RELATIVE_TYPE_CONSTRAINT:
+        code = ui->relativeCodeEdit->text();
+        break;
+    case MivarRelation::RELATIVE_TYPE_IFCLAUSE:
+        code = ui->ifclauseCodeEdit->code(); // code() так как придётся пилить отдельный виджет с полями для ввода условия и веток then и else
+        break;
+    */
+    case MivarRelation::RELATIVE_TYPE_FUNCTION:
+        code = ui->simpleCodeEdit->text();
+        break;
+    default:
+        break;
+    }
+    if (name.size()) {
+        std::shared_ptr<MivarRelation> rel = m_relFactory(type, name, desc, code);
+        if (rel != nullptr) {
+            /*
+            for (auto input : ui->someInputTable) {
+                MivarRelation::RelationParameter param(input.name, input.type);
+                rel->addInput(param);
+            }
+            for (auto output : ui->someOutputTable) {
+                MivarRelation::RelationParameter param(output.name, output.type);
+                rel->addOutput(param);
+            }
+            */
+        m_model->addRelation(rel);
+        }
+        /* TODO: Мб добавить ветку else для вывода сообщения в "терминал", что не удалось добавить отношение. Это не обязательно, просто можно подумать */
+    }
 }
 
