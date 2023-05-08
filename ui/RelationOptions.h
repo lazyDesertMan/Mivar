@@ -36,6 +36,8 @@ public:
     void prepareToAddRel(std::shared_ptr<MivarModel> model);
     ~RelationOptions();
     void reset() override;
+private slots:
+    void onTypeChange(int);
 public slots:
     // Редактирование отношения
     void EditRelative();
@@ -46,6 +48,7 @@ private:
     std::shared_ptr<MivarRelation> m_editableRel;
     std::shared_ptr<MivarRelation> m_relative;
     std::shared_ptr<MivarModel> m_model;
+    QWidget* m_activeInput;
 };
 
 #endif // RELATIONOPTIONS_H

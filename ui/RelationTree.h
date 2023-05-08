@@ -58,15 +58,16 @@ private:
 public:
     explicit RelationTree(QWidget* parent = nullptr);
     ~RelationTree();
-
     void updateRules(const QString& classID);
-
-
     void DisplayMivar(std::shared_ptr<MivarModel> model);
-public slots:
-    void updateRelations();
 private:
     void configureRel(QTreeWidgetItem* mivarRelItem, const std::shared_ptr<MivarRelation>& mivarRel);
+
+signals:
+    void addRuleEvent(std::shared_ptr<MivarRelation> rel);
+    void addRelationEvent();
+public slots:
+    void updateRelations();
 protected slots:
     void deleteRelation(const std::shared_ptr<MivarRelation>& mivarRel);
     void deleteRule(const std::shared_ptr<MivarRule>& rule);

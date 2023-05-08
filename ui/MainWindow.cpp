@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->displayProject, &ClassTree::editParamEvent, this, &MainWindow::ShowParameterEdit);
     connect(ui->displayProject, &ClassTree::addParamEvent, this, &MainWindow::ShowAddParameterForm);
     connect(ui->displayProject, &ClassTree::addRelEvent, this, &MainWindow::ShowAddRelativeForm);
+    connect(ui->displayRelative, &RelationTree::addRelationEvent, this, &MainWindow::ShowAddRelativeForm);
     connect(ui->saveFile, &QAction::triggered, this, &MainWindow::saveModel);
     connect(ui->testModel, &QAction::triggered, this, &MainWindow::testingModel);
     

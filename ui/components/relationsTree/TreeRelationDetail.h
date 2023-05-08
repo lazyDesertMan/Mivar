@@ -23,15 +23,21 @@ protected:
 
     QAction* m_editAct;
     QAction* m_removeAct;
+    QAction* m_newRuleAct;
+    QAction* m_newRelationAct;
     QMenu    m_menu;
     virtual void mousePressEvent(QMouseEvent* event);
 
 private slots:
     void onEditClick();
     void onRemoveClick();
+    void onNewRuleClick();
+    void onNewRelationClick();
 signals:
     void editClick(std::shared_ptr<MivarRelation> rel);
     void removeClick(std::shared_ptr<MivarRelation> rel);
+    void newRuleClick(std::shared_ptr<MivarRelation> rel);
+    void newRelationClick();
 };
 
 /**

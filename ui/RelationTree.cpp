@@ -105,13 +105,14 @@ void RelationTree::displayRules(std::shared_ptr<MivarClass> mivarClass) {
 RelationTree::RelationTree(QWidget *parent) : QWidget(parent), ui(new Ui::RelationTree)
 {
     ui->setupUi(this);
-
+    
 }
 void RelationTree::configureRel(QTreeWidgetItem* mivarRelItem, const std::shared_ptr<MivarRelation>& mivarRel) {
     TreeRelationDetail* relDetails = new TreeRelationDetail(mivarRel);
     ui->treeWidget->setItemWidget(mivarRelItem, 0, relDetails);
     connect(relDetails, &RelActions::removeClick, this, &RelationTree::deleteRelation);
-    //connect(relDetails, &RelActions::removeClick, this, &RelationTree::deleteRelation);
+    connect(relDetails, &RelActions::newRelationClick, this, &RelationTree::addRelationEvent);
+    connect(relDetails, &RelActions::newRuleClick, this, &RelationTree::addRuleEvent);
 }
 
 void RelationTree::deleteRule(const std::shared_ptr<MivarRule>& rule) {

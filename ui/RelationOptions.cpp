@@ -35,17 +35,49 @@ int RelTypeModel::rowCount(const QModelIndex& parent) const {
     return m_data.size();
 }
 
+void RelationOptions::onTypeChange(int i) {
+    int data = ui->typeRelative->currentData(Qt::UserRole).toInt();
+    switch (data)
+    {
+    case MivarRelation::RELATIVE_TYPE_SIMPLE:
+    {
+        m_activeInput->setVisible(false);
+        m_activeInput = ui->simpleCodeEdit;
+        m_activeInput->setVisible(true);
+        ui->stackedWidget->setCurrentIndex(0);
+    }
+    break;
+    case MivarRelation::RELATIVE_TYPE_CONSTRAINT:
+        qDebug() << "Constraint";
+        break;
+    case MivarRelation::RELATIVE_TYPE_IFCLAUSE:
+        qDebug() << "If";
+        break;
+    case MivarRelation::RELATIVE_TYPE_FUNCTION:
+    {
+        m_activeInput->setVisible(false);
+        m_activeInput = ui->functionCodeEdit;
+        m_activeInput->setVisible(true);
+        ui->stackedWidget->setCurrentIndex(1);
+    }
+    break;
+    default:
+        break;
+    }
+}
 
 RelationOptions::RelationOptions(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::RelationOptions)
 {
     ui->setupUi(this);
+    ui->functionCodeEdit->setTabStopDistance(ui->functionCodeEdit->fontMetrics().horizontalAdvance(' ') * 4);
     RelTypeModel* mod = new RelTypeModel({{MivarRelation::RELATIVE_TYPE_SIMPLE, "Простое"}, {MivarRelation::RELATIVE_TYPE_CONSTRAINT, "Ограничение"},
-                                          {MivarRelation::RELATIVE_TYPE_IFCLAUSE, "ifclause"}, {MivarRelation::RELATIVE_TYPE_FUNCTION, "Функция"}});
+                                          {MivarRelation::RELATIVE_TYPE_IFCLAUSE, "Условная функция"}, {MivarRelation::RELATIVE_TYPE_FUNCTION, "Функция"}});
     ui->typeRelative->setModel(mod);
     //connect(ui->editBtn, SIGNAL(clicked()), this, SLOT(EditRelative()));
     connect(ui->addBtn, SIGNAL(clicked()), this, SLOT(AddRelative()));
+    connect(ui->typeRelative, SIGNAL(currentIndexChanged(int)), this, SLOT(onTypeChange(int)));
 }
 
 RelationOptions::~RelationOptions()
@@ -77,13 +109,16 @@ void RelationOptions::prepareToAddRel(std::shared_ptr<MivarModel> model) {
     ui->typeRelative->setCurrentIndex(0);
     ui->editBtn->setVisible(false);
     ui->addBtn->setVisible(true);
+    ui->simpleCodeEdit->setVisible(true);
+    m_activeInput = ui->simpleCodeEdit;
+    ui->functionCodeEdit->setVisible(false);
 }
 // Редактирование отношений
 void RelationOptions::EditRelative()
 {
     QString _name = ui->nameRelative->text();
     QString _desc = ui->descriptionRelative->toPlainText();
-    QString _body = ui->bodyRelative->toPlainText();
+    QString _body = ui->simpleCodeEdit->text();
     QString _type = ui->typeRelative->currentText();
     int index = ui->typeRelative->currentIndex();
     if(index != -1 && _name.size() > 0 && _body.size() > 0){
