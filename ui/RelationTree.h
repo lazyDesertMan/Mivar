@@ -68,6 +68,7 @@ signals:
     void addRelationEvent();
 public slots:
     void updateRelations();
+    void AddRelative();
 protected slots:
     void deleteRelation(const std::shared_ptr<MivarRelation>& mivarRel);
     void deleteRule(const std::shared_ptr<MivarRule>& rule);

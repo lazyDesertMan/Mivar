@@ -25,7 +25,7 @@ protected:
     QAction* m_removeAct;
     QAction* m_addSubclassAct;
     QAction* m_addParamAct;
-    QAction* m_addRelAct;
+    QAction* m_addRuleAct;
     QMenu    m_menu;
     virtual void mousePressEvent(QMouseEvent* event);
 
@@ -33,13 +33,13 @@ private slots:
     void onEditClick();
     void onAddSubclassClick();
     void onAddParamClick();
-    void onAddRelClick();
+    void onAddRuleClick();
     void onRemoveClick();
 signals:
     void editClick(std::shared_ptr<MivarClass> mivarClass);
     void addSubclassClick(std::shared_ptr<MivarClass> mivarClass);
     void addParamClick(std::shared_ptr<MivarClass> mivarClass);
-    void addRelClick();
+    void addRuleClick();
     void removeClick(std::shared_ptr<MivarClass> mivarClass);
 };
 

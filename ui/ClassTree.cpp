@@ -14,7 +14,7 @@ void ClassTree::configureClass(QTreeWidgetItem* mivarClassItem, const std::share
     connect(classDetails, &ClassActions::addParamClick, this, &ClassTree::addParamEvent);
     connect(classDetails, &TreeClassDetail::onParamAdd, this, &ClassTree::addParam_slot);
     connect(classDetails, &TreeClassDetail::onSubclassAdd, this, &ClassTree::addSubclass_slot);
-    connect(classDetails, &ClassActions::addRelClick, this, &ClassTree::addRelEvent);
+    connect(classDetails, &ClassActions::addRuleClick, this, &ClassTree::addRuleEvent);
     connect(classDetails, &TreeClassDetail::onNameUpdate, this, &ClassTree::sortClass);
     //connect(classDetails, &TreeClassDetail::onRelAdd, this, &ClassTree::addRel_slot);
 
@@ -24,7 +24,7 @@ void ClassTree::configureClass(QTreeWidgetItem* mivarClassItem, const std::share
     connect(classDetailType, &ClassActions::editClick, this, &ClassTree::editClass);
     connect(classDetailType, &ClassActions::addSubclassClick, this, &ClassTree::addClassEvent);
     connect(classDetailType, &ClassActions::addParamClick, this, &ClassTree::addParamEvent);
-    connect(classDetailType, &ClassActions::addRelClick, this, &ClassTree::addRelEvent);
+    connect(classDetailType, &ClassActions::addRuleClick, this, &ClassTree::addRuleEvent);
 }
 
 void ClassTree::configureParam(QTreeWidgetItem *paramItem, const std::shared_ptr<MivarParam> &param) {

@@ -7,7 +7,7 @@ RuleOptions::RuleOptions(QWidget *parent) :
     ui(new Ui::RuleOptions)
 {
     ui->setupUi(this);
-    connect(ui->editRule_Button, SIGNAL(clicked()), this, SLOT(EditRule()));
+    connect(ui->editBtn_Rule, SIGNAL(clicked()), this, SLOT(EditRule()));
 }
 
 RuleOptions::~RuleOptions()
@@ -32,4 +32,11 @@ void RuleOptions::EditRule()
         qDebug() << "Не фортануло";
     }
 
+}
+void RuleOptions::prepareToAddRule(std::shared_ptr<MivarModel> model) {
+    m_model = model;
+    ui->nameRule->setText("");
+    ui->descriptionRule->setText("");
+    ui->editBtn_Rule->setVisible(false);
+    ui->addBtn_Rule->setVisible(true);
 }

@@ -11,13 +11,8 @@ RelActions::RelActions(std::shared_ptr<MivarRelation> mivarRel) : m_menu(this) {
     connect(m_editAct, &QAction::triggered, this, &RelActions::onEditClick);
     m_removeAct = new QAction("Удалить", this);
     connect(m_removeAct, &QAction::triggered, this, &RelActions::onRemoveClick);
-    m_newRuleAct = new QAction("Добавить правило", this);
-    connect(m_newRuleAct, &QAction::triggered, this, &RelActions::onNewRuleClick);
-    m_newRelationAct = new QAction("Добавить отношение", this);
-    connect(m_newRelationAct, &QAction::triggered, this, &RelActions::onNewRelationClick);
-    m_menu.addActions({m_editAct, m_removeAct, m_newRuleAct});
+    m_menu.addActions({m_editAct, m_removeAct});
     m_menu.addSeparator();
-    m_menu.addActions({m_newRelationAct});
 }
 const std::shared_ptr<MivarRelation> RelActions::getRel() const {
     return m_rel;
@@ -34,14 +29,6 @@ void RelActions::onEditClick() {
 
 void RelActions::onRemoveClick() {
     emit removeClick(m_rel);
-}
-
-void RelActions::onNewRuleClick() {
-    emit newRuleClick(m_rel);
-}
-
-void RelActions::onNewRelationClick() {
-    emit newRelationClick();
 }
 
 /*

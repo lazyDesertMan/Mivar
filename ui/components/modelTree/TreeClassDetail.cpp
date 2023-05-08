@@ -11,8 +11,8 @@ ClassActions::ClassActions(std::shared_ptr<MivarClass> mivarClass, bool isRootCl
     
     m_addParamAct = new QAction("Добавить параметр", this);
     connect(m_addParamAct, &QAction::triggered, this, &ClassActions::onAddParamClick);
-    m_addRelAct = new QAction("Добавить отношение", this);
-    connect(m_addRelAct, &QAction::triggered, this, &ClassActions::onAddRelClick);
+    m_addRuleAct = new QAction("Добавить правило", this);
+    connect(m_addRuleAct, &QAction::triggered, this, &ClassActions::onAddRuleClick);
     m_addSubclassAct = new QAction("Добавить подкласс", this);
     connect(m_addSubclassAct, &QAction::triggered, this, &ClassActions::onAddSubclassClick);
     m_editAct = new QAction("Изменить", this);
@@ -20,10 +20,10 @@ ClassActions::ClassActions(std::shared_ptr<MivarClass> mivarClass, bool isRootCl
     if (!isRootClass) {
         m_removeAct = new QAction("Удалить", this);
         connect(m_removeAct, &QAction::triggered, this, &ClassActions::onRemoveClick);
-        m_menu.addActions({m_addParamAct, m_addSubclassAct, m_editAct, m_removeAct});
+        m_menu.addActions({m_addParamAct, m_addSubclassAct, m_editAct, m_removeAct, m_addRuleAct});
     }
     else
-        m_menu.addActions({m_addParamAct, m_addSubclassAct, m_editAct, m_addRelAct});
+        m_menu.addActions({m_addParamAct, m_addSubclassAct, m_editAct, m_addRuleAct});
 }
 
 void ClassActions::mousePressEvent(QMouseEvent* event) {
@@ -34,8 +34,8 @@ void ClassActions::mousePressEvent(QMouseEvent* event) {
 void ClassActions::onAddParamClick() {
     emit addParamClick(m_class);
 }
-void ClassActions::onAddRelClick() {
-    emit addRelClick();
+void ClassActions::onAddRuleClick() {
+    emit addRuleClick();
 }
 
 void ClassActions::onAddSubclassClick() {

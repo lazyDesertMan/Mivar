@@ -69,6 +69,11 @@ public slots:
      * @param MivarModel Модель, в которую добавляется отнеошение
      */
     void ShowAddRelativeForm();
+    /**
+     * @brief Отображение формы добавления нового правила в MivarModel
+     * @param MivarModel Модель, в которую добавляется правила
+     */
+    void ShowAddRuleForm();
 
     // Вывод формы для редактирования отношений
     void ShowRelativeEdit();

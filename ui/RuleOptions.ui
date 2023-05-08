@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>647</width>
-    <height>436</height>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,8 +21,20 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="0" colspan="2">
-    <widget class="QTableWidget" name="table_OutData">
+   <item row="4" column="0" colspan="2">
+    <widget class="QTableWidget" name="table_InData">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustIgnored</enum>
+     </property>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderStretchLastSection">
+      <bool>false</bool>
+     </attribute>
      <column>
       <property name="text">
        <string>Наименование</string>
@@ -35,41 +47,17 @@
      </column>
     </widget>
    </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="QTableWidget" name="table_InData">
-     <column>
-      <property name="text">
-       <string>Наименование</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Параметр</string>
-      </property>
-     </column>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Отношение</string>
+     </property>
     </widget>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="label_3">
      <property name="text">
       <string>Описание</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QTextBrowser" name="viewRelative">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QTextEdit" name="descriptionRule"/>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Входные данные</string>
      </property>
     </widget>
    </item>
@@ -80,29 +68,73 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="nameRule"/>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>Отношение</string>
+      <string>Входные данные</string>
      </property>
     </widget>
    </item>
+   <item row="6" column="0" colspan="2">
+    <widget class="QTableWidget" name="table_OutData">
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Наименование</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Параметр</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QTextEdit" name="descriptionRule"/>
+   </item>
    <item row="7" column="1">
-    <widget class="QPushButton" name="editRule_Button">
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::RightToLeft</enum>
-     </property>
-     <property name="text">
-      <string>Применить</string>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QWidget" name="widget" native="true"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="addBtn_Rule">
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>120</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Добавить</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="editBtn_Rule">
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>120</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Изменить</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="nameRule"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="viewRelative">
+     <property name="enabled">
+      <bool>false</bool>
      </property>
     </widget>
    </item>

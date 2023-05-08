@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->displayProject, &ClassTree::addClassEvent, this, &MainWindow::ShowNewSubclassForm);
     connect(ui->displayProject, &ClassTree::editParamEvent, this, &MainWindow::ShowParameterEdit);
     connect(ui->displayProject, &ClassTree::addParamEvent, this, &MainWindow::ShowAddParameterForm);
-    connect(ui->displayProject, &ClassTree::addRelEvent, this, &MainWindow::ShowAddRelativeForm);
+    connect(ui->displayProject, &ClassTree::addRuleEvent, this, &MainWindow::ShowAddRuleForm);
     connect(ui->displayRelative, &RelationTree::addRelationEvent, this, &MainWindow::ShowAddRelativeForm);
     connect(ui->saveFile, &QAction::triggered, this, &MainWindow::saveModel);
     connect(ui->testModel, &QAction::triggered, this, &MainWindow::testingModel);
@@ -142,4 +142,10 @@ void MainWindow::ShowAddRelativeForm() {
     ui->RelativeOpt->prepareToAddRel(m_model);
     ui->centralWidget->setCurrentWidget(ui->RelativeOpt);
     activeWidget = ui->RelativeOpt;
+}
+void MainWindow::ShowAddRuleForm() {
+    activeWidget->reset();
+    ui->RuleOpt->prepareToAddRule(m_model);
+    ui->centralWidget->setCurrentWidget(ui->RuleOpt);
+    activeWidget = ui->RuleOpt;
 }
