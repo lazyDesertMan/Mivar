@@ -3,6 +3,7 @@
         <file>res/menu/pasteFile.svg</file>
         <file>res/menu/saveFile.svg</file>
         <file>res/menu/loadFile.svg</file>
+        <file>res/menu/newFile.svg</file>
         <file>res/menu/exit.svg</file>
         <file>res/menu/graph.svg</file>
         <file>res/menu/testing.svg</file>

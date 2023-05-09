@@ -143,9 +143,9 @@ void MainWindow::ShowAddRelativeForm() {
     ui->centralWidget->setCurrentWidget(ui->RelativeOpt);
     activeWidget = ui->RelativeOpt;
 }
-void MainWindow::ShowAddRuleForm() {
+void MainWindow::ShowAddRuleForm(std::shared_ptr<MivarClass> parentClass) {
     activeWidget->reset();
-    ui->RuleOpt->prepareToAddRule(m_model);
+    ui->RuleOpt->prepareToAddRule(m_model, parentClass);
     ui->centralWidget->setCurrentWidget(ui->RuleOpt);
     activeWidget = ui->RuleOpt;
 }

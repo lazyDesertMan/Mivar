@@ -13,7 +13,7 @@ class MivarRule : public MivarObject, public IObserver, public std::enable_share
     bool m_isBindet;
 
 public:
-    MivarRule() : m_isBindet(false) {}
+    MivarRule(const QString& id = "", const QString& name = "", const QString& description = "");
     MivarRule(MivarRule&) = delete;
     MivarRule(MivarRule&&) = delete;
     MivarRule& operator=(MivarRule&) = delete;
@@ -34,6 +34,7 @@ public:
     QString paramID(const QString& paramName);
     
     bool isCorrect();
+    
     /**
      * @brief Привязывает параметр с именем paramName правила
      *        к параметру с ID paramId миварного класса.

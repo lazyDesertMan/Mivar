@@ -93,27 +93,34 @@ void RelationTree::displayRules(std::shared_ptr<MivarClass> mivarClass) {
         QTreeWidgetItem* parent = m_relations[rule->getBindetRelation()->id()].first;
         QTreeWidgetItem* item = new QTreeWidgetItem();
         parent->addChild(item);
-        TreeRuleDetail* details = new TreeRuleDetail(rule);
-        connect(details, &TreeRuleDetail::removeClick, this, &RelationTree::deleteRule);
+        configureRule(item, rule);
         m_rules.insert({rule->id(), {item, rule}});
-        ui->treeWidget->setItemWidget(item, 0, details);
     }
     for (const std::shared_ptr<MivarClass>& subclass : mivarClass->subclasses())
         displayRules(subclass);
 }
 
-RelationTree::RelationTree(QWidget *parent) : QWidget(parent), ui(new Ui::RelationTree)
+RelationTree::RelationTree(QWidget* parent) : QWidget(parent), ui(new Ui::RelationTree)
 {
     ui->setupUi(this);
     connect(ui->addRelBtn, SIGNAL(clicked()), this, SLOT(AddRelative()));
     
 }
+
 void RelationTree::AddRelative() {
     emit addRelationEvent();
 }
-void RelationTree::configureRel(QTreeWidgetItem* mivarRelItem, const std::shared_ptr<MivarRelation>& mivarRel) {
-    TreeRelationDetail* relDetails = new TreeRelationDetail(mivarRel);
-    ui->treeWidget->setItemWidget(mivarRelItem, 0, relDetails);
+
+void RelationTree::configureRule(QTreeWidgetItem* item, const std::shared_ptr<MivarRule>& rule) {
+    TreeRuleDetail* details = new TreeRuleDetail(rule);
+    ui->treeWidget->setItemWidget(item, 0, details);
+    connect(details, &TreeRuleDetail::removeClick, this, &RelationTree::deleteRule);
+}
+
+void RelationTree::configureRelation(QTreeWidgetItem* item, const std::shared_ptr<MivarRelation>& relation)
+{
+    TreeRelationDetail* relDetails = new TreeRelationDetail(relation);
+    ui->treeWidget->setItemWidget(item, 0, relDetails);
     connect(relDetails, &RelActions::removeClick, this, &RelationTree::deleteRelation);
 }
 
@@ -148,6 +155,7 @@ void RelationTree::updateRules(const QString& classID) {
                 QTreeWidgetItem* item = new QTreeWidgetItem();
                 QTreeWidgetItem* parent = m_relations[rule->getBindetRelation()->id()].first;
                 parent->addChild(item);
+                configureRule(item, rule);
                 m_rules.insert({rule->id(), {item, rule}});
             }
         }
@@ -172,7 +180,7 @@ void RelationTree::updateRelations() {
         if(m_relations.find(rel->id()) == m_relations.end()){
             QTreeWidgetItem* item = new QTreeWidgetItem();
             ui->treeWidget->addTopLevelItem(item);
-            configureRel(item, rel);
+            configureRelation(item, rel);
             m_relations.insert({rel->id(), {item, rel}});
         }
     }
@@ -191,7 +199,7 @@ void RelationTree::DisplayMivar(std::shared_ptr<MivarModel> model) {
     for(size_t i = 0; i < m_model->relations().size(); i++) {
         QTreeWidgetItem* item = new QTreeWidgetItem();
         ui->treeWidget->addTopLevelItem(item);
-        configureRel(item, m_model->relations()[i]);
+        configureRelation(item, m_model->relations()[i]);
         m_relations.insert({model->relations()[i]->id(), {item, model->relations()[i]}});
     }
     displayRules(m_model->modelClass());

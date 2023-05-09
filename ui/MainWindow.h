@@ -73,7 +73,7 @@ public slots:
      * @brief Отображение формы добавления нового правила в MivarModel
      * @param MivarModel Модель, в которую добавляется правила
      */
-    void ShowAddRuleForm();
+    void ShowAddRuleForm(std::shared_ptr<MivarClass> parentClass);
 
     // Вывод формы для редактирования отношений
     void ShowRelativeEdit();

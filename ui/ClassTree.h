@@ -44,7 +44,7 @@ signals:
     void addClassEvent(const std::shared_ptr<MivarClass>& parent);
     void editClassEvent(const std::shared_ptr<MivarClass>& mivarClass, const std::shared_ptr<MivarClass>& parent);
     void addParamEvent(const std::shared_ptr<MivarClass>& mivarClass);
-    void addRuleEvent();
+    void addRuleEvent(const std::shared_ptr<MivarClass>& parentClass);
     void editParamEvent(const std::shared_ptr<MivarParam>& mivarParam);
 public:
     explicit ClassTree(QWidget *parent = nullptr);

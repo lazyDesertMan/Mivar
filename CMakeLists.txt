@@ -65,6 +65,8 @@ set(SOURCES
     ui/components/calculateTree/CalculateTreeClass.cpp
     ui/components/calculateTree/CalculateTreeParam.h
     ui/components/calculateTree/CalculateTreeParam.cpp
+    ui/components/NameIdListModel.h
+    ui/components/NameIdListModel.cpp
     ui/ResetableWidget.h
     ui/RelationTree.h
     ui/RelationTree.cpp

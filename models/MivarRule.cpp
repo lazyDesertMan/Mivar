@@ -28,6 +28,10 @@ QString MivarRule::paramID(const QString& paramName) {
 }
 
 bool MivarRule::isCorrect() {
+    for (auto curParam : m_params) {
+        if (curParam.second.size() == 0)
+            return false;
+    }
     return true;
 }
 
@@ -75,7 +79,14 @@ void MivarRule::handle(int16_t code) {
     sendEvent();
 }
 
-MivarRule::~MivarRule() {
+MivarRule::MivarRule(const QString &id, const QString &name, const QString &description): m_isBindet(false) {
+    m_id = id;
+    m_name = name;
+    m_description = description;
+}
+
+MivarRule::~MivarRule()
+{
     if(m_isBindet)
         m_relation->removeObserver(shared_from_this());
 }

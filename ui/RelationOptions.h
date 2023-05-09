@@ -7,19 +7,6 @@
 #include "ResetableWidget.h"
 #include <models/MivarModel.h>
 
-class RelTypeModel : public QAbstractListModel {
-    Q_OBJECT
-public:
-    using ModelDataType = std::pair<QVariant, QVariant>;
-    explicit RelTypeModel(std::vector<ModelDataType> data, QObject* parent = 0);
-
-    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
-    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-protected:
-    std::vector<ModelDataType> m_data;
-};
-
 namespace Ui {
 class RelationOptions;
 }

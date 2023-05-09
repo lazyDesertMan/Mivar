@@ -13,89 +13,32 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0">
-   <item row="1" column="0">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,1,0">
+   <item row="2" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
       <string>Наименование</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="QTableWidget" name="table_InData">
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::AdjustIgnored</enum>
-     </property>
-     <attribute name="horizontalHeaderStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <attribute name="verticalHeaderStretchLastSection">
-      <bool>false</bool>
-     </attribute>
-     <column>
-      <property name="text">
-       <string>Наименование</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Параметр</string>
-      </property>
-     </column>
-    </widget>
-   </item>
    <item row="0" column="0">
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="label_5">
      <property name="text">
-      <string>Отношение</string>
+      <string>Класс</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="2">
+    <widget class="QTextEdit" name="descriptionRule"/>
+   </item>
+   <item row="3" column="0">
     <widget class="QLabel" name="label_3">
      <property name="text">
       <string>Описание</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Выходные данные</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Входные данные</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0" colspan="2">
-    <widget class="QTableWidget" name="table_OutData">
-     <attribute name="horizontalHeaderStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <column>
-      <property name="text">
-       <string>Наименование</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Параметр</string>
-      </property>
-     </column>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QTextEdit" name="descriptionRule"/>
-   </item>
-   <item row="7" column="1">
+   <item row="6" column="2">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QWidget" name="widget" native="true"/>
@@ -128,15 +71,63 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="1">
+   <item row="2" column="2">
     <widget class="QLineEdit" name="nameRule"/>
    </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="viewRelative">
+   <item row="5" column="0" colspan="3">
+    <widget class="QTableWidget" name="paramBindingTable">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustIgnored</enum>
+     </property>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderStretchLastSection">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Параметр отношения</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Назначение</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Параметр класса</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Отношение</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Параметры</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLineEdit" name="classNameLine">
      <property name="enabled">
       <bool>false</bool>
      </property>
     </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QComboBox" name="relationSelector"/>
    </item>
   </layout>
  </widget>

@@ -61,7 +61,8 @@ public:
     void updateRules(const QString& classID);
     void DisplayMivar(std::shared_ptr<MivarModel> model);
 private:
-    void configureRel(QTreeWidgetItem* mivarRelItem, const std::shared_ptr<MivarRelation>& mivarRel);
+    void configureRule(QTreeWidgetItem* item, const std::shared_ptr<MivarRule>& rule);
+    void configureRelation(QTreeWidgetItem* item, const std::shared_ptr<MivarRelation>& relation);
 
 signals:
     void addRuleEvent(std::shared_ptr<MivarRelation> rel);

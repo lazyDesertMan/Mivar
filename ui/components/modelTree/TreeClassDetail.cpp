@@ -35,7 +35,7 @@ void ClassActions::onAddParamClick() {
     emit addParamClick(m_class);
 }
 void ClassActions::onAddRuleClick() {
-    emit addRuleClick();
+    emit addRuleClick(m_class);
 }
 
 void ClassActions::onAddSubclassClick() {

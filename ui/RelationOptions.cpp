@@ -1,39 +1,10 @@
-
 #include <QObject>
 #include <QDebug>
 #include <QAction>
 #include "RelationOptions.h"
 #include "ui_RelationOptions.h"
 #include <services/ModelLoader.h>
-
-
-RelTypeModel::RelTypeModel(std::vector<ModelDataType> data, QObject* parent) : m_data(data), QAbstractListModel(parent) {}
-
-int RelTypeModel::columnCount(const QModelIndex& parent) const {
-    return 2;
-}
-
-QVariant RelTypeModel::data(const QModelIndex& index, int role) const {
-    QVariant variant;
-    if (index.row() < m_data.size()) {
-        switch (role)
-        {
-        case Qt::DisplayRole:
-            variant = m_data[index.row()].second;
-            break;
-        case Qt::UserRole:
-            variant = m_data[index.row()].first;
-            break;
-        default:
-            break;
-        }
-    }
-    return variant;
-}
-
-int RelTypeModel::rowCount(const QModelIndex& parent) const {
-    return m_data.size();
-}
+#include <ui/components/NameIdListModel.h>
 
 void RelationOptions::onNextClick() {
     ui->pagesStack->setCurrentIndex(1);
@@ -43,7 +14,7 @@ void RelationOptions::onBackClick() {
     ui->pagesStack->setCurrentIndex(0);
 }
 
-void RelationOptions::onTypeChange(int i) {
+void RelationOptions::onTypeChange(int /*id*/) {
     int data = ui->typeRelative->currentData(Qt::UserRole).toInt();
     switch (data)
     {
@@ -80,7 +51,7 @@ RelationOptions::RelationOptions(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->functionCodeEdit->setTabStopDistance(ui->functionCodeEdit->fontMetrics().horizontalAdvance(' ') * 4);
-    RelTypeModel* mod = new RelTypeModel({{MivarRelation::RELATIVE_TYPE_SIMPLE, "Простое"}, {MivarRelation::RELATIVE_TYPE_CONSTRAINT, "Ограничение"},
+    NameIdListModel* mod = new NameIdListModel({{MivarRelation::RELATIVE_TYPE_SIMPLE, "Простое"}, {MivarRelation::RELATIVE_TYPE_CONSTRAINT, "Ограничение"},
                                           {MivarRelation::RELATIVE_TYPE_IFCLAUSE, "Условная функция"}, {MivarRelation::RELATIVE_TYPE_FUNCTION, "Функция"}});
     ui->typeRelative->setModel(mod);
     //connect(ui->editBtn, SIGNAL(clicked()), this, SLOT(EditRelative()));

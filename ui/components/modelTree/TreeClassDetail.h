@@ -39,7 +39,7 @@ signals:
     void editClick(std::shared_ptr<MivarClass> mivarClass);
     void addSubclassClick(std::shared_ptr<MivarClass> mivarClass);
     void addParamClick(std::shared_ptr<MivarClass> mivarClass);
-    void addRuleClick();
+    void addRuleClick(std::shared_ptr<MivarClass> parentClass);
     void removeClick(std::shared_ptr<MivarClass> mivarClass);
 };
 
