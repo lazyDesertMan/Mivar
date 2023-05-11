@@ -143,12 +143,16 @@ const QString MivarFunctionRelation::type() const noexcept {
     return "prog";
 }
 
+const QString MivarSimpleRelation::type() const noexcept {
+    return "simple";
+}
+
 std::shared_ptr<MivarRelation> RelationFactory::operator()(const int16_t type, const QString& name, const QString& description, const QString& code) {
     QString id = QUuid::createUuid().toString();
     switch (type)
     {
     case MivarRelation::RELATIVE_TYPE_SIMPLE:
-        // return std::make_shared<MivarSimpleRelation>(id, name, description, code);
+        return std::make_shared<MivarSimpleRelation>(id, name, description, code);
         break;
     case MivarRelation::RELATIVE_TYPE_CONSTRAINT:
         // return std::make_shared<MivarConstraintRelation>(id, name, description, code);

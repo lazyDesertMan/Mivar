@@ -52,13 +52,21 @@ RelationOptions::RelationOptions(QWidget *parent) :
     ui->setupUi(this);
     ui->functionCodeEdit->setTabStopDistance(ui->functionCodeEdit->fontMetrics().horizontalAdvance(' ') * 4);
     NameIdListModel* mod = new NameIdListModel({{MivarRelation::RELATIVE_TYPE_SIMPLE, "Простое"}, {MivarRelation::RELATIVE_TYPE_CONSTRAINT, "Ограничение"},
-                                          {MivarRelation::RELATIVE_TYPE_IFCLAUSE, "Условная функция"}, {MivarRelation::RELATIVE_TYPE_FUNCTION, "Функция"}});
+                                          {MivarRelation::RELATIVE_TYPE_IFCLAUSE, "Условная функция"}, {MivarRelation::RELATIVE_TYPE_FUNCTION, "Функция"}}, ui->typeRelative);
     ui->typeRelative->setModel(mod);
+
+    std::vector<NameIdListModel::ModelDataType> ioVec = { {PARAM_TYPE_INPUT, "Входной"}, {PARAM_TYPE_OUTPUT, "Выходной"} };
+    m_IOSelectorModel = std::make_shared<NameIdListModel>(ioVec);
+    std::vector<NameIdListModel::ModelDataType> typeVec = { {"double", "Число"}, {"string", "Строка"} };
+    m_typeSelectorModel = std::make_shared<NameIdListModel>(typeVec);
+
     //connect(ui->editBtn, SIGNAL(clicked()), this, SLOT(EditRelative()));
     connect(ui->nextBtn, SIGNAL(clicked()), this, SLOT(onNextClick()));
     connect(ui->backBtn, SIGNAL(clicked()), this, SLOT(onBackClick()));
     connect(ui->addBtn, SIGNAL(clicked()), this, SLOT(addRelation()));
     connect(ui->typeRelative, SIGNAL(currentIndexChanged(int)), this, SLOT(onTypeChange(int)));
+    connect(ui->addParamBtn, &QPushButton::clicked, this, &RelationOptions::onAddParamClick);
+    connect(ui->removeParamBtn, &QPushButton::clicked, this, &RelationOptions::onRemoveParamClick);
 }
 
 RelationOptions::~RelationOptions()
@@ -112,7 +120,7 @@ void RelationOptions::editRelation()
         QString test = "Name: " + _name + "; Desc: " + _desc + "; Type: " + _type + " " + QString::number(index) + "; Body: " + _body;
         qDebug() << test;
     }else{
-        qDebug() << "Не фортануло";
+
     }
 
 }
@@ -145,19 +153,41 @@ void RelationOptions::addRelation()
     if (name.size()) {
         std::shared_ptr<MivarRelation> rel = m_relFactory(type, name, desc, code);
         if (rel != nullptr) {
-            /*
-            for (auto input : ui->someInputTable) {
-                MivarRelation::RelationParameter param(input.name, input.type);
-                rel->addInput(param);
+            for (int i = 0; i < ui->paramsTable->rowCount(); i++) {
+                QLineEdit* nameInp = static_cast<QLineEdit*>(ui->paramsTable->cellWidget(i, 0));
+                QComboBox* typeSelector = static_cast<QComboBox*>(ui->paramsTable->cellWidget(i, 1));
+                QComboBox* ioSelector = static_cast<QComboBox*>(ui->paramsTable->cellWidget(i, 2));
+                QString name = nameInp->text();
+                QString type = typeSelector->currentData(Qt::UserRole).toString();
+                int io = ioSelector->currentData(Qt::UserRole).toInt();
+                MivarRelation::RelationParameter param(name, type);
+                if (io == PARAM_TYPE_INPUT)
+                    rel->addInput(param);
+                else
+                    rel->addOutput(param);
             }
-            for (auto output : ui->someOutputTable) {
-                MivarRelation::RelationParameter param(output.name, output.type);
-                rel->addOutput(param);
-            }
-            */
-        m_model->addRelation(rel);
+            m_model->addRelation(rel);
         }
-        /* TODO: Мб добавить ветку else для вывода сообщения в "терминал", что не удалось добавить отношение. Это не обязательно, просто можно подумать */
     }
 }
 
+void RelationOptions::onAddParamClick() {
+    int rowIdx = ui->paramsTable->rowCount();
+    ui->paramsTable->insertRow(rowIdx);
+    QLineEdit* nameInp = new QLineEdit();
+    QComboBox* typeSelector = new QComboBox();
+    typeSelector->setModel(m_typeSelectorModel.get());
+    QComboBox* ioSelector = new QComboBox();
+    ioSelector->setModel(m_IOSelectorModel.get());
+    ui->paramsTable->setCellWidget(rowIdx, 0, nameInp);
+    ui->paramsTable->setCellWidget(rowIdx, 1, typeSelector);
+    ui->paramsTable->setCellWidget(rowIdx, 2, ioSelector);
+}
+
+void RelationOptions::onRemoveParamClick() {
+    QModelIndexList indexList = ui->paramsTable->selectionModel()->selectedRows();
+    std::sort(indexList.begin(), indexList.end(), [](const QModelIndex& l, const QModelIndex& r) { return r < l; });
+    for (auto idx : indexList) {
+        ui->paramsTable->removeRow(idx.row());
+    }
+}

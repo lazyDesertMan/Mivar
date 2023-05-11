@@ -7,6 +7,8 @@
         <file>res/menu/exit.svg</file>
         <file>res/menu/graph.svg</file>
         <file>res/menu/testing.svg</file>
+        <file>res/icons/add.svg</file>
+        <file>res/icons/remove.svg</file>
         <file>res/icons/class.svg</file>
         <file>res/icons/param.svg</file>
         <file>res/icons/rule.svg</file>

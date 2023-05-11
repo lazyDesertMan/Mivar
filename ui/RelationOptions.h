@@ -6,6 +6,7 @@
 #include <QAbstractListModel>
 #include "ResetableWidget.h"
 #include <models/MivarModel.h>
+#include <ui/components/NameIdListModel.h>
 
 namespace Ui {
 class RelationOptions;
@@ -29,13 +30,22 @@ private slots:
     void editRelation();
     // Добавление отношения
     void addRelation();
+
+    void onAddParamClick();
+    void onRemoveParamClick();
 private:
+    static constexpr int PARAM_TYPE_INPUT = 0;
+    static constexpr int PARAM_TYPE_OUTPUT = 1;
+
     Ui::RelationOptions *ui;
     std::shared_ptr<MivarRelation> m_editableRel;
     std::shared_ptr<MivarRelation> m_relative;
     std::shared_ptr<MivarModel> m_model;
     QWidget* m_activeInput;
     RelationFactory m_relFactory;
+
+    std::shared_ptr<NameIdListModel> m_typeSelectorModel;
+    std::shared_ptr<NameIdListModel> m_IOSelectorModel;
 };
 
 #endif // RELATIONOPTIONS_H

@@ -87,6 +87,13 @@ public:
     virtual ~MivarFunctionRelation() = default;
 };
 
+class MivarSimpleRelation : public MivarFunctionRelation {
+public:
+    MivarSimpleRelation(const QString& id = "", const QString& name = "", const QString& description = "", const QString& code = "") : MivarFunctionRelation(id, name, description, code) {}
+    virtual const QString type() const noexcept override;
+    virtual ~MivarSimpleRelation() = default;
+};
+
 class RelationFactory {
 public:
     std::shared_ptr<MivarRelation> operator()(const int16_t type, const QString& name = "", const QString& description = "", const QString& code = "");

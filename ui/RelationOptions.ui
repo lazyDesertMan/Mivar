@@ -177,7 +177,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="page_4">
-      <layout class="QGridLayout" name="gridLayout_6">
+      <layout class="QGridLayout" name="gridLayout_6" rowstretch="0,0,0">
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -190,7 +190,64 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item row="1" column="0">
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,1">
+         <item>
+          <widget class="QPushButton" name="addParamBtn">
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton#addParamBtn {
+	border: none;
+}
+QPushButton#addParamBtn:hover {
+     background-color: gray;
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../resources.qrc">
+             <normaloff>:/image/res/icons/add.svg</normaloff>:/image/res/icons/add.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="removeParamBtn">
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton#removeParamBtn {
+	border: none;
+}
+QPushButton#removeParamBtn:hover {
+     background-color: gray;
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../resources.qrc">
+             <normaloff>:/image/res/icons/remove.svg</normaloff>:/image/res/icons/remove.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="widget_3" native="true"/>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0,0,0">
          <item>
           <widget class="QWidget" name="widget" native="true"/>
@@ -218,11 +275,30 @@
          </item>
         </layout>
        </item>
-       <item row="0" column="0">
-        <widget class="QTreeWidget" name="treeWidget">
+       <item row="1" column="0">
+        <widget class="QTableWidget" name="paramsTable">
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="verticalHeaderStretchLastSection">
+          <bool>false</bool>
+         </attribute>
          <column>
           <property name="text">
-           <string notr="true">1</string>
+           <string>Имя</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Тип</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Назначение</string>
           </property>
          </column>
         </widget>
@@ -233,6 +309,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
