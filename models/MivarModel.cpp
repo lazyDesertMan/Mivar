@@ -6,6 +6,7 @@ MivarModel::MivarModel(const QString& id, const QString& name, const QString& de
     m_id = id;
     m_name = name;
     m_description = description;
+    m_savePath = "";
 }
 
 std::shared_ptr<MivarClass>& MivarModel::modelClass() {
@@ -61,6 +62,14 @@ std::shared_ptr<MivarRelation>& MivarModel::getRelation(const QString& id) {
             return m_relations[idx];
     }
     throw std::invalid_argument("Отношение не существует (" + id.toStdString() + ")");
+}
+
+void MivarModel::setSavePath(const QString& path) {
+    m_savePath = path;
+}
+
+const QString &MivarModel::savePath() {
+    return m_savePath;
 }
 
 void MivarModel::removeRelation(const QString& id) {

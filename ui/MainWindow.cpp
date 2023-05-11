@@ -78,8 +78,8 @@ void MainWindow::on_showGraph_triggered() {
 }
 
 void MainWindow::saveModel() {
-    if(m_fileSavePath.size())
-        ModelLoader::save(m_model, m_fileSavePath);
+    if(m_model && m_model->savePath().size())
+        ModelLoader::save(m_model, m_model->savePath());
 }
 
 void MainWindow::testingModel() {
@@ -97,55 +97,71 @@ void MainWindow::ShowClassEdit() {
 
 // Вывод формы для редактирования класса
 void MainWindow::ShowClassEditForm(const std::shared_ptr<MivarClass> &mivarClass, const std::shared_ptr<MivarClass>& parent) {
-    ui->ClassOpt->setEditableClass(mivarClass, parent);
-    ui->centralWidget->setCurrentWidget(ui->ClassOpt);
-    activeWidget = ui->ClassOpt;
+    if (m_model) {
+        ui->ClassOpt->setEditableClass(mivarClass, parent);
+        ui->centralWidget->setCurrentWidget(ui->ClassOpt);
+        activeWidget = ui->ClassOpt;
+    }
 }
 
 void MainWindow::ShowNewSubclassForm(const std::shared_ptr<MivarClass> &mivarClass) {
-    activeWidget->reset();
-    ui->ClassOpt->prepareToAddClass(mivarClass);
-    ui->centralWidget->setCurrentWidget(ui->ClassOpt);
-    activeWidget = ui->ClassOpt;
+    if (m_model) {
+        activeWidget->reset();
+        ui->ClassOpt->prepareToAddClass(mivarClass);
+        ui->centralWidget->setCurrentWidget(ui->ClassOpt);
+        activeWidget = ui->ClassOpt;
+    }
 }
 
 // Вывод формы для редактирования правила
 void MainWindow::ShowRuleEdit() {
-    activeWidget->reset();
-    ui->centralWidget->setCurrentWidget(ui->RuleOpt);
-    activeWidget = ui->RuleOpt;
+    if (m_model) {
+        activeWidget->reset();
+        ui->centralWidget->setCurrentWidget(ui->RuleOpt);
+        activeWidget = ui->RuleOpt;
+    }
 }
 
 // Вывод формы для редактирования отношения
 void MainWindow::ShowRelativeEdit() {
-    activeWidget->reset();
-    ui->centralWidget->setCurrentWidget(ui->RelativeOpt);
-    activeWidget = ui->RelativeOpt;
+    if (m_model) {
+        activeWidget->reset();
+        ui->centralWidget->setCurrentWidget(ui->RelativeOpt);
+        activeWidget = ui->RelativeOpt;
+    }
 }
 
 // Вывод формы для редактирования параметра
 void MainWindow::ShowParameterEdit(std::shared_ptr<MivarParam> param) {
-    activeWidget->reset();
-    ui->ParamOpt->setEditableParam(m_model, param);
-    ui->centralWidget->setCurrentWidget(ui->ParamOpt);
-    activeWidget = ui->ParamOpt;
+    if (m_model) {
+        activeWidget->reset();
+        ui->ParamOpt->setEditableParam(m_model, param);
+        ui->centralWidget->setCurrentWidget(ui->ParamOpt);
+        activeWidget = ui->ParamOpt;
+    }
 }
 
 void MainWindow::ShowAddParameterForm(const std::shared_ptr<MivarClass>& mivarClass) {
-    activeWidget->reset();
-    ui->ParamOpt->prepareToAddParam(m_model, mivarClass);
-    ui->centralWidget->setCurrentWidget(ui->ParamOpt);
-    activeWidget = ui->ParamOpt;
+    if (m_model) {
+        activeWidget->reset();
+        ui->ParamOpt->prepareToAddParam(m_model, mivarClass);
+        ui->centralWidget->setCurrentWidget(ui->ParamOpt);
+        activeWidget = ui->ParamOpt;
+    }
 }
 void MainWindow::ShowAddRelativeForm() {
-    activeWidget->reset();
-    ui->RelativeOpt->prepareToAddRel(m_model);
-    ui->centralWidget->setCurrentWidget(ui->RelativeOpt);
-    activeWidget = ui->RelativeOpt;
+    if (m_model) {
+        activeWidget->reset();
+        ui->RelativeOpt->prepareToAddRel(m_model);
+        ui->centralWidget->setCurrentWidget(ui->RelativeOpt);
+        activeWidget = ui->RelativeOpt;
+    }
 }
 void MainWindow::ShowAddRuleForm(std::shared_ptr<MivarClass> parentClass) {
-    activeWidget->reset();
-    ui->RuleOpt->prepareToAddRule(m_model, parentClass);
-    ui->centralWidget->setCurrentWidget(ui->RuleOpt);
-    activeWidget = ui->RuleOpt;
+    if (m_model) {
+        activeWidget->reset();
+        ui->RuleOpt->prepareToAddRule(m_model, parentClass);
+        ui->centralWidget->setCurrentWidget(ui->RuleOpt);
+        activeWidget = ui->RuleOpt;
+    }
 }

@@ -15,6 +15,7 @@
 class MivarModel : public MivarObject {
     std::shared_ptr<MivarClass> m_rootClass;
     std::vector<std::shared_ptr<MivarRelation>> m_relations;
+    QString m_savePath;
 
 public:
     enum EventCode : int16_t { EC_RELATION_ADD = 16, EC_RELATION_REMOVE };
@@ -31,6 +32,8 @@ public:
     bool addRelation(const std::shared_ptr<MivarRelation> relation);
     const std::shared_ptr<MivarRelation>& getRelation(const QString& id) const;
     std::shared_ptr<MivarRelation>& getRelation(const QString& id);
+    void setSavePath(const QString& path);
+    const QString& savePath();
     void removeRelation(const QString& id);
 };
 

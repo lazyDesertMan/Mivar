@@ -244,6 +244,7 @@ std::shared_ptr<MivarModel> ModelLoader::load(const QString &path)
                 loadClass(model, rootClass, rootClassNode);
                 model->setModelClass(rootClass);
             } else { /* ОБРАБОТКА ОТСУТСТВИЯ КЛАССОВ */ }
+            model->setSavePath(path);
             return model;
         }
     }
