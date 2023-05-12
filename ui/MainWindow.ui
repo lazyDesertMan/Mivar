@@ -148,7 +148,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="loadFile"/>
-   <addaction name="action_2"/>
+   <addaction name="newModel"/>
    <addaction name="saveFile"/>
    <addaction name="exit"/>
    <addaction name="separator"/>
@@ -226,7 +226,7 @@
     <string>Тестировать модель</string>
    </property>
   </action>
-  <action name="action_2">
+  <action name="newModel">
    <property name="icon">
     <iconset resource="../resources.qrc">
      <normaloff>:/image/res/menu/newFile.svg</normaloff>:/image/res/menu/newFile.svg</iconset>

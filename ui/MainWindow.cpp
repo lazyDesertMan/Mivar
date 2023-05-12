@@ -9,6 +9,7 @@
 #include <QDebug>
 #include <QWidget>
 #include <QAction>
+#include <QUuid>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -35,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->displayRelative, &RelationTree::addRelationEvent, this, &MainWindow::ShowAddRelativeForm);
     connect(ui->saveFile, &QAction::triggered, this, &MainWindow::saveModel);
     connect(ui->testModel, &QAction::triggered, this, &MainWindow::testingModel);
+    connect(ui->newModel, &QAction::triggered, this, &MainWindow::newModel);
     
     activeWidget = ui->HomeOpt;
 }
@@ -77,9 +79,29 @@ void MainWindow::on_showGraph_triggered() {
     }
 }
 
+void MainWindow::newModel() {
+    m_model.reset();
+    QString modelId = QUuid::createUuid().toString();
+    QString rootClassId = QUuid::createUuid().toString();
+    m_model = std::make_shared<MivarModel>(modelId, "Mivar Model");
+    std::shared_ptr<MivarClass> rootClass = std::make_shared<MivarClass>(rootClassId, "Root class");
+    m_model->setModelClass(rootClass);
+    ui->displayProject->DisplayMivar(m_model);
+    ui->displayRelative->DisplayMivar(m_model);
+}
+
 void MainWindow::saveModel() {
-    if(m_model && m_model->savePath().size())
-        ModelLoader::save(m_model, m_model->savePath());
+    if (m_model != nullptr) {
+        if(m_model->savePath().size())
+            ModelLoader::save(m_model, m_model->savePath());
+        else {
+            QString pathFile = QFileDialog::getOpenFileName(this, "Выберите файл", QDir::currentPath(), "*.xml");
+            if (pathFile.size() > 0) {
+                m_model->setSavePath(pathFile);
+                ModelLoader::save(m_model, m_model->savePath());
+            }
+        }
+    }
 }
 
 void MainWindow::testingModel() {

@@ -33,6 +33,7 @@ private slots:
     void saveModel();
     void testingModel();
     void on_showGraph_triggered();
+    void newModel();
 
 public slots:
     void afterLoad(bool);
