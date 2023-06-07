@@ -61,9 +61,9 @@ void MainWindow::on_exit_triggered()
 // Загрузка *.xml файла
 void MainWindow::on_loadFile_triggered()
 {
-    m_model.reset();
     QString pathFile = QFileDialog::getOpenFileName(this, "Выберите файл", QDir::currentPath(), "*.xml");
     if(pathFile.size() > 0) {
+        m_model.reset();
         m_fileSavePath = pathFile;
         m_model = ModelLoader::load(pathFile);
         ui->displayProject->DisplayMivar(m_model);
